@@ -1,0 +1,55 @@
+.wrapper {
+  position: relative;
+  margin: 15px 0;
+  &:last-child {
+    margin: 0;
+  }
+
+  .placeholder {
+    color: #999999;
+    font-size: 13px;
+    line-height: 13px;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    transition: all 0.1s linear;
+    pointer-events: none;
+  }
+
+  &:focus-within {
+    .placeholder {
+      font-size: 9px;
+      line-height: 9px;
+      top: 0;
+      left: 0;
+    }
+  }
+
+  .input:not(:placeholder-shown) {
+    ~ .placeholder {
+      font-size: 9px;
+      line-height: 9px;
+      top: 0;
+      left: 0;
+    }
+  }
+
+  &::after {
+    content: "";
+    display: block;
+    position: absolute;
+    background-color: #3369f3;
+    height: 1px;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+  }
+}
+
+.input {
+  border: none;
+  outline: none;
+  height: 32px;
+  width: 100%;
+}
