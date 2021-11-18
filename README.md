@@ -6,9 +6,15 @@
 
 [Вот тут](https://eloquent-fermat-d10e6a.netlify.app/)
 
+## Макет в figma
+
+[Ссылка](https://www.figma.com/file/Dq7Io7NldK2mhzEzs7F2Fx/Chat-(Copy)?node-id=0%3A1)
+
+Будет дополняться
+
 ## Команды
 
-- `yarn start` — запуск dev сервера на порту 3000, HMR от parcel на 3001
+- `yarn start` — запуск dev сервера на порту 3000 без HMR
 - `yarn build` — билд проекта в /dist/
 
 ## Разное
