@@ -20,7 +20,8 @@
   "scripts": {
     "watch": "yarn parcel watch static/index.html --port=3001",
     "server": "node server",
-    "start": "run-p watch server",
+    "dev": "run-p watch server",
+    "start": "run-s build server",
     "build": "rm -rf dist && yarn parcel build static/index.html"
   }
 }
