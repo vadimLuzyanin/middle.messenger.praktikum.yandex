@@ -3,12 +3,12 @@ name: Tests
 on:
   pull_request:
     branches:
-      - main
+      - test_target
 
 
 jobs:
   sprint_1:
-    if: ${{github.head_ref == 'sprint_1'}}
+    if: ${{github.head_ref == 'test'}}
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -34,7 +34,7 @@ jobs:
     - name: Check PORT 3000
       run: bash tests-second-floor/sprint_1/check_port.sh
     - name: Check routing
-      run: node tests-second-floor/sprint_1/check_routing.js
+      run: node routing_test.js
       
   sprint_2:
     if: ${{github.head_ref == 'sprint_2'}}

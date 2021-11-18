@@ -1,0 +1,10 @@
+<button class="{{cn.button}}
+ {{#switch type}}
+  {{#case 'primary'}} {{cn.primary}} {{/case}}
+  {{#case 'secondary'}} {{cn.secondary}} {{/case}}
+  {{#case 'warn'}} {{cn.warn}} {{/case}}
+  {{#default cn.secondary}} {{/default}}
+ {{/switch}}
+ {{#if leftAlign}} {{cn.leftAlign}} {{/if}}">
+  {{text}}
+</button>
