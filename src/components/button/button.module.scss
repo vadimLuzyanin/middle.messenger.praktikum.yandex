@@ -6,10 +6,15 @@
   border: none;
   cursor: pointer;
   padding: 0;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: unset;
+  }
 }
 
 .primary {
-  color: #ffffff;
+  color: #fff;
   background-color: #3369f3;
   font-size: 13px;
   line-height: 13px;
@@ -17,16 +22,16 @@
 
 .secondary {
   color: #3369f3;
-  background-color: #ffffff;
+  background-color: #fff;
   font-size: 11px;
   line-height: 11px;
 }
 
 .warn {
-  color: #ff0000;
+  color: #f00;
   font-size: 11px;
   line-height: 11px;
-  background-color: #ffffff;
+  background-color: #fff;
 }
 
 .leftAlign {

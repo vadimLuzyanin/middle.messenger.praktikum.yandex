@@ -1,4 +1,4 @@
-<button class="{{cn.button}}
+<button {{#if disabled}}disabled{{/if}} name="{{name}}" class="{{cn.button}}
  {{#switch type}}
   {{#case 'primary'}} {{cn.primary}} {{/case}}
   {{#case 'secondary'}} {{cn.secondary}} {{/case}}

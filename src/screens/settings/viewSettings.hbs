@@ -1,0 +1,17 @@
+
+<div>
+  <div class="{{cn.fields}}">
+    <h1 class="{{cn.name}}">{{name}}</h1>
+    {{#each fields}}
+    <div class="{{../cn.field}}">
+      <span class="{{../cn.fieldName}}">{{this.name}}</span>
+      <span class="{{../cn.fieldValue}}">{{this.value}}</span>
+    </div>
+    {{/each}}
+  </div>
+  <div class="{{cn.buttons}}">
+    {{{changeDataButton}}}
+    {{{changePasswordButton}}}
+    {{{logoutButton }}}
+  </div>
+</div>

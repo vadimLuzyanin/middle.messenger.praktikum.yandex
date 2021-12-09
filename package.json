@@ -6,22 +6,43 @@
   "devDependencies": {
     "@parcel/config-default": "^2.0.1",
     "@parcel/transformer-sass": "^2.0.1",
+    "@types/uuid": "^8.3.3",
+    "@typescript-eslint/eslint-plugin": "^5.6.0",
+    "@typescript-eslint/parser": "^5.6.0",
+    "eslint": "^8.4.1",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-airbnb-typescript": "^16.1.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-import-resolver-typescript": "^2.0.0",
+    "eslint-plugin-es": "^4.1.0",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-prettier": "^4.0.0",
     "express": "^4.17.1",
     "npm-run-all": "^4.1.5",
     "parcel": "2.0.1",
     "parcel-transformer-hbs": "^1.0.4",
-    "postcss": "8.3.11",
-    "prettier": "^2.4.1",
-    "sass": "^1.43.4"
+    "postcss": "^8.4.4",
+    "prettier": "^2.5.1",
+    "sass": "^1.43.4",
+    "stylelint": "^14.1.0",
+    "stylelint-config-recommended-scss": "^5.0.2",
+    "stylelint-config-standard": "^24.0.0",
+    "stylelint-config-standard-scss": "^3.0.0",
+    "stylelint-scss": "^4.0.1",
+    "typed-scss-modules": "^4.1.1",
+    "typescript": "^4.5.3"
   },
   "dependencies": {
-    "handlebars": "^4.7.7"
+    "handlebars": "^4.7.7",
+    "uuid": "^8.3.2"
   },
   "scripts": {
     "watch": "yarn parcel watch static/index.html --port=3001",
     "server": "node server",
     "dev": "run-p watch server",
     "start": "run-s build server",
-    "build": "rm -rf dist && yarn parcel build static/index.html"
+    "build": "rm -rf dist && yarn parcel build static/index.html",
+    "type-scss": "yarn tsm src",
+    "lint": "yarn tsc --noEmit && yarn eslint --ext .ts . && yarn stylelint '**/*.scss' && yarn prettier '**/*.{ts,scss}' --check"
   }
 }
