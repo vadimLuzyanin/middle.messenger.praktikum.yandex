@@ -28,4 +28,4 @@
 
 При переходе на любой неизвестный роут происходит редирект на 404
 
-[Ссылка на пул реквест](https://github.com/vadimLuzyanin/middle.messenger.praktikum.yandex/pull/1)
+[Ссылка на пул реквест](https://github.com/vadimLuzyanin/middle.messenger.praktikum.yandex/pull/3)
