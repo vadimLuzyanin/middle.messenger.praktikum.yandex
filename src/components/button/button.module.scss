@@ -1,0 +1,34 @@
+.button {
+  font-weight: 500;
+  border-radius: 8px;
+  min-width: 280px;
+  min-height: 37px;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.primary {
+  color: #ffffff;
+  background-color: #3369f3;
+  font-size: 13px;
+  line-height: 13px;
+}
+
+.secondary {
+  color: #3369f3;
+  background-color: #ffffff;
+  font-size: 11px;
+  line-height: 11px;
+}
+
+.warn {
+  color: #ff0000;
+  font-size: 11px;
+  line-height: 11px;
+  background-color: #ffffff;
+}
+
+.leftAlign {
+  text-align: left;
+}

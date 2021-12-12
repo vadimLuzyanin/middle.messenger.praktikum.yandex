@@ -1,0 +1,27 @@
+{
+  "name": "chat",
+  "version": "1.0.0",
+  "author": "Vadim Luzyanin <vadim.luzyanin@phkp.ru>",
+  "license": "MIT",
+  "devDependencies": {
+    "@parcel/config-default": "^2.0.1",
+    "@parcel/transformer-sass": "^2.0.1",
+    "express": "^4.17.1",
+    "npm-run-all": "^4.1.5",
+    "parcel": "2.0.1",
+    "parcel-transformer-hbs": "^1.0.4",
+    "postcss": "8.3.11",
+    "prettier": "^2.4.1",
+    "sass": "^1.43.4"
+  },
+  "dependencies": {
+    "handlebars": "^4.7.7"
+  },
+  "scripts": {
+    "watch": "yarn parcel watch static/index.html --port=3001",
+    "server": "node server",
+    "dev": "run-p watch server",
+    "start": "run-s build server",
+    "build": "rm -rf dist && yarn parcel build static/index.html"
+  }
+}
