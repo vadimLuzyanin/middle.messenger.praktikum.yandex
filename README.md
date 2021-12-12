@@ -31,3 +31,5 @@
 При переходе на любой неизвестный роут происходит редирект на 404
 
 Использована реализация блока с реактивным state
+
+[Ссылка на пул реквест](https://github.com/vadimLuzyanin/middle.messenger.praktikum.yandex/pull/3)
