@@ -13,7 +13,9 @@
     "noUnusedParameters": true,
     "moduleResolution": "node",
     "lib": ["dom", "es2015.iterable"],
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true
   },
   "ts-node": {
     "compilerOptions": {
