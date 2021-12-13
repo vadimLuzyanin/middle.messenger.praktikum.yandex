@@ -8,7 +8,7 @@ import {
   SettingsScreen,
 } from "./screens";
 
-export function renderRoot(block: Component<any, any>) {
+export function renderRoot(block: Component<any, any, any>) {
   const root = document.getElementById("app");
   if (root) {
     root.appendChild(block.render());

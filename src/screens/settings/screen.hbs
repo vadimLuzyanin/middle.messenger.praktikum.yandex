@@ -3,7 +3,7 @@
     <img src="{{backIcon}}" class="{{cn.backIcon}}" />
   </div>
   <main class="{{cn.content}}">
-    <div class="{{cn.avatarContainer}}">
+    <div class="{{cn.avatarContainer}} {{#if avatarWithHover}} {{cn.avatarContainerWithHover}} {{/if}}">
       <img src="{{avatar}}" class="{{cn.avatar}}" />
     </div>
     {{{currentComponent}}}

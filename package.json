@@ -43,6 +43,7 @@
     "start": "run-s build server",
     "build": "rm -rf dist && yarn parcel build static/index.html",
     "type-scss": "yarn tsm src",
-    "lint": "yarn tsc --noEmit && yarn eslint --ext .ts . && yarn stylelint '**/*.scss' && yarn prettier '**/*.{ts,scss}' --check"
+    "lint": "yarn tsc --noEmit && yarn eslint --ext .ts . && yarn stylelint '**/*.scss' && yarn prettier '**/*.{ts,scss}' --check",
+    "fix": "yarn eslint --ext .ts . --fix && yarn prettier '**/*.{ts,scss}' --write"
   }
 }

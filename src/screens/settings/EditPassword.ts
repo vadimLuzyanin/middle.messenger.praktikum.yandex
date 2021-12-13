@@ -4,11 +4,14 @@ import validations from "../../validations";
 import tmpl from "./editPassword.hbs";
 import * as cn from "./settings.module.scss";
 
+type InnerProps = {
+  oldPasswordInput: Input;
+  newPasswordInput: Input;
+  newPasswordAgainInput: Input;
+  saveButton: Button;
+};
+
 type Props = {
-  oldPasswordInput?: Input;
-  newPasswordInput?: Input;
-  newPasswordAgainInput?: Input;
-  saveButton?: Button;
   onSaveClick: () => void;
 };
 
@@ -21,7 +24,7 @@ type State = {
   disableSubmit: boolean;
 };
 
-export default class EditPassword extends Component<Props, State> {
+export default class EditPassword extends Component<Props, State, InnerProps> {
   cn = cn;
 
   constructor(props: Props) {
@@ -36,31 +39,31 @@ export default class EditPassword extends Component<Props, State> {
       disableSubmit: true,
     };
 
-    this.props.oldPasswordInput = new Input({
+    this.innerProps.oldPasswordInput = new Input({
       placeholder: "Старый пароль",
       name: "oldPassword",
       type: "password",
       validation: validations.password,
       value: this.state.formValues.oldPassword.value,
       handleInput: () => {
-        const { value, notValid } = this.props.oldPasswordInput!.state;
+        const { value, notValid } = this.props.oldPasswordInput.state;
         this.setFormValue("oldPassword", value, notValid);
-        this.props.oldPasswordInput!.focus();
+        this.props.oldPasswordInput.focus();
       },
     });
-    this.props.newPasswordInput = new Input({
+    this.innerProps.newPasswordInput = new Input({
       placeholder: "Новый пароль",
       name: "newPassword",
       type: "password",
       validation: validations.password,
       value: this.state.formValues.newPassword.value,
       handleInput: () => {
-        const { value, notValid } = this.props.newPasswordInput!.state;
+        const { value, notValid } = this.props.newPasswordInput.state;
         this.setFormValue("newPassword", value, notValid);
-        this.props.newPasswordInput!.focus();
+        this.props.newPasswordInput.focus();
       },
     });
-    this.props.newPasswordAgainInput = new Input({
+    this.innerProps.newPasswordAgainInput = new Input({
       placeholder: "Повторите новый пароль",
       name: "newPassword",
       type: "password",
@@ -72,13 +75,13 @@ export default class EditPassword extends Component<Props, State> {
       },
 
       handleInput: () => {
-        const { value, notValid } = this.props.newPasswordAgainInput!.state;
+        const { value, notValid } = this.props.newPasswordAgainInput.state;
         this.setFormValue("newPasswordAgain", value, notValid);
-        this.props.newPasswordAgainInput!.focus();
+        this.props.newPasswordAgainInput.focus();
       },
     });
 
-    this.props.saveButton = new Button({
+    this.innerProps.saveButton = new Button({
       text: "Сохранить",
       type: "primary",
       name: "save",

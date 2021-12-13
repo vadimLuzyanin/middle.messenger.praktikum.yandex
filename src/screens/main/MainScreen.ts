@@ -4,7 +4,7 @@ import * as cn from "./main.module.scss";
 import Component from "../../component";
 import { pushPathname } from "../../index";
 
-type Props = {
+type InnerProps = {
   btnAuth: Button;
   btnRegister: Button;
   btnSettings: Button;
@@ -13,48 +13,48 @@ type Props = {
   btnModal: Button;
 };
 
-export default class MainScreen extends Component<Props> {
+export default class MainScreen extends Component<{}, {}, InnerProps> {
   cn = cn;
 
   constructor() {
     super(tmpl);
 
-    this.props.btnAuth = new Button({
+    this.innerProps.btnAuth = new Button({
       text: "Потестить страницу логина",
       type: "primary",
       onClick: () => {
         pushPathname("/login");
       },
     });
-    this.props.btnRegister = new Button({
+    this.innerProps.btnRegister = new Button({
       text: "Потестить страницу регистрации",
       type: "secondary",
       onClick: () => {
         pushPathname("/register");
       },
     });
-    this.props.btnSettings = new Button({
+    this.innerProps.btnSettings = new Button({
       text: "Потестить страницу настроек",
       type: "primary",
       onClick: () => {
         pushPathname("/settings");
       },
     });
-    this.props.btn404 = new Button({
+    this.innerProps.btn404 = new Button({
       text: "Потестить страницу 404",
       type: "warn",
       onClick: () => {
         pushPathname("/404");
       },
     });
-    this.props.btn500 = new Button({
+    this.innerProps.btn500 = new Button({
       text: "Потестить страницу 500",
       type: "warn",
       onClick: () => {
         pushPathname("/500");
       },
     });
-    this.props.btnModal = new Button({
+    this.innerProps.btnModal = new Button({
       text: "Потестить модалку",
       type: "primary",
       onClick: (e) => {

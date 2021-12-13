@@ -9,7 +9,7 @@ import EditData from "./EditData";
 import { Button, renderModal } from "../../components";
 import { pushPathname } from "../../index";
 
-type Props = {
+type InnerProps = {
   viewSettings: ViewSettings;
   editData: EditData;
   editPassword: EditPassword;
@@ -18,16 +18,19 @@ type Props = {
 };
 
 type State = {
-  currentComponent: Component<any, any>;
+  currentComponent: ViewSettings | EditData | EditPassword;
+  avatarWithHover: boolean;
 };
 
-export default class SettingsScreen extends Component<Props, State> {
+export default class SettingsScreen extends Component<{}, State, InnerProps> {
   cn = cn;
+
+  listeners: { avatar?: (e: Event) => void; goBack?: () => void } = {};
 
   constructor() {
     super(tmpl);
 
-    this.props.viewSettings = new ViewSettings({
+    this.innerProps.viewSettings = new ViewSettings({
       onChangePasswordClick: () => {
         this.switchContent(this.props.editPassword);
       },
@@ -35,67 +38,91 @@ export default class SettingsScreen extends Component<Props, State> {
         this.switchContent(this.props.editData);
       },
     });
-    this.props.editPassword = new EditPassword({
+    this.innerProps.editPassword = new EditPassword({
       onSaveClick: () => this.switchContent(this.props.viewSettings),
     });
-    this.props.editData = new EditData({
+    this.innerProps.editData = new EditData({
       onSaveClick: () => this.switchContent(this.props.viewSettings),
     });
-    this.props.avatar = avatar;
-    this.props.backIcon = backIcon;
+    this.innerProps.avatar = avatar;
+    this.innerProps.backIcon = backIcon;
 
     this.state = {
       currentComponent: this.props.viewSettings,
+      avatarWithHover: true,
     };
   }
 
-  switchContent(content: Component<any, any>) {
-    this.setState((prev) => ({ ...prev, currentComponent: content }));
+  switchContent(content: typeof this.state.currentComponent) {
+    this.setState((prev) => ({
+      ...prev,
+      currentComponent: content,
+      avatarWithHover: content === this.props.viewSettings,
+    }));
+  }
+
+  bindListeners() {
+    if (this.element) {
+      const avatar = this.element.querySelector(`.${cn.avatarContainer}`);
+      if (avatar) {
+        const listener = (e: Event) => {
+          if (this.state.currentComponent === this.props.viewSettings) {
+            renderModal(
+              new Button({
+                text: "Тут будет инпут для аватарки",
+                type: "primary",
+              }),
+              e as MouseEvent
+            );
+          }
+        };
+        this.listeners.avatar = listener;
+        avatar.addEventListener("click", listener);
+      }
+      const goBackButton = this.element.querySelector(`.${cn.back}`);
+      if (goBackButton) {
+        const listener = () => {
+          switch (this.state.currentComponent) {
+            case this.props.viewSettings: {
+              pushPathname("/");
+              break;
+            }
+            default: {
+              this.switchContent(this.props.viewSettings);
+            }
+          }
+        };
+
+        this.listeners.goBack = listener;
+        goBackButton.addEventListener("click", listener);
+      }
+    }
+  }
+
+  removeListeners() {
+    if (this.element) {
+      if (this.listeners.avatar) {
+        const avatar = this.element.querySelector(`.${cn.avatarContainer}`);
+        if (avatar) {
+          avatar.removeEventListener("click", this.listeners.avatar);
+        }
+      }
+      if (this.listeners.goBack) {
+        const goBackButton = this.element.querySelector(`.${cn.back}`);
+        if (goBackButton) {
+          goBackButton.removeEventListener("click", this.listeners.goBack);
+        }
+      }
+    }
   }
 
   componentDidMount() {
-    if (this.element) {
-      const avatar = this.element.querySelector(`.${cn.avatarContainer}`);
-      if (avatar) {
-        avatar.addEventListener("click", (e) => {
-          renderModal(
-            new Button({
-              text: "Тут будет инпут для аватарки",
-              type: "primary",
-            }),
-            e as MouseEvent
-          );
-        });
-      }
-      const goBackButton = this.element.querySelector(`.${cn.back}`);
-      if (goBackButton) {
-        goBackButton.addEventListener("click", () => {
-          pushPathname("/");
-        });
-      }
-    }
+    this.removeListeners();
+    this.bindListeners();
   }
 
   componentDidUpdate() {
-    if (this.element) {
-      const avatar = this.element.querySelector(`.${cn.avatarContainer}`);
-      if (avatar) {
-        avatar.addEventListener("click", (e) => {
-          renderModal(
-            new Button({
-              text: "Тут будет инпут для аватарки",
-              type: "primary",
-            }),
-            e as MouseEvent
-          );
-        });
-      }
-      const goBackButton = this.element.querySelector(`.${cn.back}`);
-      if (goBackButton) {
-        goBackButton.addEventListener("click", () => {
-          pushPathname("/");
-        });
-      }
-    }
+    this.removeListeners();
+    this.bindListeners();
   }
 }

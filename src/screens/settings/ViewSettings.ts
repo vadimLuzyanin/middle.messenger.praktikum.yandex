@@ -1,14 +1,19 @@
-import { Button } from "../../components";
+import { Button, renderModal } from "../../components";
 import Component from "../../component";
 import tmpl from "./viewSettings.hbs";
 import * as cn from "./settings.module.scss";
 import { pushPathname } from "../../index";
+import LogoutModalContent from "./LogoutModalContent";
+
+type InnerProps = {
+  changeDataButton: Button;
+  changePasswordButton: Button;
+  logoutButton: Button;
+  saveButton: Button;
+  logoutModalContent: LogoutModalContent;
+};
 
 type Props = {
-  changeDataButton?: Button;
-  changePasswordButton?: Button;
-  logoutButton?: Button;
-  saveButton?: Button;
   onChangePasswordClick: () => void;
   onChangeDataClick: () => void;
 };
@@ -18,13 +23,13 @@ type State = {
   fields: { name: string; value: string }[];
 };
 
-export default class ViewSettings extends Component<Props, State> {
+export default class ViewSettings extends Component<Props, State, InnerProps> {
   cn = cn;
 
   constructor(props: Props) {
     super(tmpl, props);
 
-    this.props.changeDataButton = new Button({
+    this.innerProps.changeDataButton = new Button({
       text: "Изменить данные",
       type: "secondary",
       leftAlign: true,
@@ -32,7 +37,7 @@ export default class ViewSettings extends Component<Props, State> {
         this.props.onChangeDataClick();
       },
     });
-    this.props.changePasswordButton = new Button({
+    this.innerProps.changePasswordButton = new Button({
       text: "Изменить пароль",
       type: "secondary",
       leftAlign: true,
@@ -40,12 +45,20 @@ export default class ViewSettings extends Component<Props, State> {
         this.props.onChangePasswordClick();
       },
     });
-    this.props.logoutButton = new Button({
+    this.innerProps.logoutModalContent = new LogoutModalContent({
+      onCancelClick: () => {
+        this.props.logoutModalContent.remove();
+      },
+      onLogoutClick: () => {
+        pushPathname("/login");
+      },
+    });
+    this.innerProps.logoutButton = new Button({
       text: "Выйти",
       type: "warn",
       leftAlign: true,
-      onClick: () => {
-        pushPathname("/login");
+      onClick: (e) => {
+        renderModal(this.props.logoutModalContent, e as MouseEvent);
       },
     });
 

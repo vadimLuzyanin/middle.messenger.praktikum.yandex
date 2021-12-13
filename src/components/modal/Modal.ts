@@ -41,10 +41,7 @@ function getElementPath(element: Element) {
   return path;
 }
 
-export default function renderModal(
-  content: Component<any, any>,
-  clickEvent?: MouseEvent
-) {
+export default function renderModal(content: any, clickEvent?: MouseEvent) {
   if (clickEvent) {
     clickEvent.stopPropagation();
   }

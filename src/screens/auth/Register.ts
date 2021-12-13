@@ -5,7 +5,7 @@ import validations from "../../validations";
 import Component from "../../component";
 import { pushPathname } from "../../index";
 
-type Props = {
+type InnerProps = {
   loginBtn: Button;
   registerBtn: Button;
   emailInput: Input;
@@ -30,7 +30,7 @@ type State = {
   disableSubmit: boolean;
 };
 
-export default class RegisterScreen extends Component<Props, State> {
+export default class RegisterScreen extends Component<{}, State, InnerProps> {
   cn = cn;
 
   constructor() {
@@ -49,14 +49,14 @@ export default class RegisterScreen extends Component<Props, State> {
       disableSubmit: true,
     };
 
-    this.props.loginBtn = new Button({
+    this.innerProps.loginBtn = new Button({
       text: "Войти",
       type: "secondary",
       onClick: () => {
         pushPathname("/login");
       },
     });
-    this.props.registerBtn = new Button({
+    this.innerProps.registerBtn = new Button({
       text: "Зарегистрироваться",
       type: "primary",
       getDisabled: () => !!this.state.disableSubmit,
@@ -66,7 +66,7 @@ export default class RegisterScreen extends Component<Props, State> {
         pushPathname("/");
       },
     });
-    this.props.loginInput = new Input({
+    this.innerProps.loginInput = new Input({
       type: "text",
       name: "login",
       placeholder: "Логин",
@@ -78,7 +78,7 @@ export default class RegisterScreen extends Component<Props, State> {
         this.props.loginInput.focus();
       },
     });
-    this.props.passwordInput = new Input({
+    this.innerProps.passwordInput = new Input({
       type: "password",
       name: "password",
       placeholder: "Пароль",
@@ -90,7 +90,7 @@ export default class RegisterScreen extends Component<Props, State> {
         this.props.passwordInput.focus();
       },
     });
-    this.props.emailInput = new Input({
+    this.innerProps.emailInput = new Input({
       placeholder: "Почта",
       type: "email",
       name: "email",
@@ -102,7 +102,7 @@ export default class RegisterScreen extends Component<Props, State> {
         this.props.emailInput.focus();
       },
     });
-    this.props.firstNameInput = new Input({
+    this.innerProps.firstNameInput = new Input({
       placeholder: "Имя",
       type: "text",
       name: "first_name",
@@ -114,7 +114,7 @@ export default class RegisterScreen extends Component<Props, State> {
         this.props.firstNameInput.focus();
       },
     });
-    this.props.secondNameInput = new Input({
+    this.innerProps.secondNameInput = new Input({
       placeholder: "Фамилия",
       type: "text",
       name: "second_name",
@@ -126,7 +126,7 @@ export default class RegisterScreen extends Component<Props, State> {
         this.props.secondNameInput.focus();
       },
     });
-    this.props.phoneInput = new Input({
+    this.innerProps.phoneInput = new Input({
       placeholder: "Телефон",
       type: "tel",
       name: "phone",
@@ -138,7 +138,7 @@ export default class RegisterScreen extends Component<Props, State> {
         this.props.phoneInput.focus();
       },
     });
-    this.props.passwordInput = new Input({
+    this.innerProps.passwordInput = new Input({
       placeholder: "Пароль",
       type: "password",
       name: "password",
@@ -150,7 +150,7 @@ export default class RegisterScreen extends Component<Props, State> {
         this.props.passwordInput.focus();
       },
     });
-    this.props.passwordAgainInput = new Input({
+    this.innerProps.passwordAgainInput = new Input({
       placeholder: "Пароль (ещё раз)",
       type: "password",
       name: "password",

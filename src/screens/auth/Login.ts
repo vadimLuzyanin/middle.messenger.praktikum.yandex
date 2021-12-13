@@ -5,7 +5,7 @@ import validations from "../../validations";
 import Component from "../../component";
 import { pushPathname } from "../../index";
 
-type Props = {
+type InnerProps = {
   loginBtn: Button;
   registerBtn: Button;
   loginInput: Input;
@@ -20,7 +20,7 @@ type State = {
   disableSubmit: boolean;
 };
 
-export default class LoginScreen extends Component<Props, State> {
+export default class LoginScreen extends Component<{}, State, InnerProps> {
   cn = cn;
 
   constructor() {
@@ -34,7 +34,7 @@ export default class LoginScreen extends Component<Props, State> {
       disableSubmit: true,
     };
 
-    this.props.loginBtn = new Button({
+    this.innerProps.loginBtn = new Button({
       text: "Войти",
       type: "primary",
       getDisabled: () => !!this.state.disableSubmit,
@@ -44,14 +44,14 @@ export default class LoginScreen extends Component<Props, State> {
         pushPathname("/");
       },
     });
-    this.props.registerBtn = new Button({
+    this.innerProps.registerBtn = new Button({
       text: "Нет аккаунта?",
       type: "secondary",
       onClick: () => {
         pushPathname("/register");
       },
     });
-    this.props.loginInput = new Input({
+    this.innerProps.loginInput = new Input({
       type: "text",
       name: "login",
       placeholder: "Логин",
@@ -63,7 +63,7 @@ export default class LoginScreen extends Component<Props, State> {
         this.props.loginInput.focus();
       },
     });
-    this.props.passwordInput = new Input({
+    this.innerProps.passwordInput = new Input({
       type: "password",
       name: "password",
       placeholder: "Пароль",

@@ -1,5 +1,6 @@
 export const avatar: string;
 export const avatarContainer: string;
+export const avatarContainerWithHover: string;
 export const back: string;
 export const backIcon: string;
 export const buttons: string;

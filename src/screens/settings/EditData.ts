@@ -4,14 +4,17 @@ import validations from "../../validations";
 import tmpl from "./editData.hbs";
 import * as cn from "./settings.module.scss";
 
+type InnerProps = {
+  emailInput: Input;
+  loginInput: Input;
+  firstNameInput: Input;
+  secondNameInput: Input;
+  displayNameInput: Input;
+  phoneInput: Input;
+  saveButton: Button;
+};
+
 type Props = {
-  emailInput?: Input;
-  loginInput?: Input;
-  firstNameInput?: Input;
-  secondNameInput?: Input;
-  displayNameInput?: Input;
-  phoneInput?: Input;
-  saveButton?: Button;
   onSaveClick: () => void;
 };
 
@@ -27,7 +30,7 @@ type State = {
   disableSubmit: boolean;
 };
 
-export default class EditData extends Component<Props, State> {
+export default class EditData extends Component<Props, State, InnerProps> {
   cn = cn;
 
   constructor(props: Props) {
@@ -45,80 +48,80 @@ export default class EditData extends Component<Props, State> {
       disableSubmit: true,
     };
 
-    this.props.loginInput = new Input({
+    this.innerProps.loginInput = new Input({
       type: "text",
       name: "login",
       placeholder: "Логин",
       validation: validations.login,
       value: this.state.formValues.login.value,
       handleInput: () => {
-        const { value, notValid } = this.props.loginInput!.state;
+        const { value, notValid } = this.props.loginInput.state;
         this.setFormValue("login", value, notValid);
-        this.props.loginInput!.focus();
+        this.props.loginInput.focus();
       },
     });
 
-    this.props.emailInput = new Input({
+    this.innerProps.emailInput = new Input({
       placeholder: "Почта",
       type: "email",
       name: "email",
       validation: validations.email,
       value: this.state.formValues.email.value,
       handleInput: () => {
-        const { value, notValid } = this.props.emailInput!.state;
+        const { value, notValid } = this.props.emailInput.state;
         this.setFormValue("email", value, notValid);
-        this.props.emailInput!.focus();
+        this.props.emailInput.focus();
       },
     });
-    this.props.firstNameInput = new Input({
+    this.innerProps.firstNameInput = new Input({
       placeholder: "Имя",
       type: "text",
       name: "first_name",
       validation: validations.firstName,
       value: this.state.formValues.first_name.value,
       handleInput: () => {
-        const { value, notValid } = this.props.firstNameInput!.state;
+        const { value, notValid } = this.props.firstNameInput.state;
         this.setFormValue("first_name", value, notValid);
-        this.props.firstNameInput!.focus();
+        this.props.firstNameInput.focus();
       },
     });
-    this.props.secondNameInput = new Input({
+    this.innerProps.secondNameInput = new Input({
       placeholder: "Фамилия",
       type: "text",
       name: "second_name",
       validation: validations.secondName,
       value: this.state.formValues.second_name.value,
       handleInput: () => {
-        const { value, notValid } = this.props.secondNameInput!.state;
+        const { value, notValid } = this.props.secondNameInput.state;
         this.setFormValue("second_name", value, notValid);
-        this.props.secondNameInput!.focus();
+        this.props.secondNameInput.focus();
       },
     });
-    this.props.displayNameInput = new Input({
+    this.innerProps.displayNameInput = new Input({
       placeholder: "Имя в чате",
       type: "text",
       name: "display_name",
       value: this.state.formValues.second_name.value,
       handleInput: () => {
-        const { value } = this.props.secondNameInput!.state;
+        const { value } = this.props.secondNameInput.state;
         this.setFormValue("second_name", value, false);
-        this.props.displayNameInput!.focus();
+        this.props.displayNameInput.focus();
       },
     });
-    this.props.phoneInput = new Input({
+    this.innerProps.phoneInput = new Input({
       placeholder: "Телефон",
       type: "tel",
       name: "phone",
       validation: validations.phone,
       value: this.state.formValues.phone.value,
       handleInput: () => {
-        const { value, notValid } = this.props.phoneInput!.state;
+        const { value, notValid } = this.props.phoneInput.state;
         this.setFormValue("phone", value, notValid);
-        this.props.phoneInput!.focus();
+        this.props.phoneInput.focus();
       },
     });
 
-    this.props.saveButton = new Button({
+    this.innerProps.saveButton = new Button({
       text: "Сохранить",
       type: "primary",
       name: "save",

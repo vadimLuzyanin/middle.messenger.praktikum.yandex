@@ -15,11 +15,15 @@ type Children = {
   [name: string]: Component<any, any>;
 };
 
+type ShallowImmutable<T> = {
+  readonly [K in keyof T]: T[K];
+};
 export default class Component<
-  P extends object & BlockProps = BlockProps,
-  S extends object = {}
+  P extends object = BlockProps,
+  S extends object = {},
+  I extends object = BlockProps
 > {
-  #template: TemplateFn<P>;
+  #template: TemplateFn<typeof this.props & S>;
 
   #eventBus: EventBus<FLOW>;
 
@@ -29,17 +33,23 @@ export default class Component<
 
   #prevEl: HTMLElement | null = null;
 
-  props: P & BlockProps;
-
   id: string;
 
   eventTargetSelector?: string;
 
   cn: object = {};
 
-  constructor(template: TemplateFn<any>, props: P = {} as P) {
+  innerProps: I = {} as I;
+
+  outerProps: P;
+
+  get props(): ShallowImmutable<P & I> {
+    return { ...this.innerProps, ...this.outerProps };
+  }
+
+  constructor(template: TemplateFn<any>, outerProps: P = {} as P) {
     this.#template = template;
-    this.props = props;
+    this.outerProps = outerProps;
     this.#eventBus = new EventBus<FLOW>();
     this.id = v4();
     this.state = this.#makeStateProxy({} as S);
@@ -93,7 +103,7 @@ export default class Component<
 
   componentDidMount() {}
 
-  componentDidUpdate(_prevProps: P, _prevState: S) {}
+  componentDidUpdate(_prevProps: typeof this.props, _prevState: S) {}
 
   shouldComponentUpdate(_prevProps: P, _prevState: S) {
     return true;
@@ -232,8 +242,7 @@ export default class Component<
     return result;
   }
 
-  render(props?: P) {
-    Object.assign(this.props, props);
+  render() {
     return this.#render();
   }
 

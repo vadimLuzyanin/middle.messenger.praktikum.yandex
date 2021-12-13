@@ -5,18 +5,21 @@ import tmpl from "./error.hbs";
 import * as cn from "./error.module.scss";
 
 type Props = {
-  backBtn?: Button;
   title: string;
   description: string;
 };
 
-export default class ErrorPage extends Component<Props> {
+type InnerProps = {
+  backBtn: Button;
+};
+
+export default class ErrorPage extends Component<Props, {}, InnerProps> {
   cn = cn;
 
   constructor(props: Props) {
     super(tmpl, props);
 
-    this.props.backBtn = new Button({
+    this.innerProps.backBtn = new Button({
       text: "Назад к чатам",
       type: "secondary",
       onClick: () => {

@@ -20,6 +20,7 @@ type State = {
   value: string;
   fixPlaceholder: boolean;
   errorMessage: string;
+  selectionRange: { selectionStart: number; selectionEnd: number };
 };
 
 export default class Input extends Component<Props, State> {
@@ -37,9 +38,17 @@ export default class Input extends Component<Props, State> {
       value: this.props.value || "",
       fixPlaceholder: false,
       errorMessage,
+      selectionRange: {
+        selectionStart: this.props.value?.length || 1,
+        selectionEnd: this.props.value?.length || 1,
+      },
     };
 
-    this.props.onInput = (e) => {
+    this.innerProps.onInput = (e) => {
+      const selectionStart =
+        this.getInputElement()?.selectionStart || e.target.value.length;
+      const selectionEnd =
+        this.getInputElement()?.selectionEnd || e.target.value.length;
       const fixPlaceholder =
         e.target.value.length === 0 && document.activeElement === e.target;
 
@@ -47,16 +56,21 @@ export default class Input extends Component<Props, State> {
         ...prev,
         value: e.target.value,
         fixPlaceholder,
+        selectionRange: {
+          selectionStart,
+          selectionEnd,
+        },
       }));
 
       this.focus();
 
       if (this.props.handleInput) {
         this.props.handleInput(e);
+        this.focus();
       }
     };
 
-    this.props.onFocus = (e) => {
+    this.innerProps.onFocus = (e) => {
       const notValid = this.getNotValid();
 
       this.setState((prev) => ({
@@ -71,7 +85,7 @@ export default class Input extends Component<Props, State> {
       }
     };
 
-    this.props.onBlur = (e) => {
+    this.innerProps.onBlur = (e) => {
       this.getPlaceholderElement()?.classList.remove(cn.fixPlaceholder);
 
       const notValid = this.getNotValid();
@@ -90,6 +104,8 @@ export default class Input extends Component<Props, State> {
 
   focus() {
     this.getInputElement()?.focus();
+    const { selectionStart, selectionEnd } = this.state.selectionRange;
+    this.getInputElement()?.setSelectionRange(selectionStart, selectionEnd);
   }
 
   componentDidUpdate() {
