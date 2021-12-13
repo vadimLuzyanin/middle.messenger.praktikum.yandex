@@ -8,11 +8,11 @@
 
 .input {
   flex-grow: 1;
-  background: $avatarAndInputBackground;
+  background: $avatar-and-input-background;
   border-radius: 30px;
   height: 32px;
   box-sizing: border-box;
-  padding: 10px 20px 15px 20px;
+  padding: 10px 20px 15px;
   border: none;
 
   &::placeholder {
@@ -44,7 +44,7 @@
 
   &:disabled {
     cursor: unset;
-    opacity: 30%;
+    opacity: 0.5;
   }
 }
 

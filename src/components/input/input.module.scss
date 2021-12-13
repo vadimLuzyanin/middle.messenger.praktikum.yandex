@@ -11,7 +11,7 @@
 
 .inputWrapper {
   position: relative;
-  padding: 0 0 10px 0;
+  padding: 0 0 10px;
   box-sizing: border-box;
 
   .placeholder {
@@ -41,6 +41,7 @@
       outline-width: 1px;
       outline-style: inset;
     }
+
     border: none;
     height: 32px;
     width: 100%;

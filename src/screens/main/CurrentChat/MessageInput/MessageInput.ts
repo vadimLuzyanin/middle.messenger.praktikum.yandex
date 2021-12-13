@@ -108,7 +108,7 @@ export default class MessageInput extends Component<{}, State> {
   componentDidUpdate() {
     this.removeListeners();
     this.addListeners();
-    
+
     const inputElement = this.getInputElement();
     if (inputElement) {
       inputElement.value = this.state.value;

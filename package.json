@@ -31,7 +31,8 @@
     "stylelint-scss": "^4.0.1",
     "typed-scss-modules": "^4.1.1",
     "typescript": "^4.5.3",
-    "rimraf": "^3.0.2"
+    "rimraf": "^3.0.2",
+    "copyfiles": "^2.4.1"
   },
   "dependencies": {
     "handlebars": "^4.7.7",
@@ -42,7 +43,7 @@
     "server": "node server",
     "dev": "run-p watch server",
     "start": "run-s build server",
-    "build": "rimraf dist && yarn parcel build static/index.html",
+    "build": "rimraf dist && yarn parcel build static/index.html && yarn copyfiles _redirects dist",
     "type-scss": "yarn tsm src",
     "lint": "yarn tsc --noEmit && yarn eslint --ext .ts . && yarn stylelint '**/*.scss' && yarn prettier '**/*.{ts,scss}' --check",
     "fix": "yarn eslint --ext .ts . --fix && yarn prettier '**/*.{ts,scss}' --write"

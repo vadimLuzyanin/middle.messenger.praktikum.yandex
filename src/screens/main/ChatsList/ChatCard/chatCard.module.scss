@@ -31,7 +31,7 @@
   height: 71px;
   width: 100%;
   position: relative;
-  background-color: $chatListBackground;
+  background-color: $chat-list-background;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -44,14 +44,14 @@
 }
 
 .selected {
-  background-color: $selectedChat;
+  background-color: $selected-chat;
 }
 
 .avatarContainer {
   border-radius: 50%;
   width: 47px;
   height: 47px;
-  background-color: $avatarAndInputBackground;
+  background-color: $avatar-and-input-background;
   margin-right: 10px;
 }
 

@@ -8,6 +8,5 @@ export const content: string;
 export const field: string;
 export const fieldName: string;
 export const fields: string;
-export const fieldValue: string;
 export const name: string;
 export const wrapper: string;

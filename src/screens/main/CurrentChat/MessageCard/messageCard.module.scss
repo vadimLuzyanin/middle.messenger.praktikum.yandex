@@ -4,30 +4,19 @@
   font-size: 12px;
   font-weight: 500;
   line-height: 15px;
-  letter-spacing: 0em;
   max-width: 33%;
   position: relative;
   box-sizing: border-box;
-  padding: 11px 11px 28px 11px;
+  padding: 11px 11px 28px;
   display: flex;
   flex-direction: row;
   min-width: 100px;
 }
 
 .received {
-  background-color: $receivedMessage;
+  background-color: $received-message;
   margin-right: auto;
-  border-radius: 0 15px 15px 15px;
-}
-
-.sent {
-  background-color: $selectedChat;
-  margin-left: auto;
-  border-radius: 15px 15px 0px 15px;
-
-  .time {
-    color: $primary;
-  }
+  border-radius: 0 15px 15px;
 }
 
 .time {
@@ -38,6 +27,16 @@
   position: absolute;
   bottom: 11px;
   right: 11px;
+}
+
+.sent {
+  background-color: $selected-chat;
+  margin-left: auto;
+  border-radius: 15px 15px 0;
+
+  .time {
+    color: $primary;
+  }
 }
 
 .status {

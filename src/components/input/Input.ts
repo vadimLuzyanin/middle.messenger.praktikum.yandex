@@ -110,7 +110,7 @@ export default class Input extends Component<Props, State> {
       const savedType = input.type;
       input.type = "text";
       input.setSelectionRange(selectionStart, selectionEnd);
-      input.type = savedType
+      input.type = savedType;
     }
   }
 
