@@ -1,9 +1,11 @@
+@use "../../../../utils/colors" as *;
+
 .outerWrapper {
   &:first-child {
     .topDivider {
       height: 1px;
       width: 290px;
-      background-color: #eaeaea;
+      background-color: $border;
       z-index: 100;
       margin-left: 10px;
       margin-bottom: 3px;
@@ -18,7 +20,7 @@
 .divider {
   height: 1px;
   width: 290px;
-  background-color: #eaeaea;
+  background-color: $border;
   z-index: 100;
   margin-left: 10px;
   margin-top: 3px;
@@ -29,7 +31,7 @@
   height: 71px;
   width: 100%;
   position: relative;
-  background-color: #fbfbfb;
+  background-color: $chatListBackground;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -42,14 +44,14 @@
 }
 
 .selected {
-  background-color: #e4edfd;
+  background-color: $selectedChat;
 }
 
 .avatarContainer {
   border-radius: 50%;
   width: 47px;
   height: 47px;
-  background-color: #efefef;
+  background-color: $avatarAndInputBackground;
   margin-right: 10px;
 }
 
@@ -63,7 +65,7 @@
 }
 
 .messageAuthor {
-  color: #1e1e1e;
+  color: $text;
   font-size: 13px;
   font-weight: 600;
   line-height: 13px;
@@ -74,7 +76,7 @@
   font-size: 12px;
   font-weight: 500;
   line-height: 15px;
-  color: #999999;
+  color: $gray;
   max-height: 30px;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -90,7 +92,7 @@
 }
 
 .date {
-  color: #999999;
+  color: $gray;
   font-size: 9px;
   font-weight: 500;
   line-height: 13px;
@@ -103,8 +105,8 @@
   justify-content: center;
   align-items: center;
   border-radius: 50%;
-  background-color: #3369f3;
-  color: #ffffff;
+  background-color: $primary;
+  color: $white;
   font-size: 11px;
   font-weight: 500;
   line-height: 12px;

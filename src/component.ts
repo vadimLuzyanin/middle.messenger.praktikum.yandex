@@ -114,7 +114,7 @@ export default class Component<
   setState(updateFromPrev: (prev: S) => S): void;
 
   setState(arg: any) {
-    if (typeof arg === "object") {
+    if (typeof arg === "object" && arg) {
       Object.assign(this.#state, arg);
     } else if (typeof arg === "function") {
       const newState = arg(this.#state);

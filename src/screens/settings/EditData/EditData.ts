@@ -3,6 +3,7 @@ import Component from "../../../component";
 import validations from "../../../validations";
 import tmpl from "./editData.hbs";
 import * as cn from "../settings.module.scss";
+import { getIsFormInvalid } from "../../../utils";
 
 type InnerProps = {
   emailInput: Input;
@@ -129,19 +130,11 @@ export default class EditData extends Component<Props, State, InnerProps> {
       onClick: () => {
         // eslint-disable-next-line no-console
         console.log(this.state.formValues);
-        this.props.onSaveClick();
+        if (!getIsFormInvalid(this.state.formValues)) {
+          this.props.onSaveClick();
+        }
       },
     });
-  }
-
-  getSendDisabled() {
-    const { formValues } = this.state;
-
-    const disabled = Object.values(formValues).some(
-      (status) => status.notValid === true
-    );
-
-    return disabled;
   }
 
   setFormValue(
@@ -161,7 +154,7 @@ export default class EditData extends Component<Props, State, InnerProps> {
     }));
     this.setState((prev) => ({
       ...prev,
-      disableSubmit: this.getSendDisabled(),
+      disableSubmit: getIsFormInvalid(prev.formValues),
     }));
   }
 }

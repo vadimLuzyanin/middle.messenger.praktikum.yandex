@@ -3,6 +3,7 @@ import Component from "../../../component";
 import validations from "../../../validations";
 import tmpl from "./editPassword.hbs";
 import * as cn from "../settings.module.scss";
+import { getIsFormInvalid } from "../../../utils";
 
 type InnerProps = {
   oldPasswordInput: Input;
@@ -89,19 +90,11 @@ export default class EditPassword extends Component<Props, State, InnerProps> {
       onClick: () => {
         // eslint-disable-next-line no-console
         console.log(this.state.formValues);
-        this.props.onSaveClick();
+        if (!getIsFormInvalid(this.state.formValues)) {
+          this.props.onSaveClick();
+        }
       },
     });
-  }
-
-  getSendDisabled() {
-    const { formValues } = this.state;
-
-    const disabled = Object.values(formValues)
-      .map((i) => i.notValid)
-      .some((status) => status === true);
-
-    return disabled;
   }
 
   setFormValue(
@@ -121,7 +114,7 @@ export default class EditPassword extends Component<Props, State, InnerProps> {
     }));
     this.setState((prev) => ({
       ...prev,
-      disableSubmit: this.getSendDisabled(),
+      disableSubmit: getIsFormInvalid(prev.formValues),
     }));
   }
 }

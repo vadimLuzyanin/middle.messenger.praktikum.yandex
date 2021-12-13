@@ -4,6 +4,7 @@ import * as cn from "./auth.module.scss";
 import validations from "../../validations";
 import Component from "../../component";
 import { pushPathname } from "../../index";
+import { getIsFormInvalid } from "../../utils";
 
 type InnerProps = {
   loginBtn: Button;
@@ -63,7 +64,9 @@ export default class RegisterScreen extends Component<{}, State, InnerProps> {
       onClick: () => {
         // eslint-disable-next-line no-console
         console.log(this.state.formValues);
-        pushPathname("/");
+        if (!getIsFormInvalid(this.state.formValues)) {
+          pushPathname("/");
+        }
       },
     });
     this.innerProps.loginInput = new Input({
@@ -169,16 +172,6 @@ export default class RegisterScreen extends Component<{}, State, InnerProps> {
     });
   }
 
-  getSendDisabled() {
-    const { formValues } = this.state;
-
-    const disabled = Object.values(formValues)
-      .map((i) => i.notValid)
-      .some((status) => status === true);
-
-    return disabled;
-  }
-
   setFormValue(
     field: keyof typeof this.state.formValues,
     value: string,
@@ -196,7 +189,7 @@ export default class RegisterScreen extends Component<{}, State, InnerProps> {
     }));
     this.setState((prev) => ({
       ...prev,
-      disableSubmit: this.getSendDisabled(),
+      disableSubmit: getIsFormInvalid(prev.formValues),
     }));
   }
 }

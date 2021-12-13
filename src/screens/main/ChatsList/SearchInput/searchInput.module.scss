@@ -1,3 +1,5 @@
+@use "../../../../utils/colors" as *;
+
 .wrapper {
   box-sizing: border-box;
   padding: 0 10px;
@@ -5,7 +7,7 @@
 }
 
 .input {
-  background-color: #efefef;
+  background-color: $avatarAndInputBackground;
   border-radius: 5px;
   border: none;
   height: 32px;
@@ -17,7 +19,7 @@
   box-sizing: border-box;
 
   &::placeholder {
-    color: #999999;
+    color: $gray;
     font-size: 12px;
     font-weight: 500;
     line-height: 12px;

@@ -17,15 +17,12 @@ class Modal extends Component<Props> {
   componentDidMount() {
     const listener = (e: MouseEvent) => {
       const path = getElementPath(e.target as Element);
-      if (this.element) {
-        const target = this.element.querySelector(`.${cn.modal}`);
-        if (target) {
-          if (!path.includes(target)) {
-            this.remove();
-            document.removeEventListener("click", listener);
-          }
-        }
-      }
+      if (!this.element) return;
+      const target = this.element.querySelector(`.${cn.modal}`);
+      if (!target) return;
+      if (path.includes(target)) return;
+      this.remove();
+      document.removeEventListener("click", listener);
     };
     document.addEventListener("click", listener);
   }

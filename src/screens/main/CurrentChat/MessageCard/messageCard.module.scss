@@ -1,3 +1,5 @@
+@use "../../../../utils/colors" as *;
+
 .card {
   font-size: 12px;
   font-weight: 500;
@@ -13,23 +15,23 @@
 }
 
 .received {
-  background-color: #f8f8f8;
+  background-color: $receivedMessage;
   margin-right: auto;
   border-radius: 0 15px 15px 15px;
 }
 
 .sent {
-  background-color: #e4edfd;
+  background-color: $selectedChat;
   margin-left: auto;
   border-radius: 15px 15px 0px 15px;
 
   .time {
-    color: #3369f3;
+    color: $primary;
   }
 }
 
 .time {
-  color: #999999;
+  color: $gray;
   font-size: 9px;
   font-weight: 500;
   line-height: 9px;

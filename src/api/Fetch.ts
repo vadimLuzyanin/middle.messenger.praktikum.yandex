@@ -63,7 +63,11 @@ export default class HTTPTransport {
   ): Promise<XMLHttpRequest> => {
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
-      const { method, headers = {}, data = {} } = options;
+      const {
+        method,
+        headers = { "Content-Type": "application/json" },
+        data = {},
+      } = options;
 
       if (method === METHODS.GET) {
         xhr.open(method, `${url}${queryStringify(data)}`, true);
@@ -91,7 +95,15 @@ export default class HTTPTransport {
         }
       }
 
-      xhr.onload = () => resolve(xhr);
+      xhr.onload = () => {
+        const { status, responseText } = xhr;
+        const parsedResponse = JSON.parse(responseText);
+        if (status >= 200 && status < 300) {
+          resolve(parsedResponse);
+        } else {
+          reject(parsedResponse);
+        }
+      };
       xhr.onerror = reject;
       xhr.ontimeout = reject;
       xhr.onabort = reject;

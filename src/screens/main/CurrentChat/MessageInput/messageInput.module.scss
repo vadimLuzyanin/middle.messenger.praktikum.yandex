@@ -1,3 +1,5 @@
+@use "../../../../utils/colors" as *;
+
 .wrapper {
   display: flex;
   flex-direction: row;
@@ -6,7 +8,7 @@
 
 .input {
   flex-grow: 1;
-  background: #efefef;
+  background: $avatarAndInputBackground;
   border-radius: 30px;
   height: 32px;
   box-sizing: border-box;
@@ -14,7 +16,7 @@
   border: none;
 
   &::placeholder {
-    color: #999999;
+    color: $gray;
     font-size: 12px;
     font-weight: 500;
     line-height: 12px;
@@ -39,4 +41,13 @@
   border: none;
   margin-left: 10px;
   cursor: pointer;
+
+  &:disabled {
+    cursor: unset;
+    opacity: 30%;
+  }
+}
+
+.notValid {
+  outline: 1px solid $warn;
 }

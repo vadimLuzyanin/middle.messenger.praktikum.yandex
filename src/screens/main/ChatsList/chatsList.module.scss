@@ -1,7 +1,9 @@
+@use "../../../utils/colors" as *;
+
 .wrapper {
   width: 310px;
-  background-color: #fbfbfb;
-  border-right: 1px solid #eaeaea;
+  background-color: $chatListBackground;
+  border-right: 1px solid $border;
   padding: 20px 0 0 0;
 }
 .cards {
