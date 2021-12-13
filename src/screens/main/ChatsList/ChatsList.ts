@@ -1,11 +1,11 @@
-import Component from "../../../component";
 import { Chat } from "../types";
-import ChatCard from "./ChatCard";
-
 import tmpl from "./chatsList.hbs";
 import * as cn from "./chatsList.module.scss";
-import ProfileButton from "./ProfileButton";
-import SearchInput from "./SearchInput";
+
+import { ChatCard } from "./ChatCard";
+import { ProfileButton } from "./ProfileButton";
+import { SearchInput } from "./SearchInput";
+import Component from "../../../component";
 
 type Props = {
   onSelect: (id: number) => void;

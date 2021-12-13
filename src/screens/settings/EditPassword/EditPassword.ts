@@ -1,8 +1,8 @@
-import { Button, Input } from "../../components";
-import Component from "../../component";
-import validations from "../../validations";
+import { Button, Input } from "../../../components";
+import Component from "../../../component";
+import validations from "../../../validations";
 import tmpl from "./editPassword.hbs";
-import * as cn from "./settings.module.scss";
+import * as cn from "../settings.module.scss";
 
 type InnerProps = {
   oldPasswordInput: Input;

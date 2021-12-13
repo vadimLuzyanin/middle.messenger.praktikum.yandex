@@ -1,5 +1,5 @@
-import { pushPathname } from "../../..";
-import Component from "../../../component";
+import { pushPathname } from "../../../../index";
+import Component from "../../../../component";
 import tmpl from "./profileButton.hbs";
 import * as cn from "./profileButton.module.scss";
 

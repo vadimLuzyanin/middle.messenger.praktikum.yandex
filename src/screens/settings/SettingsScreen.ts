@@ -1,11 +1,11 @@
 import Component from "../../component";
 import tmpl from "./screen.hbs";
 import * as cn from "./settings.module.scss";
-import ViewSettings from "./ViewSettings";
 import backIcon from "./assets/back.svg";
 import avatar from "./assets/defaultAvatar.svg";
-import EditPassword from "./EditPassword";
-import EditData from "./EditData";
+import { ViewSettings } from "./ViewSettings";
+import { EditPassword } from "./EditPassword";
+import { EditData } from "./EditData";
 import { Button, renderModal } from "../../components";
 import { pushPathname } from "../../index";
 

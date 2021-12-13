@@ -1,9 +1,9 @@
-import { Button, renderModal } from "../../components";
-import Component from "../../component";
+import { Button, renderModal } from "../../../components";
+import Component from "../../../component";
 import tmpl from "./viewSettings.hbs";
-import * as cn from "./settings.module.scss";
-import { pushPathname } from "../../index";
-import LogoutModalContent from "./LogoutModalContent";
+import * as cn from "../settings.module.scss";
+import { pushPathname } from "../../../index";
+import { LogoutModalContent } from "./LogoutModalContent";
 
 type InnerProps = {
   changeDataButton: Button;

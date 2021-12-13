@@ -1,8 +1,8 @@
-import { Button, Input } from "../../components";
-import Component from "../../component";
-import validations from "../../validations";
+import { Button, Input } from "../../../components";
+import Component from "../../../component";
+import validations from "../../../validations";
 import tmpl from "./editData.hbs";
-import * as cn from "./settings.module.scss";
+import * as cn from "../settings.module.scss";
 
 type InnerProps = {
   emailInput: Input;
@@ -101,10 +101,10 @@ export default class EditData extends Component<Props, State, InnerProps> {
       placeholder: "Имя в чате",
       type: "text",
       name: "display_name",
-      value: this.state.formValues.second_name.value,
+      value: this.state.formValues.display_name.value,
       handleInput: () => {
-        const { value } = this.props.secondNameInput.state;
-        this.setFormValue("second_name", value, false);
+        const { value } = this.props.displayNameInput.state;
+        this.setFormValue("display_name", value, false);
         this.props.displayNameInput.focus();
       },
     });
@@ -137,9 +137,9 @@ export default class EditData extends Component<Props, State, InnerProps> {
   getSendDisabled() {
     const { formValues } = this.state;
 
-    const disabled = Object.values(formValues)
-      .map((i) => i.notValid)
-      .some((status) => status === true);
+    const disabled = Object.values(formValues).some(
+      (status) => status.notValid === true
+    );
 
     return disabled;
   }

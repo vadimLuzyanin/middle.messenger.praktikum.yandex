@@ -64,6 +64,11 @@ const multiChatFixture = [
   ...chatsFixture,
   ...chatsFixture,
   ...chatsFixture,
+  ...chatsFixture,
+  ...chatsFixture,
+  ...chatsFixture,
+  ...chatsFixture,
+  ...chatsFixture,
 ].map((chat, index) => ({ ...chat, id: index }));
 
 type State = {

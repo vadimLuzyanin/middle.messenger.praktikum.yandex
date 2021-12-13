@@ -1,5 +1,5 @@
-import Component from "../../component";
-import { Button } from "../../components";
+import Component from "../../../../component";
+import { Button } from "../../../../components";
 import tmpl from "./logoutModalContent.hbs";
 import * as cn from "./logoutModalContent.module.scss";
 

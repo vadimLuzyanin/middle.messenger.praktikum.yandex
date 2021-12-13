@@ -103,9 +103,15 @@ export default class Input extends Component<Props, State> {
   }
 
   focus() {
-    this.getInputElement()?.focus();
-    const { selectionStart, selectionEnd } = this.state.selectionRange;
-    this.getInputElement()?.setSelectionRange(selectionStart, selectionEnd);
+    const input = this.getInputElement();
+    if (input) {
+      input.focus();
+      const { selectionStart, selectionEnd } = this.state.selectionRange;
+      const savedType = input.type;
+      input.type = "text";
+      input.setSelectionRange(selectionStart, selectionEnd);
+      input.type = savedType
+    }
   }
 
   componentDidUpdate() {

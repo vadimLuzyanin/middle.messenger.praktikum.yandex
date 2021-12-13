@@ -156,14 +156,15 @@ export default class Component<
 
   #updateIfNeeded(prevProps: P, prevState: S) {
     if (this.shouldComponentUpdate(prevProps, prevState)) {
-      this.#eventBus.emit(FLOW.didUpdate, prevProps, prevState);
       this.#eventBus.emit(FLOW.render);
+      this.#eventBus.emit(FLOW.didUpdate, prevProps, prevState);
     }
   }
 
   forceUpdate() {
-    this.#eventBus.emit(FLOW.didUpdate);
     this.#eventBus.emit(FLOW.render);
+
+    this.#eventBus.emit(FLOW.didUpdate, this.props, this.state);
   }
 
   #getListenersFromProps() {
@@ -264,8 +265,8 @@ export default class Component<
             `[data-component-id="${c.id}"]`
           );
           if (element && c instanceof Component) {
-            // c.dispatchComponentDidUpdate();
             element.replaceWith(c.render());
+            c.dispatchComponentDidUpdate();
           }
         });
       } else {
@@ -273,8 +274,8 @@ export default class Component<
           `[data-component-id="${child.id}"]`
         );
         if (element) {
-          // child.dispatchComponentDidUpdate();
           element.replaceWith(child.render());
+          child.dispatchComponentDidUpdate();
         }
       }
     });

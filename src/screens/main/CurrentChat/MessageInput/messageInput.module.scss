@@ -1,0 +1,42 @@
+.wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.input {
+  flex-grow: 1;
+  background: #efefef;
+  border-radius: 30px;
+  height: 32px;
+  box-sizing: border-box;
+  padding: 10px 20px 15px 20px;
+  border: none;
+
+  &::placeholder {
+    color: #999999;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 12px;
+  }
+}
+
+.attachButton {
+  width: 32px;
+  height: 32px;
+  background-image: url("../assets/attachIcon.svg");
+  background-color: transparent;
+  border: none;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.sendButton {
+  width: 28px;
+  height: 28px;
+  background-image: url("../assets/sendIcon.svg");
+  background-color: transparent;
+  border: none;
+  margin-left: 10px;
+  cursor: pointer;
+}

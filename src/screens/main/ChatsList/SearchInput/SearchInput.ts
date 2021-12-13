@@ -1,4 +1,4 @@
-import Component from "../../../component";
+import Component from "../../../../component";
 
 import tmpl from "./searchInput.hbs";
 import * as cn from "./searchInput.module.scss";

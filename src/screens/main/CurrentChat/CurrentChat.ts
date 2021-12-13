@@ -2,7 +2,8 @@ import Component from "../../../component";
 import * as cn from "./currentChat.module.scss";
 import tmpl from "./currentChat.hbs";
 import { Chat } from "../types";
-import MessageCard from "./MessageCard";
+import { MessageCard } from "./MessageCard";
+import { MessageInput } from "./MessageInput";
 
 type Props = {
   chat?: Chat;
@@ -10,6 +11,7 @@ type Props = {
 
 type InnerProps = {
   messages?: MessageCard[];
+  messageInput: MessageInput;
 };
 
 export default class CurrentChat extends Component<Props, {}, InnerProps> {
@@ -17,6 +19,7 @@ export default class CurrentChat extends Component<Props, {}, InnerProps> {
 
   constructor(props: Props) {
     super(tmpl, props);
+    this.innerProps.messageInput = new MessageInput();
   }
 
   componentDidUpdate() {
@@ -24,5 +27,6 @@ export default class CurrentChat extends Component<Props, {}, InnerProps> {
       .map((c) => c.messages)
       .flat(1)
       .map((message) => new MessageCard({ message }));
+    this.render();
   }
 }

@@ -1,5 +1,5 @@
-import Component from "../../../component";
-import { BlockProps } from "../../../types";
+import Component from "../../../../component";
+import { BlockProps } from "../../../../types";
 import tmpl from "./chatCard.hbs";
 import * as cn from "./chatCard.module.scss";
 
