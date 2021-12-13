@@ -34,7 +34,8 @@ export default function render() {
   clearRoot();
   const { pathname } = document.location;
   switch (pathname) {
-    case "/": {
+    case "/":
+    case "/index.html": {
       renderRoot(new MainScreen());
       break;
     }
