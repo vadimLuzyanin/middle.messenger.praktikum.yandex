@@ -1,0 +1,15 @@
+.wrapper {
+  width: 310px;
+  background-color: #fbfbfb;
+  border-right: 1px solid #eaeaea;
+  padding: 20px 0 0 0;
+}
+.cards {
+  padding: 10px 0;
+  box-sizing: border-box;
+  height: calc(100vh - 110px);
+  overflow: auto;
+  &::-webkit-scrollbar {
+    width: 0;
+  }
+}

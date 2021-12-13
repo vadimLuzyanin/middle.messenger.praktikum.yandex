@@ -1,68 +1,105 @@
-import { Button, renderModal } from "../../components";
 import tmpl from "./main.hbs";
 import * as cn from "./main.module.scss";
 import Component from "../../component";
-import { pushPathname } from "../../index";
+import ChatsList from "./ChatsList/ChatsList";
+import CurrentChat from "./CurrentChat/CurrentChat";
+import { Chat } from "./types";
 
-type InnerProps = {
-  btnAuth: Button;
-  btnRegister: Button;
-  btnSettings: Button;
-  btn404: Button;
-  btn500: Button;
-  btnModal: Button;
+const chatsFixture: Chat[] = [
+  {
+    id: 0,
+    avatar: "",
+    messageAuthor: "Андрей",
+    messageContent: "Вы: Круто!",
+    notify: 2,
+    lastUpdated: "Пт",
+    content: [
+      {
+        date: "19 июня",
+        messages: [
+          {
+            type: "received",
+            time: "11:56",
+            text:
+              "Привет! Смотри, тут всплыл интересный кусок лунной космической истории — НАСА в какой-то момент попросила Хассельблад адаптировать модель SWC для полетов на Луну. Сейчас мы все знаем что астронавты летали с моделью 500 EL — и к слову говоря, все тушки этих камер все еще находятся на поверхности Луны, так как астронавты с собой забрали только кассеты с пленкой. Хассельблад в итоге адаптировал SWC для космоса, но что-то пошло не так и на ракету они так никогда и не попали. Всего их было произведено 25 штук, одну из них недавно продали на аукционе за 45000 евро.",
+          },
+          { type: "sent", time: "12:00", text: "Круто!", status: "readed" },
+        ],
+      },
+    ],
+  },
+  {
+    id: 0,
+    avatar: "",
+    messageAuthor: "Илья",
+    messageContent:
+      "Друзья, у меня для вас особенный выпуск новостей! Друзья, у меня для вас особенный выпуск новостей! Друзья, у меня для вас особенный выпуск новостей!",
+    notify: 0,
+    lastUpdated: "15:12",
+    content: [
+      {
+        date: "20 июня",
+        messages: [
+          {
+            type: "received",
+            time: "11:56",
+            text:
+              "Друзья, у меня для вас особенный выпуск новостей! Друзья, у меня для вас особенный выпуск новостей! Друзья, у меня для вас особенный выпуск новостей!",
+          },
+          {
+            type: "sent",
+            time: "12:00",
+            text: "Интересно!",
+            status: "readed",
+          },
+        ],
+      },
+    ],
+  },
+];
+
+const multiChatFixture = [
+  ...chatsFixture,
+  ...chatsFixture,
+  ...chatsFixture,
+  ...chatsFixture,
+  ...chatsFixture,
+].map((chat, index) => ({ ...chat, id: index }));
+
+type State = {
+  chats: Chat[];
+  currentChatId: number | null;
 };
 
-export default class MainScreen extends Component<{}, {}, InnerProps> {
+type InnerProps = {
+  chatsList: ChatsList;
+  currentChat: CurrentChat;
+};
+export default class MainScreen extends Component<{}, State, InnerProps> {
   cn = cn;
 
   constructor() {
     super(tmpl);
 
-    this.innerProps.btnAuth = new Button({
-      text: "Потестить страницу логина",
-      type: "primary",
-      onClick: () => {
-        pushPathname("/login");
+    this.state = { chats: multiChatFixture, currentChatId: null };
+
+    this.innerProps.chatsList = new ChatsList({
+      onSelect: (id: number) => {
+        this.setState((prev) => ({ ...prev, currentChatId: id }));
       },
+      chats: this.state.chats,
     });
-    this.innerProps.btnRegister = new Button({
-      text: "Потестить страницу регистрации",
-      type: "secondary",
-      onClick: () => {
-        pushPathname("/register");
-      },
+
+    this.innerProps.currentChat = new CurrentChat({
+      chat: this.state.chats.find(
+        (chat) => chat.id === this.state.currentChatId
+      ),
     });
-    this.innerProps.btnSettings = new Button({
-      text: "Потестить страницу настроек",
-      type: "primary",
-      onClick: () => {
-        pushPathname("/settings");
-      },
-    });
-    this.innerProps.btn404 = new Button({
-      text: "Потестить страницу 404",
-      type: "warn",
-      onClick: () => {
-        pushPathname("/404");
-      },
-    });
-    this.innerProps.btn500 = new Button({
-      text: "Потестить страницу 500",
-      type: "warn",
-      onClick: () => {
-        pushPathname("/500");
-      },
-    });
-    this.innerProps.btnModal = new Button({
-      text: "Потестить модалку",
-      type: "primary",
-      onClick: (e) => {
-        renderModal(
-          new Button({ text: "Кнопка внутри модалки", type: "primary" }),
-          e as MouseEvent
-        );
-      },
-    });
+  }
+
+  componentDidUpdate() {
+    this.innerProps.currentChat.outerProps.chat = this.state.chats.find(
+      (chat) => chat.id === this.state.currentChatId
+    );
   }
 }

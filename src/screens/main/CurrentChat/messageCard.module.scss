@@ -1,0 +1,49 @@
+.card {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 15px;
+  letter-spacing: 0em;
+  max-width: 33%;
+  position: relative;
+  box-sizing: border-box;
+  padding: 11px 11px 28px 11px;
+  display: flex;
+  flex-direction: row;
+  min-width: 100px;
+}
+
+.received {
+  background-color: #f8f8f8;
+  margin-right: auto;
+  border-radius: 0 15px 15px 15px;
+}
+
+.sent {
+  background-color: #e4edfd;
+  margin-left: auto;
+  border-radius: 15px 15px 0px 15px;
+
+  .time {
+    color: #3369f3;
+  }
+}
+
+.time {
+  color: #999999;
+  font-size: 9px;
+  font-weight: 500;
+  line-height: 9px;
+  position: absolute;
+  bottom: 11px;
+  right: 11px;
+}
+
+.status {
+  width: 10px;
+  height: 6px;
+  background-image: url("./assets/readedIcon.svg");
+  background-repeat: no-repeat;
+  position: relative;
+  left: -14px;
+  bottom: -8px;
+}

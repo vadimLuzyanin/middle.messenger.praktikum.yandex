@@ -12,7 +12,7 @@ enum FLOW {
 }
 
 type Children = {
-  [name: string]: Component<any, any>;
+  [name: string]: Component<any, any> | Children[];
 };
 
 type ShallowImmutable<T> = {
@@ -49,7 +49,7 @@ export default class Component<
 
   constructor(template: TemplateFn<any>, outerProps: P = {} as P) {
     this.#template = template;
-    this.outerProps = outerProps;
+    this.outerProps = this.#makeOuterPropsProxy(outerProps);
     this.#eventBus = new EventBus<FLOW>();
     this.id = v4();
     this.state = this.#makeStateProxy({} as S);
@@ -74,6 +74,27 @@ export default class Component<
         target[prop] = value;
         if (oldProp !== value) {
           this.#eventBus.emit(FLOW.requestUpdate, this.props, prevState);
+        }
+        return true;
+      },
+    });
+  }
+
+  #makeOuterPropsProxy(outerProps: P) {
+    return new Proxy(outerProps, {
+      set: (target, prop, value) => {
+        const prevOuterProps = { ...target };
+        // @ts-ignore
+        const oldProp = target[prop];
+        // @ts-ignore
+        // eslint-disable-next-line no-param-reassign
+        target[prop] = value;
+        if (oldProp !== value) {
+          this.#eventBus.emit(
+            FLOW.requestUpdate,
+            { ...prevOuterProps, ...this.innerProps },
+            this.state
+          );
         }
         return true;
       },
@@ -117,7 +138,13 @@ export default class Component<
     this.componentDidMount();
 
     Object.values(this.#getChildren()).forEach((child) => {
-      if (child.element) {
+      if (Array.isArray(child)) {
+        child.forEach((c) => {
+          if (c.element && c instanceof Component) {
+            c.dispatchComponentDidMount();
+          }
+        });
+      } else if (child.element) {
         child.dispatchComponentDidMount();
       }
     });
@@ -129,14 +156,14 @@ export default class Component<
 
   #updateIfNeeded(prevProps: P, prevState: S) {
     if (this.shouldComponentUpdate(prevProps, prevState)) {
-      this.#eventBus.emit(FLOW.render);
       this.#eventBus.emit(FLOW.didUpdate, prevProps, prevState);
+      this.#eventBus.emit(FLOW.render);
     }
   }
 
   forceUpdate() {
-    this.#eventBus.emit(FLOW.render);
     this.#eventBus.emit(FLOW.didUpdate);
+    this.#eventBus.emit(FLOW.render);
   }
 
   #getListenersFromProps() {
@@ -203,6 +230,10 @@ export default class Component<
     Object.entries({ ...this.props, ...this.state }).forEach(([key, value]) => {
       if (value instanceof Component) {
         children[key] = value;
+      } else if (Array.isArray(value)) {
+        if (value.every((el) => el instanceof Component)) {
+          children[key] = value;
+        }
       }
     });
 
@@ -212,20 +243,39 @@ export default class Component<
   #render() {
     const copy = { ...this.props, ...this.state };
     Object.entries(this.#getChildren()).forEach(([name, child]) => {
-      // @ts-ignore
-      copy[name] = `<div data-component-id="${child.id}"></div>`;
+      if (Array.isArray(child)) {
+        // @ts-ignore
+        copy[name] = child.map(
+          (c) => `<div data-component-id="${c.id}"></div>`
+        );
+      } else {
+        // @ts-ignore
+        copy[name] = `<div data-component-id="${child.id}"></div>`;
+      }
     });
     const string = this.#template({ ...copy, cn: this.cn });
 
     const fragment = document.createElement("template");
     fragment.innerHTML = string;
     Object.values(this.#getChildren()).forEach((child) => {
-      const element = fragment.content.querySelector(
-        `[data-component-id="${child.id}"]`
-      );
-      if (element) {
-        element.replaceWith(child.render());
-        child.dispatchComponentDidUpdate();
+      if (Array.isArray(child)) {
+        child.forEach((c) => {
+          const element = fragment.content.querySelector(
+            `[data-component-id="${c.id}"]`
+          );
+          if (element && c instanceof Component) {
+            // c.dispatchComponentDidUpdate();
+            element.replaceWith(c.render());
+          }
+        });
+      } else {
+        const element = fragment.content.querySelector(
+          `[data-component-id="${child.id}"]`
+        );
+        if (element) {
+          // child.dispatchComponentDidUpdate();
+          element.replaceWith(child.render());
+        }
       }
     });
 

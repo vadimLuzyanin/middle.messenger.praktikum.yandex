@@ -1,0 +1,32 @@
+.button {
+  border: none;
+  cursor: pointer;
+  background-color: #fbfbfb;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 25px 0 10px;
+  margin-bottom: 23px;
+}
+
+.inner {
+  color: #999999;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 12px;
+  letter-spacing: 0em;
+  position: relative;
+  text-align: right;
+
+  &::before {
+    content: "";
+    border: solid #999999;
+    border-width: 0 1px 1px 0;
+    display: inline-block;
+    padding: 3px;
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+    position: absolute;
+    right: -12px;
+    top: 3px;
+  }
+}
