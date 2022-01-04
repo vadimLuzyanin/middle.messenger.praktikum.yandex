@@ -3,8 +3,8 @@ import tmpl from "./register.hbs";
 import * as cn from "./auth.module.scss";
 import validations from "../../validations";
 import Component from "../../component";
-import { pushPathname } from "../../index";
 import { getIsFormInvalid } from "../../utils";
+import { gotoRoute } from "../../router";
 
 type InnerProps = {
   loginBtn: Button;
@@ -54,7 +54,7 @@ export default class RegisterScreen extends Component<{}, State, InnerProps> {
       text: "Войти",
       type: "secondary",
       onClick: () => {
-        pushPathname("/login");
+        gotoRoute("/login");
       },
     });
     this.innerProps.registerBtn = new Button({
@@ -65,7 +65,7 @@ export default class RegisterScreen extends Component<{}, State, InnerProps> {
         // eslint-disable-next-line no-console
         console.log(this.state.formValues);
         if (!getIsFormInvalid(this.state.formValues)) {
-          pushPathname("/");
+          gotoRoute("/");
         }
       },
     });

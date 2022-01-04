@@ -1,30 +1,30 @@
-import { pushPathname } from "../../index";
 import Component from "../../component";
 import { Button } from "../../components";
 import tmpl from "./error.hbs";
 import * as cn from "./error.module.scss";
+import { gotoRoute } from "../../router";
 
-type Props = {
+type InnerProps = {
+  backBtn: Button;
   title: string;
   description: string;
 };
 
-type InnerProps = {
-  backBtn: Button;
-};
-
-export default class ErrorPage extends Component<Props, {}, InnerProps> {
+export default class Screen404 extends Component<{}, {}, InnerProps> {
   cn = cn;
 
-  constructor(props: Props) {
-    super(tmpl, props);
+  constructor() {
+    super(tmpl);
 
     this.innerProps.backBtn = new Button({
       text: "Назад к чатам",
       type: "secondary",
       onClick: () => {
-        pushPathname("/");
+        gotoRoute("/");
       },
     });
+
+    this.innerProps.title = "404";
+    this.innerProps.description = "Не туда попали";
   }
 }

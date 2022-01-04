@@ -1,5 +1,5 @@
-import { renderRoot } from "../../index";
 import Component from "../../component";
+import { renderRoot } from "../../render";
 import tmpl from "./modal.hbs";
 import * as cn from "./modal.module.scss";
 
@@ -38,7 +38,11 @@ function getElementPath(element: Element) {
   return path;
 }
 
-export default function renderModal(content: any, clickEvent?: MouseEvent) {
+export function removeModals() {
+  document.querySelectorAll(`.${cn.wrapper}`).forEach((el) => el.remove());
+}
+
+export function renderModal(content: any, clickEvent?: MouseEvent) {
   if (clickEvent) {
     clickEvent.stopPropagation();
   }

@@ -7,7 +7,7 @@ import { ViewSettings } from "./ViewSettings";
 import { EditPassword } from "./EditPassword";
 import { EditData } from "./EditData";
 import { Button, renderModal } from "../../components";
-import { pushPathname } from "../../index";
+import { gotoRoute } from "../../router";
 
 type InnerProps = {
   viewSettings: ViewSettings;
@@ -84,7 +84,7 @@ export default class SettingsScreen extends Component<{}, State, InnerProps> {
         const listener = () => {
           switch (this.state.currentComponent) {
             case this.props.viewSettings: {
-              pushPathname("/");
+              gotoRoute("/");
               break;
             }
             default: {

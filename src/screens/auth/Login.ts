@@ -3,8 +3,8 @@ import tmpl from "./login.hbs";
 import * as cn from "./auth.module.scss";
 import validations from "../../validations";
 import Component from "../../component";
-import { pushPathname } from "../../index";
 import { getIsFormInvalid } from "../../utils";
+import { gotoRoute } from "../../router";
 
 type InnerProps = {
   loginBtn: Button;
@@ -43,7 +43,7 @@ export default class LoginScreen extends Component<{}, State, InnerProps> {
         // eslint-disable-next-line
         console.log(this.state.formValues);
         if (!getIsFormInvalid(this.state.formValues)) {
-          pushPathname("/");
+          gotoRoute("/");
         }
       },
     });
@@ -51,7 +51,7 @@ export default class LoginScreen extends Component<{}, State, InnerProps> {
       text: "Нет аккаунта?",
       type: "secondary",
       onClick: () => {
-        pushPathname("/register");
+        gotoRoute("/register");
       },
     });
     this.innerProps.loginInput = new Input({

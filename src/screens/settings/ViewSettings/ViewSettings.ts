@@ -2,8 +2,8 @@ import { Button, renderModal } from "../../../components";
 import Component from "../../../component";
 import tmpl from "./viewSettings.hbs";
 import * as cn from "../settings.module.scss";
-import { pushPathname } from "../../../index";
 import { LogoutModalContent } from "./LogoutModalContent";
+import { gotoRoute } from "../../../router";
 
 type InnerProps = {
   changeDataButton: Button;
@@ -50,7 +50,7 @@ export default class ViewSettings extends Component<Props, State, InnerProps> {
         this.props.logoutModalContent.remove();
       },
       onLogoutClick: () => {
-        pushPathname("/login");
+        gotoRoute("/login");
       },
     });
     this.innerProps.logoutButton = new Button({

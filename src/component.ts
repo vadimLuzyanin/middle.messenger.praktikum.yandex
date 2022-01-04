@@ -43,6 +43,8 @@ export default class Component<
 
   outerProps: P;
 
+  #elementDisplayValue: string | null = null;
+
   get props(): ShallowImmutable<P & I> {
     return { ...this.innerProps, ...this.outerProps };
   }
@@ -305,6 +307,20 @@ export default class Component<
     if (this.element) {
       this.#removeListeners(this.element);
       this.element.remove();
+    }
+  }
+
+  hide() {
+    if (this.element && this.#elementDisplayValue !== "none") {
+      this.#elementDisplayValue = window.getComputedStyle(this.element).display;
+      this.element.style.display = "none";
+    }
+  }
+
+  show() {
+    if (this.element && this.#elementDisplayValue) {
+      this.element.style.display = this.#elementDisplayValue;
+      this.#elementDisplayValue = null;
     }
   }
 }
