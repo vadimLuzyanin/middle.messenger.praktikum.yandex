@@ -1,21 +1,28 @@
 import { removeModals } from "../components/modal";
 import { renderRoot } from "../render";
-import { ScreenComponentClassType, ScreenComponentType } from "../types";
+import {
+  ScreenComponentClassType,
+  ScreenComponentType,
+  ValidRouterPathname,
+} from "../types";
 
 export default class Route {
-  #pathname: string;
+  #pathname: ValidRouterPathname;
 
   #componentClass: ScreenComponentClassType;
 
   #component: ScreenComponentType | null;
 
-  constructor(pathname: string, componentClass: ScreenComponentClassType) {
+  constructor(
+    pathname: ValidRouterPathname,
+    componentClass: ScreenComponentClassType
+  ) {
     this.#pathname = pathname;
     this.#componentClass = componentClass;
     this.#component = null;
   }
 
-  matchPathname(pathname: string) {
+  matchPathname(pathname: ValidRouterPathname) {
     if (this.#pathname === "*") {
       return true;
     }

@@ -4,6 +4,7 @@ import tmpl from "./viewSettings.hbs";
 import * as cn from "../settings.module.scss";
 import { LogoutModalContent } from "./LogoutModalContent";
 import { gotoRoute } from "../../../router";
+import { ScreensPathnames } from "../../../constants";
 
 type InnerProps = {
   changeDataButton: Button;
@@ -50,7 +51,7 @@ export default class ViewSettings extends Component<Props, State, InnerProps> {
         this.props.logoutModalContent.remove();
       },
       onLogoutClick: () => {
-        gotoRoute("/login");
+        gotoRoute(ScreensPathnames.login);
       },
     });
     this.innerProps.logoutButton = new Button({

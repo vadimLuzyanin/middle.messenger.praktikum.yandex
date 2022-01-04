@@ -5,6 +5,7 @@ import validations from "../../validations";
 import Component from "../../component";
 import { getIsFormInvalid } from "../../utils";
 import { gotoRoute } from "../../router";
+import { ScreensPathnames } from "../../constants";
 
 type InnerProps = {
   loginBtn: Button;
@@ -54,7 +55,7 @@ export default class RegisterScreen extends Component<{}, State, InnerProps> {
       text: "Войти",
       type: "secondary",
       onClick: () => {
-        gotoRoute("/login");
+        gotoRoute(ScreensPathnames.login);
       },
     });
     this.innerProps.registerBtn = new Button({
@@ -65,7 +66,7 @@ export default class RegisterScreen extends Component<{}, State, InnerProps> {
         // eslint-disable-next-line no-console
         console.log(this.state.formValues);
         if (!getIsFormInvalid(this.state.formValues)) {
-          gotoRoute("/");
+          gotoRoute(ScreensPathnames.messenger);
         }
       },
     });

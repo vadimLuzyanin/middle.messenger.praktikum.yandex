@@ -3,6 +3,7 @@ import { Button } from "../../components";
 import tmpl from "./error.hbs";
 import * as cn from "./error.module.scss";
 import { gotoRoute } from "../../router";
+import { ScreensPathnames } from "../../constants";
 
 type InnerProps = {
   backBtn: Button;
@@ -20,7 +21,7 @@ export default class Screen500 extends Component<{}, {}, InnerProps> {
       text: "Назад к чатам",
       type: "secondary",
       onClick: () => {
-        gotoRoute("/");
+        gotoRoute(ScreensPathnames.messenger);
       },
     });
 

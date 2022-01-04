@@ -5,6 +5,7 @@ import validations from "../../validations";
 import Component from "../../component";
 import { getIsFormInvalid } from "../../utils";
 import { gotoRoute } from "../../router";
+import { ScreensPathnames } from "../../constants";
 
 type InnerProps = {
   loginBtn: Button;
@@ -43,7 +44,7 @@ export default class LoginScreen extends Component<{}, State, InnerProps> {
         // eslint-disable-next-line
         console.log(this.state.formValues);
         if (!getIsFormInvalid(this.state.formValues)) {
-          gotoRoute("/");
+          gotoRoute(ScreensPathnames.messenger);
         }
       },
     });
@@ -51,7 +52,7 @@ export default class LoginScreen extends Component<{}, State, InnerProps> {
       text: "Нет аккаунта?",
       type: "secondary",
       onClick: () => {
-        gotoRoute("/register");
+        gotoRoute(ScreensPathnames.register);
       },
     });
     this.innerProps.loginInput = new Input({

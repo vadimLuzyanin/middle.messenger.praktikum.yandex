@@ -1,3 +1,4 @@
+import { ScreensPathnames } from "./constants";
 import {
   LoginScreen,
   MainScreen,
@@ -38,3 +39,5 @@ export type ScreenComponentType =
 export type ScreenComponentClassType = {
   new (): ScreenComponentType;
 };
+
+export type ValidRouterPathname = ScreensPathnames | "*";
