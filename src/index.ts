@@ -1,4 +1,5 @@
 import { ScreensPathnames } from "./constants";
+import authController from "./controllers/authController";
 import "./helpers";
 import { router } from "./router";
 import {
@@ -19,6 +20,8 @@ function init() {
     .use(ScreensPathnames.screen500, Screen500)
     .use("*", Screen404)
     .start();
+
+  authController.ensureInSystem();
 }
 
 init();

@@ -48,4 +48,5 @@ export function renderModal(content: any, clickEvent?: MouseEvent) {
   }
   const modal = new Modal({ content });
   renderRoot(modal);
+  return modal.element;
 }

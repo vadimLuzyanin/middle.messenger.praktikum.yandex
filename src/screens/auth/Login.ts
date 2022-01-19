@@ -3,9 +3,10 @@ import tmpl from "./login.hbs";
 import * as cn from "./auth.module.scss";
 import validations from "../../validations";
 import Component from "../../component";
-import { getIsFormInvalid } from "../../utils";
+import { extractFormValues, getIsFormInvalid } from "../../utils";
 import { gotoRoute } from "../../router";
 import { ScreensPathnames } from "../../constants";
+import authController from "../../controllers/authController";
 
 type InnerProps = {
   loginBtn: Button;
@@ -44,7 +45,8 @@ export default class LoginScreen extends Component<{}, State, InnerProps> {
         // eslint-disable-next-line
         console.log(this.state.formValues);
         if (!getIsFormInvalid(this.state.formValues)) {
-          gotoRoute(ScreensPathnames.messenger);
+          const params = extractFormValues(this.state.formValues);
+          authController.login(params);
         }
       },
     });

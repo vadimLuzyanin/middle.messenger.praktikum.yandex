@@ -6,22 +6,33 @@ import avatar from "./assets/defaultAvatar.svg";
 import { ViewSettings } from "./ViewSettings";
 import { EditPassword } from "./EditPassword";
 import { EditData } from "./EditData";
-import { Button, renderModal } from "../../components";
+import { renderModal } from "../../components";
 import { gotoRoute } from "../../router";
 import { ScreensPathnames } from "../../constants";
+import { AppState } from "../../store/reducers";
+import userSettingsController from "../../controllers/userSettingsController";
 
 type InnerProps = {
   viewSettings: ViewSettings;
   editData: EditData;
   editPassword: EditPassword;
-  avatar: string;
   backIcon: string;
 };
 
 type State = {
   currentComponent: ViewSettings | EditData | EditPassword;
   avatarWithHover: boolean;
+  avatar: string;
 };
+
+function mapStoreToState(state: AppState) {
+  if (state.auth.user?.avatar) {
+    return {
+      avatar: `https://ya-praktikum.tech/api/v2/resources${state.auth.user.avatar}`,
+    };
+  }
+  return {};
+}
 
 export default class SettingsScreen extends Component<{}, State, InnerProps> {
   cn = cn;
@@ -29,7 +40,7 @@ export default class SettingsScreen extends Component<{}, State, InnerProps> {
   listeners: { avatar?: (e: Event) => void; goBack?: () => void } = {};
 
   constructor() {
-    super(tmpl);
+    super(tmpl, {}, mapStoreToState);
 
     this.innerProps.viewSettings = new ViewSettings({
       onChangePasswordClick: () => {
@@ -45,12 +56,12 @@ export default class SettingsScreen extends Component<{}, State, InnerProps> {
     this.innerProps.editData = new EditData({
       onSaveClick: () => this.switchContent(this.props.viewSettings),
     });
-    this.innerProps.avatar = avatar;
     this.innerProps.backIcon = backIcon;
 
     this.state = {
       currentComponent: this.props.viewSettings,
       avatarWithHover: true,
+      avatar: this.state.avatar || avatar,
     };
   }
 
@@ -68,13 +79,24 @@ export default class SettingsScreen extends Component<{}, State, InnerProps> {
       if (avatar) {
         const listener = (e: Event) => {
           if (this.state.currentComponent === this.props.viewSettings) {
-            renderModal(
-              new Button({
-                text: "Тут будет инпут для аватарки",
-                type: "primary",
-              }),
+            const modalElement = renderModal(
+              "<input type='file' name='avatarInput' accept='image/*' />",
               e as MouseEvent
             );
+            const avatarInput = modalElement?.querySelector(
+              "input[name=avatarInput]"
+            );
+            if (avatarInput) {
+              avatarInput.addEventListener("change", (e) => {
+                const target = <HTMLInputElement>e.target;
+                const file = target.files?.[0];
+                if (file) {
+                  const formData = new FormData();
+                  formData.append("avatar", file, file.name);
+                  userSettingsController.changeAvatar(formData);
+                }
+              });
+            }
           }
         };
         this.listeners.avatar = listener;

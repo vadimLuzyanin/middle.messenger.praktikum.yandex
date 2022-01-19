@@ -3,7 +3,8 @@ import Component from "../../../component";
 import validations from "../../../validations";
 import tmpl from "./editPassword.hbs";
 import * as cn from "../settings.module.scss";
-import { getIsFormInvalid } from "../../../utils";
+import { extractFormValues, getIsFormInvalid } from "../../../utils";
+import userSettingsController from "../../../controllers/userSettingsController";
 
 type InnerProps = {
   oldPasswordInput: Input;
@@ -91,6 +92,9 @@ export default class EditPassword extends Component<Props, State, InnerProps> {
         // eslint-disable-next-line no-console
         console.log(this.state.formValues);
         if (!getIsFormInvalid(this.state.formValues)) {
+          userSettingsController.changePassword(
+            extractFormValues(this.state.formValues)
+          );
           this.props.onSaveClick();
         }
       },
