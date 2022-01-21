@@ -29,6 +29,14 @@ const WEEK_DAYS = {
 
 const WEEK_MS = 1000 * 60 * 60 * 24 * 7;
 
+function addTrailingZero(num: number) {
+  const str = `${num}`;
+  if (str.length === 1) {
+    return `0${str}`;
+  }
+  return str;
+}
+
 export function parseDate(dateString: string) {
   const date = new Date(dateString);
   const currentDate = new Date();
@@ -38,11 +46,15 @@ export function parseDate(dateString: string) {
     date.getFullYear() === currentDate.getFullYear()
   ) {
     // сегодня, показываем время
-    return `${date.getHours()}:${date.getMinutes()}`;
+    return `${addTrailingZero(date.getHours())}:${addTrailingZero(
+      date.getMinutes()
+    )}`;
   }
   if (currentDate.getTime() - date.getTime() < WEEK_MS) {
     // меньше недели назад, показываем день недели
     return WEEK_DAYS[date.getDay() as keyof typeof WEEK_DAYS];
   }
-  return `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`;
+  return `${addTrailingZero(date.getDate())}.${addTrailingZero(
+    date.getMonth() + 1
+  )}.${addTrailingZero(date.getFullYear())}`;
 }

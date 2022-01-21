@@ -60,7 +60,6 @@ async function init() {
   subRedirects();
 
   store.dispatch({ type: "@@INIT", payload: null });
-
   await WSController.requestOldMessagesAndSubscribeToNew();
 }
 
