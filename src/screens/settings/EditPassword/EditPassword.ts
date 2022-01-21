@@ -4,7 +4,7 @@ import validations from "../../../validations";
 import tmpl from "./editPassword.hbs";
 import * as cn from "../settings.module.scss";
 import { extractFormValues, getIsFormInvalid } from "../../../utils";
-import userSettingsController from "../../../controllers/userSettingsController";
+import { userSettingsController } from "../../../controllers";
 
 type InnerProps = {
   oldPasswordInput: Input;
@@ -89,7 +89,7 @@ export default class EditPassword extends Component<Props, State, InnerProps> {
       text: "Неверный пароль",
       indent: 15,
       hidden: true,
-      warn: true
+      warn: true,
     });
 
     this.innerProps.saveButton = new Button({

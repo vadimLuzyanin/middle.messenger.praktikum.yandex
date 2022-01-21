@@ -1,4 +1,3 @@
-import BaseAPI from "./baseApi";
 import HTTP from "./Fetch";
 import { BaseResponse, Chat, User } from "./types";
 
@@ -40,9 +39,25 @@ export type GetChatUsersParams = {
 
 type GetChatUsersResponse = User[];
 
+export type GetChatTokenParams = {
+  id: number;
+};
+
+type GetChatTokenResponse = {
+  token: string;
+};
+
+export type GetOldMessagesCountParams = {
+  id: number;
+};
+
+type GetOldMessagesCountResponse = {
+  unread_count: number;
+};
+
 const chatAPIInstance = new HTTP("api/v2/chats");
 
-export default class ChatApi extends BaseAPI {
+export class ChatApi {
   getChats(params?: GetChatsParams) {
     return chatAPIInstance.get<GetChatsResponse>("/", {
       data: params,
@@ -70,5 +85,15 @@ export default class ChatApi extends BaseAPI {
     return chatAPIInstance.get<GetChatUsersResponse>(`/${id}/users`, {
       data: rest,
     });
+  }
+
+  getChatToken(params: GetChatTokenParams) {
+    const { id } = params;
+    return chatAPIInstance.post<GetChatTokenResponse>(`/token/${id}`);
+  }
+
+  getOldMessagesCount(params: GetOldMessagesCountParams) {
+    const { id } = params;
+    return chatAPIInstance.get<GetOldMessagesCountResponse>(`/new/${id}`);
   }
 }

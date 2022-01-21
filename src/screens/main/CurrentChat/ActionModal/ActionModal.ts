@@ -1,9 +1,7 @@
-import { User } from "../../../../api/types";
+import { User } from "../../../../api";
 import Component from "../../../../component";
-import { Button, Input } from "../../../../components";
-import { removeModals } from "../../../../components/modal";
-import chatsController from "../../../../controllers/chatsController";
-import getUserController from "../../../../controllers/getUserController";
+import { Button, Input, removeModals } from "../../../../components";
+import { chatsController, getUserController } from "../../../../controllers";
 import tmpl from "./actionModal.hbs";
 import * as cn from "./actionModal.module.scss";
 

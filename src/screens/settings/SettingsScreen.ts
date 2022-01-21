@@ -6,11 +6,11 @@ import avatar from "./assets/defaultAvatar.svg";
 import { ViewSettings } from "./ViewSettings";
 import { EditPassword } from "./EditPassword";
 import { EditData } from "./EditData";
-import { renderModal } from "../../components";
+import { renderModal, removeModals } from "../../components";
 import { gotoRoute } from "../../router";
 import { ScreensPathnames } from "../../constants";
 import { AppState } from "../../store/reducers";
-import userSettingsController from "../../controllers/userSettingsController";
+import { userSettingsController } from "../../controllers";
 
 type InnerProps = {
   viewSettings: ViewSettings;
@@ -94,7 +94,9 @@ export default class SettingsScreen extends Component<{}, State, InnerProps> {
                 if (file) {
                   const formData = new FormData();
                   formData.append("avatar", file, file.name);
-                  userSettingsController.changeAvatar(formData);
+                  userSettingsController.changeAvatar(formData).then(() => {
+                    removeModals();
+                  });
                 }
               });
             }

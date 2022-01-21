@@ -3,8 +3,8 @@ import Component from "../../../component";
 import tmpl from "./viewSettings.hbs";
 import * as cn from "../settings.module.scss";
 import { LogoutModalContent } from "./LogoutModalContent";
-import { AppState } from "../../../store/reducers";
-import authController from "../../../controllers/authController";
+import { AppState } from "../../../store";
+import { authController } from "../../../controllers";
 import { removeModals } from "../../../components/modal";
 
 type InnerProps = {

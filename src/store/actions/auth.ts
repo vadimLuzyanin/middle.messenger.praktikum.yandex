@@ -1,5 +1,5 @@
-import { User } from "../../api/types";
-import { createAction } from "../../storeLib/storeLib";
+import { User } from "../../api";
+import { createAction } from "../../storeLib";
 
 export const logout = createAction("LOGOUT", () => null);
 export const currentUserReceive = createAction(

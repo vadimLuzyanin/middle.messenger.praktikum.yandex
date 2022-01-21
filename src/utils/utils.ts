@@ -16,3 +16,33 @@ export function extractFormValues<F = FormValues>(formValues: F) {
   });
   return result;
 }
+
+const WEEK_DAYS = {
+  0: "Вс",
+  1: "Пн",
+  2: "Вт",
+  3: "Ср",
+  4: "Чт",
+  5: "Пт",
+  6: "Сб",
+};
+
+const WEEK_MS = 1000 * 60 * 60 * 24 * 7;
+
+export function parseDate(dateString: string) {
+  const date = new Date(dateString);
+  const currentDate = new Date();
+  if (
+    date.getDate() === currentDate.getDate() &&
+    date.getMonth() === currentDate.getMonth() &&
+    date.getFullYear() === currentDate.getFullYear()
+  ) {
+    // сегодня, показываем время
+    return `${date.getHours()}:${date.getMinutes()}`;
+  }
+  if (currentDate.getTime() - date.getTime() < WEEK_MS) {
+    // меньше недели назад, показываем день недели
+    return WEEK_DAYS[date.getDay() as keyof typeof WEEK_DAYS];
+  }
+  return `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`;
+}

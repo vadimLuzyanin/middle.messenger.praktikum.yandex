@@ -1,6 +1,5 @@
 import { ScreensPathnames } from "./constants";
-import authController from "./controllers/authController";
-import chatsController from "./controllers/chatsController";
+import { authController, chatsController, WSController } from "./controllers";
 import "./helpers";
 import { router } from "./router";
 import {
@@ -11,10 +10,39 @@ import {
   Screen500,
   SettingsScreen,
 } from "./screens";
-import { pathnameChange } from "./store/actions/pathname";
+import { pathnameChange } from "./store";
 import store from "./store/store";
 
-function init() {
+function subRedirects() {
+  store.subscribe((getState) => {
+    const { isLoggedIn, pathname } = getState();
+    if (isLoggedIn) {
+      switch (pathname) {
+        case ScreensPathnames.register:
+        case ScreensPathnames.login: {
+          router.go(ScreensPathnames.messenger);
+          break;
+        }
+        default: {
+          break;
+        }
+      }
+    } else {
+      switch (pathname) {
+        case ScreensPathnames.messenger:
+        case ScreensPathnames.settings: {
+          router.go(ScreensPathnames.login);
+          break;
+        }
+        default: {
+          break;
+        }
+      }
+    }
+  });
+}
+
+async function init() {
   router
     .use(ScreensPathnames.login, LoginScreen)
     .use(ScreensPathnames.register, RegisterScreen)
@@ -27,42 +55,13 @@ function init() {
     })
     .start();
 
-  authController.ensureInSystem().then(() => {
-    chatsController
-      .fetchChats()
-      .then(() => {
-        store.subscribe((getState) => {
-          const { isLoggedIn, pathname } = getState();
-          if (isLoggedIn) {
-            switch (pathname) {
-              case ScreensPathnames.register:
-              case ScreensPathnames.login: {
-                router.go(ScreensPathnames.messenger);
-                break;
-              }
-              default: {
-                break;
-              }
-            }
-          } else {
-            switch (pathname) {
-              case ScreensPathnames.messenger:
-              case ScreensPathnames.settings: {
-                router.go(ScreensPathnames.login);
-                break;
-              }
-              default: {
-                break;
-              }
-            }
-          }
-        });
-      })
-      .then(() => {
-        store.dispatch({ type: "@@INIT", payload: null });
-      });
-  });
+  await authController.ensureInSystem();
+  await chatsController.fetchChats();
+  subRedirects();
 
+  store.dispatch({ type: "@@INIT", payload: null });
+
+  await WSController.requestOldMessagesAndSubscribeToNew();
 }
 
 init();

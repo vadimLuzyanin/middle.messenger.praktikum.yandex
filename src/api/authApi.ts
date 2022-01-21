@@ -1,4 +1,3 @@
-import BaseAPI from "./baseApi";
 import HTTP from "./Fetch";
 import { BaseResponse, User } from "./types";
 
@@ -25,7 +24,7 @@ type LogoutResponse = BaseResponse;
 
 const authApiInstance = new HTTP("api/v2/auth");
 
-export default class AuthApi extends BaseAPI {
+export class AuthApi {
   register(params: RegisterParams) {
     return authApiInstance.post<RegisterResponse>("/signup", { data: params });
   }

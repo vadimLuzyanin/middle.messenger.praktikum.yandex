@@ -2,6 +2,7 @@ import Component from "../../../../component";
 import * as cn from "./messageInput.module.scss";
 import tmpl from "./messageInput.hbs";
 import validations from "../../../../validations";
+import WSController from "../../../../controllers/WSController";
 
 type State = {
   notValid: boolean;
@@ -11,15 +12,21 @@ type State = {
     selectionEnd: number;
   };
 };
-export default class MessageInput extends Component<{}, State> {
+
+type Props = {
+  chatId: number;
+};
+export default class MessageInput extends Component<Props, State> {
   cn = cn;
 
   eventTargetSelector = "input";
 
   sendListener?: () => void;
 
-  constructor() {
-    super(tmpl);
+  keypressListener?: (event: KeyboardEvent) => void;
+
+  constructor(props: Props) {
+    super(tmpl, props);
 
     this.state = {
       notValid: true,
@@ -86,6 +93,12 @@ export default class MessageInput extends Component<{}, State> {
     if (this.sendListener) {
       sendButton.removeEventListener("click", this.sendListener);
     }
+    if (this.keypressListener) {
+      this.getInputElement()?.removeEventListener(
+        "keypress",
+        this.keypressListener
+      );
+    }
   }
 
   addListeners() {
@@ -93,10 +106,17 @@ export default class MessageInput extends Component<{}, State> {
     if (!sendButton) return;
     this.sendListener = () => {
       if (!this.getNotValid()) {
-        // eslint-disable-next-line no-console
-        console.log(this.state.value);
+        WSController.sendMessage(this.state.value, this.props.chatId);
       }
     };
+    this.keypressListener = (e) => {
+      if (e.code === "Enter" && this.sendListener) {
+        this.sendListener();
+        this.setState({ value: "" });
+      }
+      this.focus();
+    };
+    this.getInputElement()?.addEventListener("keypress", this.keypressListener);
     sendButton.addEventListener("click", this.sendListener);
   }
 
@@ -112,6 +132,9 @@ export default class MessageInput extends Component<{}, State> {
     const inputElement = this.getInputElement();
     if (inputElement) {
       inputElement.value = this.state.value;
+      setTimeout(() => {
+        inputElement.focus();
+      });
     }
   }
 

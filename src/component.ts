@@ -1,8 +1,7 @@
 import { v4 } from "uuid";
 import { ListenerNames } from "./constants";
 import EventBus from "./eventBus";
-import { AppState } from "./store/reducers";
-import store from "./store/store";
+import { AppState, store } from "./store";
 import { BlockProps, NativeListenersMap, TemplateFn } from "./types";
 
 enum FLOW {
@@ -326,17 +325,17 @@ export default class Component<
     }
   }
 
-  hide() {
-    if (this.element && this.#elementDisplayValue !== "none") {
-      this.#elementDisplayValue = window.getComputedStyle(this.element).display;
-      this.element.style.display = "none";
-    }
-  }
+  // hide() {
+  //   if (this.element && this.#elementDisplayValue !== "none") {
+  //     this.#elementDisplayValue = window.getComputedStyle(this.element).display;
+  //     this.element.style.display = "none";
+  //   }
+  // }
 
-  show() {
-    if (this.element && this.#elementDisplayValue) {
-      this.element.style.display = this.#elementDisplayValue;
-      this.#elementDisplayValue = null;
-    }
-  }
+  // show() {
+  //   if (this.element && this.#elementDisplayValue) {
+  //     this.element.style.display = this.#elementDisplayValue;
+  //     this.#elementDisplayValue = null;
+  //   }
+  // }
 }

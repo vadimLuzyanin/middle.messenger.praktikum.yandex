@@ -1,8 +1,6 @@
 /* eslint-disable no-console */
-import AuthApi, { LoginParams, RegisterParams } from "../api/authApi";
-import { ErrorResponse } from "../api/types";
-import { currentUserReceive, loginError, logout } from "../store/actions";
-import store from "../store/store";
+import { AuthApi, ErrorResponse, LoginParams, RegisterParams } from "../api";
+import { store, currentUserReceive, loginError, logout } from "../store";
 import chatsController from "./chatsController";
 
 const authApi = new AuthApi();

@@ -1,4 +1,3 @@
-import BaseAPI from "./baseApi";
 import HTTP from "./Fetch";
 import { User } from "./types";
 
@@ -9,7 +8,7 @@ type SearchUsersResponse = User[];
 
 const getUserApiInstance = new HTTP("api/v2/user");
 
-export default class GetUserApi extends BaseAPI {
+export class GetUserApi {
   getById(id: number) {
     return getUserApiInstance.get<GetUserResponse>(`/${id}`);
   }

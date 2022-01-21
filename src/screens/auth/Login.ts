@@ -6,8 +6,8 @@ import Component from "../../component";
 import { extractFormValues, getIsFormInvalid } from "../../utils";
 import { gotoRoute } from "../../router";
 import { ScreensPathnames } from "../../constants";
-import authController from "../../controllers/authController";
-import { AppState } from "../../store/reducers";
+import { authController } from "../../controllers";
+import { AppState } from "../../store";
 
 type InnerProps = {
   loginBtn: Button;

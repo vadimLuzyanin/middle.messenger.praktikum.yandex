@@ -1,4 +1,3 @@
-import BaseAPI from "./baseApi";
 import HTTP from "./Fetch";
 import { BaseResponse, User } from "./types";
 
@@ -19,7 +18,7 @@ type ChangePasswordResponse = BaseResponse;
 
 const userSettingsApiInstance = new HTTP("api/v2/user");
 
-export default class UserSettingsApi extends BaseAPI {
+export class UserSettingsApi {
   changeProfile(params: ChangeProfileParams) {
     return userSettingsApiInstance.put<ChangeProfileResponse>("/profile", {
       data: params,

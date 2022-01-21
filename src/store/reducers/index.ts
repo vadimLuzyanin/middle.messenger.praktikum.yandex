@@ -1,11 +1,17 @@
 import { combineReducers } from "../../storeLib/storeLib";
-import { AppAction } from "../types";
+import type { AppAction } from "../types";
 import { authError, isLoggedIn, user, AuthState } from "./auth";
+import { messages, MessagesState } from "./chatMessages";
+// eslint-disable-next-line import/no-cycle
 import { chats, ChatsState } from "./chats";
 import { chatUsers, ChatUsersState } from "./chatUsers";
 import { PathnameState, pathname } from "./pathname";
 
-export type AppState = AuthState & ChatsState & ChatUsersState & PathnameState;
+export type AppState = AuthState &
+  ChatsState &
+  ChatUsersState &
+  PathnameState &
+  MessagesState;
 
 const result = combineReducers<AppState, Pick<AppAction, "type">["type"]>({
   authError,
@@ -14,6 +20,7 @@ const result = combineReducers<AppState, Pick<AppAction, "type">["type"]>({
   chats,
   chatUsers,
   pathname,
+  messages,
 });
 
 export const appReducer = result.reducer;

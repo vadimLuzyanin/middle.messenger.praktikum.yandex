@@ -25,7 +25,7 @@ function queryStringify(data: any) {
   return result;
 }
 
-export default class HTTPTransport {
+export default class HTTP {
   baseUrl: string;
 
   constructor(base: string) {
@@ -96,6 +96,7 @@ export default class HTTPTransport {
         case METHODS.DELETE: {
           if (data instanceof FormData) {
             xhr.send(data);
+            break;
           }
           xhr.send(JSON.stringify(data));
           break;

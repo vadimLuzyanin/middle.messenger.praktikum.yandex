@@ -1,10 +1,10 @@
 import tmpl from "./main.hbs";
 import * as cn from "./main.module.scss";
 import Component from "../../component";
-import ChatsList from "./ChatsList/ChatsList";
-import CurrentChat from "./CurrentChat/CurrentChat";
-import { Chat } from "../../api/types";
-import { AppState } from "../../store/reducers";
+import { Chat } from "../../api";
+import { AppState } from "../../store";
+import { CurrentChat } from "./CurrentChat";
+import { ChatsList } from "./ChatsList";
 
 type State = {
   chats: Chat[];

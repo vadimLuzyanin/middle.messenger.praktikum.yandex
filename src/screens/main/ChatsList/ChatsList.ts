@@ -1,13 +1,11 @@
 import tmpl from "./chatsList.hbs";
 import * as cn from "./chatsList.module.scss";
-
 import { ChatCard } from "./ChatCard";
 import { ProfileButton } from "./ProfileButton";
 import { SearchInput } from "./SearchInput";
 import Component from "../../../component";
-import { Chat } from "../../../api/types";
-import { CreateChatButton } from "./CreateChatButton";
-import { CreateChatModal } from "./CreateChatButton/CreateChatModal";
+import { Chat } from "../../../api";
+import { CreateChatButton, CreateChatModal } from "./CreateChatButton";
 import { renderModal } from "../../../components";
 
 type Props = {
@@ -33,7 +31,7 @@ export default class ChatsList extends Component<Props, State, InnerProps> {
     this.state = { selected: null, scrollPosition: 0 };
 
     this.innerProps.profileBtn = new ProfileButton();
-    this.innerProps.searchInput = new SearchInput();
+    // this.innerProps.searchInput = new SearchInput();
 
     this.innerProps.createChatModal = new CreateChatModal();
     this.innerProps.createChatBtn = new CreateChatButton({

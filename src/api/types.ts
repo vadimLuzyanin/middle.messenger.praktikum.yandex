@@ -10,7 +10,7 @@ export type User = {
 };
 
 export type BaseResponse = string | ErrorResponse;
-export type ErrorResponse = { reason: string }
+export type ErrorResponse = { reason: string };
 
 export type Chat = {
   id: number;
@@ -29,4 +29,17 @@ export type Chat = {
     time: string;
     content: string;
   };
+};
+
+export type WSMessage = {
+  type: string;
+};
+
+export type ChatMessage = {
+  id: string;
+  time: string;
+  user_id: number;
+  content: string;
+  is_read?: boolean;
+  type: "message";
 };

@@ -1,9 +1,15 @@
-import { AuthAction, ChatsAction, ChatUsersAction } from "./actions";
-import { PathnameAction } from "./actions/pathname";
+import {
+  AuthAction,
+  ChatsAction,
+  ChatUsersAction,
+  MessagesAction,
+  PathnameAction,
+} from "./actions";
 
 export type AppAction =
   | AuthAction
   | ChatsAction
   | ChatUsersAction
   | PathnameAction
+  | MessagesAction
   | { type: "@@INIT" };

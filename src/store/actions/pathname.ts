@@ -1,4 +1,4 @@
-import { createAction } from "../../storeLib/storeLib";
+import { createAction } from "../../storeLib";
 
 export const pathnameChange = createAction(
   "PATHNAME_CHANGE",

@@ -4,9 +4,11 @@
   {{#case 'sent'}} {{cn.sent}} {{/case}}
   {{/switch}}"
 >
-  {{text}}
+  {{content}}
   <div class="{{cn.time}}">
-    {{#ifCond status "===" "readed"}}<div class="{{cn.status}}"></div>{{/ifCond}}
+    {{#if showIcon}}
+      <div class="{{#if readed}}{{cn.readed}}{{else}}{{cn.notReaded}}{{/if}}"></div>
+    {{/if}}
     {{time}}
   </div>
 </div>

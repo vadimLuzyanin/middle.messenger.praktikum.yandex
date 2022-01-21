@@ -33,16 +33,15 @@ export default class Route {
     if (!this.#component) {
       this.#component = new this.#componentClass();
       renderRoot(this.#component);
-      return;
+    } else {
+      renderRoot(this.#component);
     }
-
-    this.#component.show();
   }
 
   leave() {
     if (this.#component) {
       removeModals();
-      this.#component.hide();
+      this.#component.remove();
     }
   }
 }

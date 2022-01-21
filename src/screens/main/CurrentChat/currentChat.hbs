@@ -7,15 +7,18 @@
   {{#if chat}}
     <div class="{{cn.header}}">
       <div class="{{cn.chatInfo}}">
-        <div class="{{cn.avatarContainer}}">
-          <img src="{{chat.avatar}}" />
-        </div>
+        {{#if avatar}}
+          <img src="{{avatar}}" class="{{cn.avatarContainer}}" />
+        {{else}}
+          <div class="{{cn.avatarContainer}}"></div>
+        {{/if}}
         <div class="{{cn.chatName}}">
           {{chat.title}}
         </div>
         {{#if currentChatUsersCount}}
           <div class="{{cn.usersCount}}">
-            Пользователей в чате: {{currentChatUsersCount}}
+            Пользователей в чате:
+            {{currentChatUsersCount}}
           </div>
         {{/if}}
       </div>
@@ -25,7 +28,7 @@
       </div>
     </div>
     <div class="{{cn.chatContent}}">
-      {{#each messages}}
+      {{#each messageComponents}}
         {{{this}}}
       {{/each}}
     </div>

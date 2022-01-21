@@ -1,11 +1,9 @@
 /* eslint-disable no-console */
-import GetUserApi, { SearchUsersParams } from "../api/getUserApi";
-import { ErrorResponse } from "../api/types";
+import { ErrorResponse, GetUserApi, SearchUsersParams } from "../api";
 
 const getUserApi = new GetUserApi();
 
 class GetUserController {
-  // eslint-disable-next-line consistent-return
   async searchUsers(params: SearchUsersParams) {
     try {
       const result = await getUserApi.searchUsers(params);

@@ -1,7 +1,6 @@
 import Component from "../../../../../component";
-import { Button, Input } from "../../../../../components";
-import { removeModals } from "../../../../../components/modal";
-import chatsController from "../../../../../controllers/chatsController";
+import { Button, Input, removeModals } from "../../../../../components";
+import { chatsController } from "../../../../../controllers";
 import tmpl from "./createChatModal.hbs";
 import * as cn from "./createChatModal.module.scss";
 

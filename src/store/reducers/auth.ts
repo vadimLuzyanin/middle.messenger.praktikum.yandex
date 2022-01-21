@@ -1,10 +1,10 @@
-import { User } from "../../api/types";
+import { User } from "../../api";
 import {
   currentUserReceive,
   loginError,
   logout,
   registerError,
-} from "../actions/auth";
+} from "../actions";
 import { AppAction } from "../types";
 
 type UserState = User | null;

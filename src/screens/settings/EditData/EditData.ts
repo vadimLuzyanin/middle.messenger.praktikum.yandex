@@ -4,7 +4,7 @@ import validations from "../../../validations";
 import tmpl from "./editData.hbs";
 import * as cn from "../settings.module.scss";
 import { extractFormValues, getIsFormInvalid } from "../../../utils";
-import userSettingsController from "../../../controllers/userSettingsController";
+import { userSettingsController } from "../../../controllers";
 
 type InnerProps = {
   emailInput: Input;

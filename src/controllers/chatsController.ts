@@ -1,13 +1,18 @@
 /* eslint-disable no-console */
-import ChatApi, {
+
+import {
   AddUsersParams,
+  ChatApi,
   CreateChatParams,
   DeleteUsersParams,
   GetChatsParams,
+  GetChatTokenParams,
   GetChatUsersParams,
-} from "../api/chatApi";
-import { chatListReceive, chatUsersReceive } from "../store/actions";
-import store from "../store/store";
+  GetOldMessagesCountParams,
+} from "../api";
+import { store, chatListReceive, chatUsersReceive } from "../store";
+// eslint-disable-next-line import/no-cycle
+import WSController from "./WSController";
 
 const chatsApi = new ChatApi();
 
@@ -47,6 +52,7 @@ class ChatsController {
     try {
       await chatsApi.createChat(params);
       await this.fetchChats();
+      await WSController.requestOldMessagesAndSubscribeToNew();
     } catch (e) {
       console.log(e);
     }
@@ -58,6 +64,25 @@ class ChatsController {
       store.dispatch(chatUsersReceive({ users, chatId: params.id }));
     } catch (e) {
       console.log(e);
+    }
+  }
+
+  async getChatToken(params: GetChatTokenParams) {
+    try {
+      const { token } = await chatsApi.getChatToken(params);
+      return token;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  async getOldMessagesCount(params: GetOldMessagesCountParams) {
+    try {
+      const count = await chatsApi.getOldMessagesCount(params);
+      return count;
+    } catch (e) {
+      console.log(e);
+      return { unread_count: 0 };
     }
   }
 }

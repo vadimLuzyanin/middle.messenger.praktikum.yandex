@@ -1,5 +1,5 @@
-import { Chat } from "../../api/types";
-import { createAction } from "../../storeLib/storeLib";
+import { Chat } from "../../api";
+import { createAction } from "../../storeLib";
 
 export const chatListReceive = createAction(
   "CHAT_LIST_RECEIVE",

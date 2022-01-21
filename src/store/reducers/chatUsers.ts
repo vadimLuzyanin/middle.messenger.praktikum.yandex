@@ -1,4 +1,4 @@
-import { User } from "../../api/types";
+import { User } from "../../api";
 import { chatUsersReceive } from "../actions";
 import { AppAction } from "../types";
 
@@ -19,12 +19,3 @@ export function chatUsers(state: ChatUsers = {}, action: AppAction) {
 export type ChatUsersState = {
   chatUsers: ChatUsers;
 };
-
-// const result = combineReducers<ChatUsersState, Pick<AppAction, "type">["type"]>(
-//   {
-//     chatUsers,
-//   }
-// );
-
-// export const chatUsersReducer = result.reducer;
-// export const chatUsersIniitalState = result.initialState;

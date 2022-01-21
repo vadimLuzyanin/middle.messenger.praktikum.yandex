@@ -1,12 +1,13 @@
 /* eslint-disable no-console */
-import { ErrorResponse } from "../api/types";
-import UserSettingsApi, {
+import chatsController from "./chatsController";
+import { store, currentUserReceive } from "../store";
+import {
   ChangeAvatarParams,
   ChangePasswordParams,
   ChangeProfileParams,
-} from "../api/userSettingsApi";
-import { currentUserReceive } from "../store/actions";
-import store from "../store/store";
+  ErrorResponse,
+  UserSettingsApi,
+} from "../api";
 
 const userSettingsApi = new UserSettingsApi();
 
@@ -33,6 +34,7 @@ class UserSettingsController {
     try {
       const result = await userSettingsApi.changeAvatar(params);
       store.dispatch(currentUserReceive(result));
+      await chatsController.fetchChats();
     } catch (e) {
       console.log(e);
     }
