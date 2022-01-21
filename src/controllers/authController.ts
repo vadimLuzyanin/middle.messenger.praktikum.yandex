@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import { AuthApi, ErrorResponse, LoginParams, RegisterParams } from "../api";
 import { store, currentUserReceive, loginError, logout } from "../store";
+// eslint-disable-next-line import/no-cycle
 import chatsController from "./chatsController";
 
 const authApi = new AuthApi();

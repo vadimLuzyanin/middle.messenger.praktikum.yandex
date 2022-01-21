@@ -1,5 +1,6 @@
 import { Chat } from "../../api";
 import { chatListReceive, newMessagesReceive } from "../actions";
+// eslint-disable-next-line import/no-cycle
 import store from "../store";
 import { AppAction } from "../types";
 

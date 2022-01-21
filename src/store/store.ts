@@ -1,4 +1,5 @@
 import { createStore } from "../storeLib/storeLib";
+// eslint-disable-next-line import/no-cycle
 import { appInitialState, appReducer, AppState } from "./reducers";
 import type { AppAction } from "./types";
 

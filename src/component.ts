@@ -44,8 +44,6 @@ export default class Component<
 
   outerProps: P;
 
-  #elementDisplayValue: string | null = null;
-
   mapStoreToState?: (state: AppState) => Partial<S>;
 
   get props(): ShallowImmutable<P & I> {

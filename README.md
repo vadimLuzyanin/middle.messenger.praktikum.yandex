@@ -18,7 +18,7 @@
 - `yarn build` — билд проекта в /dist/
 - `yarn dev` — запуск сервера на порту 3000 с HMR от парсела
 - `yarn lint` — запуск tsc, eslint, stylelint, prettier (без write)
-- `yarn type-scss` — генерирует *.d.ts для всех scss файлов
+- `yarn type-scss` — генерирует \*.d.ts для всех scss файлов
 
 ## Разное
 

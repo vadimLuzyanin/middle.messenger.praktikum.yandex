@@ -6,5 +6,4 @@ export const chatListReceive = createAction(
   (chatList: Chat[]) => chatList
 );
 
-export type ChatsAction =
-  | ReturnType<typeof chatListReceive>
+export type ChatsAction = ReturnType<typeof chatListReceive>;
