@@ -4,3 +4,11 @@ export enum ListenerNames {
   focus = "onFocus",
   blur = "onBlur",
 }
+
+export enum ScreensPathnames {
+  login = "/",
+  register = "/sign-up",
+  settings = "/settings",
+  messenger = "/messenger",
+  screen500 = "/500",
+}

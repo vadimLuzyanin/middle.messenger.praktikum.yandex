@@ -1,5 +1,5 @@
-import { renderRoot } from "../../index";
 import Component from "../../component";
+import { renderRoot } from "../../render";
 import tmpl from "./modal.hbs";
 import * as cn from "./modal.module.scss";
 
@@ -22,9 +22,9 @@ class Modal extends Component<Props> {
       if (!target) return;
       if (path.includes(target)) return;
       this.remove();
-      document.removeEventListener("click", listener);
+      document.removeEventListener("mousedown", listener);
     };
-    document.addEventListener("click", listener);
+    document.addEventListener("mousedown", listener);
   }
 }
 
@@ -38,10 +38,15 @@ function getElementPath(element: Element) {
   return path;
 }
 
-export default function renderModal(content: any, clickEvent?: MouseEvent) {
+export function removeModals() {
+  document.querySelectorAll(`.${cn.wrapper}`).forEach((el) => el.remove());
+}
+
+export function renderModal(content: any, clickEvent?: MouseEvent) {
   if (clickEvent) {
     clickEvent.stopPropagation();
   }
   const modal = new Modal({ content });
   renderRoot(modal);
+  return modal.element;
 }

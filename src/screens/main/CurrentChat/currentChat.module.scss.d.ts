@@ -1,3 +1,4 @@
+export const actions: string;
 export const avatarContainer: string;
 export const chatContent: string;
 export const chatInfo: string;

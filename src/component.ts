@@ -1,6 +1,7 @@
 import { v4 } from "uuid";
 import { ListenerNames } from "./constants";
 import EventBus from "./eventBus";
+import { AppState, store } from "./store";
 import { BlockProps, NativeListenersMap, TemplateFn } from "./types";
 
 enum FLOW {
@@ -43,16 +44,25 @@ export default class Component<
 
   outerProps: P;
 
+  mapStoreToState?: (state: AppState) => Partial<S>;
+
   get props(): ShallowImmutable<P & I> {
     return { ...this.innerProps, ...this.outerProps };
   }
 
-  constructor(template: TemplateFn<any>, outerProps: P = {} as P) {
+  constructor(
+    template: TemplateFn<any>,
+    outerProps: P = {} as P,
+    mapStoreToState?: (state: AppState) => Partial<S>
+  ) {
     this.#template = template;
     this.outerProps = this.#makeOuterPropsProxy(outerProps);
     this.#eventBus = new EventBus<FLOW>();
     this.id = v4();
-    this.state = this.#makeStateProxy({} as S);
+    this.mapStoreToState = mapStoreToState;
+    this.state = this.#makeStateProxy(
+      (mapStoreToState ? mapStoreToState(store.getState()) : {}) as S
+    );
     this.#registerEvents();
   }
 
@@ -61,6 +71,11 @@ export default class Component<
     this.#eventBus.on(FLOW.render, this.#render.bind(this));
     this.#eventBus.on(FLOW.didUpdate, this.componentDidUpdate.bind(this));
     this.#eventBus.on(FLOW.requestUpdate, this.#updateIfNeeded.bind(this));
+    if (this.mapStoreToState) {
+      store.subscribe(() => {
+        this.setState({ ...this.mapStoreToState!(store.getState()) });
+      });
+    }
   }
 
   #makeStateProxy(rawState: S) {
@@ -307,4 +322,18 @@ export default class Component<
       this.element.remove();
     }
   }
+
+  // hide() {
+  //   if (this.element && this.#elementDisplayValue !== "none") {
+  //     this.#elementDisplayValue = window.getComputedStyle(this.element).display;
+  //     this.element.style.display = "none";
+  //   }
+  // }
+
+  // show() {
+  //   if (this.element && this.#elementDisplayValue) {
+  //     this.element.style.display = this.#elementDisplayValue;
+  //     this.#elementDisplayValue = null;
+  //   }
+  // }
 }

@@ -1,69 +1,66 @@
-import Component from "./component";
+import { ScreensPathnames } from "./constants";
+import { authController, chatsController, WSController } from "./controllers";
 import "./helpers";
+import { router } from "./router";
 import {
-  ErrorScreen,
   LoginScreen,
   MainScreen,
   RegisterScreen,
+  Screen404,
+  Screen500,
   SettingsScreen,
 } from "./screens";
+import { pathnameChange } from "./store";
+import store from "./store/store";
 
-export function renderRoot(block: Component<any, any, any>) {
-  const root = document.getElementById("app");
-  if (root) {
-    root.appendChild(block.render());
-  }
-  block.dispatchComponentDidMount();
+function subRedirects() {
+  store.subscribe((getState) => {
+    const { isLoggedIn, pathname } = getState();
+    if (isLoggedIn) {
+      switch (pathname) {
+        case ScreensPathnames.register:
+        case ScreensPathnames.login: {
+          router.go(ScreensPathnames.messenger);
+          break;
+        }
+        default: {
+          break;
+        }
+      }
+    } else {
+      switch (pathname) {
+        case ScreensPathnames.messenger:
+        case ScreensPathnames.settings: {
+          router.go(ScreensPathnames.login);
+          break;
+        }
+        default: {
+          break;
+        }
+      }
+    }
+  });
 }
 
-export function clearRoot() {
-  const root = document.getElementById("app");
-  if (root) {
-    root.innerHTML = "";
-  }
+async function init() {
+  router
+    .use(ScreensPathnames.login, LoginScreen)
+    .use(ScreensPathnames.register, RegisterScreen)
+    .use(ScreensPathnames.messenger, MainScreen)
+    .use(ScreensPathnames.settings, SettingsScreen)
+    .use(ScreensPathnames.screen500, Screen500)
+    .use("*", Screen404)
+    .addOnPathname((pathname) => {
+      store.dispatch(pathnameChange(pathname));
+    })
+    .start();
+
+  await authController.ensureInSystem();
+  await chatsController.fetchChats();
+  subRedirects();
+
+  store.dispatch({ type: "@@INIT", payload: null });
+  await WSController.requestOldMessagesAndSubscribeToNew();
 }
 
-export function pushPathname(pathname: string) {
-  if (document.location.pathname !== pathname) {
-    window.history.pushState(null, "", pathname);
-    render();
-  }
-}
-
-export default function render() {
-  clearRoot();
-  const { pathname } = document.location;
-  switch (pathname) {
-    case "/":
-    case "/index.html": {
-      renderRoot(new MainScreen());
-      break;
-    }
-    case "/login": {
-      renderRoot(new LoginScreen());
-      break;
-    }
-    case "/register": {
-      renderRoot(new RegisterScreen());
-      break;
-    }
-    case "/settings": {
-      renderRoot(new SettingsScreen());
-      break;
-    }
-    case "/500": {
-      renderRoot(
-        new ErrorScreen({ description: "Мы уже фиксим", title: "500" })
-      );
-      break;
-    }
-    case "/404":
-    default: {
-      renderRoot(
-        new ErrorScreen({ description: "Не туда попали", title: "404" })
-      );
-    }
-  }
-}
-
-render();
+init();

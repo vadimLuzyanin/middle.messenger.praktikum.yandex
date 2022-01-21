@@ -1,1 +1,1 @@
-export { default as renderModal } from "./Modal";
+export { removeModals, renderModal } from "./Modal";

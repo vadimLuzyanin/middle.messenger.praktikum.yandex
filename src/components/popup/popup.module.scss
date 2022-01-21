@@ -5,4 +5,11 @@
   box-shadow: 0 0 6px rgba(0, 0, 0, 14%);
   border-radius: 12px;
   position: absolute;
+  padding: 20px;
+  transition: 0.3s ease all;
+}
+
+.warn {
+  background: $warn;
+  color: $white;
 }

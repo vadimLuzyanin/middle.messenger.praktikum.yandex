@@ -3,8 +3,11 @@ import tmpl from "./login.hbs";
 import * as cn from "./auth.module.scss";
 import validations from "../../validations";
 import Component from "../../component";
-import { pushPathname } from "../../index";
-import { getIsFormInvalid } from "../../utils";
+import { extractFormValues, getIsFormInvalid } from "../../utils";
+import { gotoRoute } from "../../router";
+import { ScreensPathnames } from "../../constants";
+import { authController } from "../../controllers";
+import { AppState } from "../../store";
 
 type InnerProps = {
   loginBtn: Button;
@@ -19,31 +22,39 @@ type State = {
     password: { value: string; notValid: boolean };
   };
   disableSubmit: boolean;
+  authError?: string;
 };
+
+function mapStoreToState(store: AppState) {
+  return {
+    authError: store.authError,
+  };
+}
 
 export default class LoginScreen extends Component<{}, State, InnerProps> {
   cn = cn;
 
   constructor() {
-    super(tmpl);
+    super(tmpl, {}, mapStoreToState);
 
-    this.state = {
+    this.setState({
       formValues: {
         login: { value: "", notValid: true },
         password: { value: "", notValid: true },
       },
       disableSubmit: true,
-    };
+    });
 
     this.innerProps.loginBtn = new Button({
       text: "Войти",
       type: "primary",
       getDisabled: () => !!this.state.disableSubmit,
       onClick: () => {
-        // eslint-disable-next-line
-        console.log(this.state.formValues);
         if (!getIsFormInvalid(this.state.formValues)) {
-          pushPathname("/");
+          const params = extractFormValues(this.state.formValues);
+          authController
+            .login(params)
+            .then(() => this.setState({ authError: "" }));
         }
       },
     });
@@ -51,7 +62,7 @@ export default class LoginScreen extends Component<{}, State, InnerProps> {
       text: "Нет аккаунта?",
       type: "secondary",
       onClick: () => {
-        pushPathname("/register");
+        gotoRoute(ScreensPathnames.register);
       },
     });
     this.innerProps.loginInput = new Input({
@@ -78,6 +89,15 @@ export default class LoginScreen extends Component<{}, State, InnerProps> {
         this.props.passwordInput.focus();
       },
     });
+  }
+
+  componentDidUpdate(_: InnerProps, prevState: State) {
+    if (this.state.authError && !prevState.authError) {
+      this.props.loginInput.setState({
+        errorMessage: this.state.authError,
+        notValid: true,
+      });
+    }
   }
 
   setFormValue(

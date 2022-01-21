@@ -1,5 +1,3 @@
-import { InputValidation } from "./types";
-
 const regexps = {
   login: /^((?!^\d+$)^\w{3,20})$/,
   email: /^\S+@\S+\.\S+$/,
@@ -9,7 +7,7 @@ const regexps = {
   message: /^(?:.+$)/,
 };
 
-const validations: { [key: string]: InputValidation } = {
+const validations = {
   login: {
     errorMessage:
       "Логин должен быть от 3 до 20 символов, может включать латиницу, -, _ и цифры (но не состоять из цифр)",

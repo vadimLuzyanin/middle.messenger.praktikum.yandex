@@ -3,7 +3,8 @@ import Component from "../../../component";
 import validations from "../../../validations";
 import tmpl from "./editData.hbs";
 import * as cn from "../settings.module.scss";
-import { getIsFormInvalid } from "../../../utils";
+import { extractFormValues, getIsFormInvalid } from "../../../utils";
+import { userSettingsController } from "../../../controllers";
 
 type InnerProps = {
   emailInput: Input;
@@ -128,9 +129,10 @@ export default class EditData extends Component<Props, State, InnerProps> {
       name: "save",
       getDisabled: () => !!this.state.disableSubmit,
       onClick: () => {
-        // eslint-disable-next-line no-console
-        console.log(this.state.formValues);
         if (!getIsFormInvalid(this.state.formValues)) {
+          userSettingsController.changeProfile(
+            extractFormValues(this.state.formValues)
+          );
           this.props.onSaveClick();
         }
       },

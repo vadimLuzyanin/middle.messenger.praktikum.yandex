@@ -42,7 +42,8 @@
     "no-use-before-define": "off",
     "no-unneeded-ternary": "off",
     "no-restricted-syntax": ["error", "LabeledStatement", "WithStatement"],
-    "spaced-comment": [2, "always", { "markers": ["/"] }]
+    "spaced-comment": [2, "always", { "markers": ["/"] }],
+    "default-param-last": "off"
   },
   "overrides": [
     {
