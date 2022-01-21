@@ -26,12 +26,13 @@ type State = {
 };
 
 function mapStoreToState(state: AppState) {
-  if (state.auth.user?.avatar) {
+  if (state.user?.avatar) {
     return {
-      avatar: `https://ya-praktikum.tech/api/v2/resources${state.auth.user.avatar}`,
+      avatar: state.user.avatar,
+      isLoggedIn: state.isLoggedIn,
     };
   }
-  return {};
+  return { isLoggedIn: state.isLoggedIn };
 }
 
 export default class SettingsScreen extends Component<{}, State, InnerProps> {

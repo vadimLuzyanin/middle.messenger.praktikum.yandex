@@ -5,6 +5,7 @@ import * as cn from "../settings.module.scss";
 import { LogoutModalContent } from "./LogoutModalContent";
 import { AppState } from "../../../store/reducers";
 import authController from "../../../controllers/authController";
+import { removeModals } from "../../../components/modal";
 
 type InnerProps = {
   changeDataButton: Button;
@@ -19,10 +20,10 @@ type Props = {
   onChangeDataClick: () => void;
 };
 
-type State = {} & Partial<AppState["auth"]["user"]>;
+type State = {} & Partial<AppState["user"]>;
 
 function mapStoreToState(state: AppState) {
-  return { ...state.auth.user };
+  return { ...state.user };
 }
 
 export default class ViewSettings extends Component<Props, State, InnerProps> {
@@ -49,10 +50,12 @@ export default class ViewSettings extends Component<Props, State, InnerProps> {
     });
     this.innerProps.logoutModalContent = new LogoutModalContent({
       onCancelClick: () => {
-        this.props.logoutModalContent.remove();
+        removeModals();
       },
       onLogoutClick: () => {
-        authController.logout();
+        authController.logout().then(() => {
+          removeModals();
+        });
       },
     });
     this.innerProps.logoutButton = new Button({

@@ -1,11 +1,11 @@
 import BaseAPI from "./baseApi";
 import HTTP from "./Fetch";
-import { BaseResponse, User } from "./types";
+import { User } from "./types";
 
-type GetUserResponse = User | BaseResponse;
+type GetUserResponse = User;
 
-type SearchUsersParams = { login: string };
-type SearchUsersResponse = User[] | BaseResponse;
+export type SearchUsersParams = { login: string };
+type SearchUsersResponse = User[];
 
 const getUserApiInstance = new HTTP("api/v2/user");
 
@@ -15,7 +15,7 @@ export default class GetUserApi extends BaseAPI {
   }
 
   searchUsers(params: SearchUsersParams) {
-    return getUserApiInstance.post<SearchUsersResponse>("/user/search", {
+    return getUserApiInstance.post<SearchUsersResponse>("/search", {
       data: params,
     });
   }

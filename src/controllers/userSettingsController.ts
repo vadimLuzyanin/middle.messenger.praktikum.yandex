@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+import { ErrorResponse } from "../api/types";
 import UserSettingsApi, {
   ChangeAvatarParams,
   ChangePasswordParams,
@@ -22,8 +23,9 @@ class UserSettingsController {
   async changePassword(params: ChangePasswordParams) {
     try {
       await userSettingsApi.changePassword(params);
+      return true;
     } catch (e) {
-      console.log(e);
+      return (e as ErrorResponse).reason;
     }
   }
 

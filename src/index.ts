@@ -1,5 +1,6 @@
 import { ScreensPathnames } from "./constants";
 import authController from "./controllers/authController";
+import chatsController from "./controllers/chatsController";
 import "./helpers";
 import { router } from "./router";
 import {
@@ -10,6 +11,8 @@ import {
   Screen500,
   SettingsScreen,
 } from "./screens";
+import { pathnameChange } from "./store/actions/pathname";
+import store from "./store/store";
 
 function init() {
   router
@@ -19,9 +22,47 @@ function init() {
     .use(ScreensPathnames.settings, SettingsScreen)
     .use(ScreensPathnames.screen500, Screen500)
     .use("*", Screen404)
+    .addOnPathname((pathname) => {
+      store.dispatch(pathnameChange(pathname));
+    })
     .start();
 
-  authController.ensureInSystem();
+  authController.ensureInSystem().then(() => {
+    chatsController
+      .fetchChats()
+      .then(() => {
+        store.subscribe((getState) => {
+          const { isLoggedIn, pathname } = getState();
+          if (isLoggedIn) {
+            switch (pathname) {
+              case ScreensPathnames.register:
+              case ScreensPathnames.login: {
+                router.go(ScreensPathnames.messenger);
+                break;
+              }
+              default: {
+                break;
+              }
+            }
+          } else {
+            switch (pathname) {
+              case ScreensPathnames.messenger:
+              case ScreensPathnames.settings: {
+                router.go(ScreensPathnames.login);
+                break;
+              }
+              default: {
+                break;
+              }
+            }
+          }
+        });
+      })
+      .then(() => {
+        store.dispatch({ type: "@@INIT", payload: null });
+      });
+  });
+
 }
 
 init();

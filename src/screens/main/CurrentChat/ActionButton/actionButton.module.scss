@@ -1,0 +1,33 @@
+@use "../../../../utils/colors" as *;
+
+.action {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+  color: $text;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 13px;
+  height: 100%;
+  border-radius: 10px;
+  padding: 0 10px;
+
+  &:hover {
+    background: $selected-chat;
+  }
+}
+
+.addUserIcon {
+  width: 22px;
+  height: 22px;
+  margin-right: 10px;
+}
+
+.removeUserIcon {
+  width: 22px;
+  height: 22px;
+  margin-right: 10px;
+  transform: rotate(-45deg);
+}

@@ -1,3 +1,9 @@
-import { AuthAction } from "./actions";
+import { AuthAction, ChatsAction, ChatUsersAction } from "./actions";
+import { PathnameAction } from "./actions/pathname";
 
-export type AppAction = AuthAction;
+export type AppAction =
+  | AuthAction
+  | ChatsAction
+  | ChatUsersAction
+  | PathnameAction
+  | { type: "@@INIT" };

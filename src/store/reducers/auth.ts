@@ -1,14 +1,22 @@
 import { User } from "../../api/types";
-import { combineReducers } from "../../storeLib/storeLib";
-import { currentUserReceive, logout } from "../actions/auth";
+import {
+  currentUserReceive,
+  loginError,
+  logout,
+  registerError,
+} from "../actions/auth";
 import { AppAction } from "../types";
 
 type UserState = User | null;
 
-function user(state: UserState = null, action: AppAction) {
+export function user(state: UserState = null, action: AppAction) {
   switch (action.type) {
     case currentUserReceive.type: {
-      return action.payload;
+      const user = action.payload;
+      if (user.avatar) {
+        user.avatar = `https://ya-praktikum.tech/api/v2/resources${user.avatar}`;
+      }
+      return user;
     }
     case logout.type: {
       return null;
@@ -19,9 +27,24 @@ function user(state: UserState = null, action: AppAction) {
   }
 }
 
+export function authError(state: string = "", action: AppAction) {
+  switch (action.type) {
+    case loginError.type:
+    case registerError.type: {
+      return action.payload;
+    }
+    case currentUserReceive.type: {
+      return "";
+    }
+    default: {
+      return state;
+    }
+  }
+}
+
 type LoggedInState = boolean;
 
-function isLoggedIn(state: LoggedInState = false, action: AppAction) {
+export function isLoggedIn(state: LoggedInState = false, action: AppAction) {
   switch (action.type) {
     case currentUserReceive.type: {
       return true;
@@ -38,12 +61,5 @@ function isLoggedIn(state: LoggedInState = false, action: AppAction) {
 export type AuthState = {
   user: UserState;
   isLoggedIn: LoggedInState;
+  authError: string;
 };
-
-const result = combineReducers<AuthState, Pick<AppAction, "type">["type"]>({
-  user,
-  isLoggedIn,
-});
-
-export const authReducer = result.reducer;
-export const authIniitalState = result.initialState;

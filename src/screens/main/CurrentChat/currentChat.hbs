@@ -8,14 +8,20 @@
     <div class="{{cn.header}}">
       <div class="{{cn.chatInfo}}">
         <div class="{{cn.avatarContainer}}">
-          {{{chat.avatar}}}
+          <img src="{{chat.avatar}}" />
         </div>
         <div class="{{cn.chatName}}">
-          {{chat.messageAuthor}}
+          {{chat.title}}
         </div>
+        {{#if currentChatUsersCount}}
+          <div class="{{cn.usersCount}}">
+            Пользователей в чате: {{currentChatUsersCount}}
+          </div>
+        {{/if}}
       </div>
-      <div class="{{cn.chatActions}}">
-        {{{chatActionsButton}}}
+      <div class="{{cn.actions}}">
+        {{{addUserBtn}}}
+        {{{removeUserBtn}}}
       </div>
     </div>
     <div class="{{cn.chatContent}}">

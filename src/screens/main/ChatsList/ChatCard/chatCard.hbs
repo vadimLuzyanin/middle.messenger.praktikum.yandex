@@ -3,15 +3,15 @@
  <div class="{{cn.wrapper}} {{#if selected}} {{cn.selected}}{{/if}}">
  <div class="{{cn.container}} {{#if selected}} {{cn.selected}}{{/if}}">
   <div class="{{cn.avatarContainer}}">
-    {{{avatar}}}
+    {{{chat.avatar}}}
   </div>
   <div class="{{cn.messageContainer}}">
-    <div class="{{cn.messageAuthor}}">{{messageAuthor}}</div>
-    <div class="{{cn.messageContent}}">{{messageContent}}</div>
+    <div class="{{cn.messageAuthor}}">{{chat.title}}</div>
+    <div class="{{cn.messageContent}}">{{chat.last_message.content}}</div>
   </div>
   <div class="{{cn.dateAndNotifier}}">
-    <div class="{{cn.date}}">{{lastUpdated}}</div>
-    {{#if notify}}<div class="{{cn.notifier}}">{{notify}}</div>{{/if}}
+    <div class="{{cn.date}}">{{chat.last_message.time}}</div>
+    {{#if notify}}<div class="{{cn.notifier}}">{{chat.unread_count}}</div>{{/if}}
   </div>
 </div>
 </div><div class="{{cn.divider}}"></div>

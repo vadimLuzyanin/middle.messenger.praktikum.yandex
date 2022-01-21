@@ -22,9 +22,9 @@ class Modal extends Component<Props> {
       if (!target) return;
       if (path.includes(target)) return;
       this.remove();
-      document.removeEventListener("click", listener);
+      document.removeEventListener("mousedown", listener);
     };
-    document.addEventListener("click", listener);
+    document.addEventListener("mousedown", listener);
   }
 }
 

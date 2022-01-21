@@ -1,9 +1,9 @@
 /* eslint-disable no-console */
 import AuthApi, { LoginParams, RegisterParams } from "../api/authApi";
-import { ScreensPathnames } from "../constants";
-import { gotoRoute, router } from "../router";
-import { currentUserReceive } from "../store/actions";
+import { ErrorResponse } from "../api/types";
+import { currentUserReceive, loginError, logout } from "../store/actions";
 import store from "../store/store";
+import chatsController from "./chatsController";
 
 const authApi = new AuthApi();
 
@@ -11,12 +11,12 @@ class AuthController {
   async login(params: LoginParams) {
     try {
       await authApi.login(params);
-
       const userData = await authApi.getUser();
+
       store.dispatch(currentUserReceive(userData));
-      gotoRoute(ScreensPathnames.messenger);
+      await chatsController.fetchChats();
     } catch (e) {
-      console.log(e);
+      store.dispatch(loginError((e as ErrorResponse).reason));
     }
   }
 
@@ -26,7 +26,7 @@ class AuthController {
       const userData = await authApi.getUser();
 
       store.dispatch(currentUserReceive(userData));
-      gotoRoute(ScreensPathnames.messenger);
+      await chatsController.fetchChats();
     } catch (e) {
       console.log(e);
     }
@@ -45,7 +45,7 @@ class AuthController {
   async logout() {
     try {
       await authApi.logout();
-      router.go(ScreensPathnames.login);
+      store.dispatch(logout(null));
     } catch (e) {
       console.log(e);
     }
@@ -55,7 +55,6 @@ class AuthController {
     try {
       const userData = await authApi.getUser();
       store.dispatch(currentUserReceive(userData));
-      gotoRoute(ScreensPathnames.messenger);
     } catch (e) {
       console.log(e);
     }

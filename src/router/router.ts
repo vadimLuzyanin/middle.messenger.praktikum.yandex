@@ -8,6 +8,8 @@ class Router {
 
   #currentRoute: Route | null;
 
+  #onPathname?: (pathname: string) => void;
+
   constructor() {
     this.routes = [];
     this.history = window.history;
@@ -50,6 +52,11 @@ class Router {
     return this.routes.find((route) => route.matchPathname(pathname));
   }
 
+  addOnPathname(onPathname: (pathname: string) => void) {
+    this.#onPathname = onPathname;
+    return this;
+  }
+
   #onRoute(pathname: ValidRouterPathname) {
     const route = this.getRoute(pathname);
     if (!route) return;
@@ -60,6 +67,9 @@ class Router {
 
     this.#currentRoute = route;
     route.render();
+    if (this.#onPathname) {
+      this.#onPathname(pathname);
+    }
   }
 }
 

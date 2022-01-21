@@ -13,6 +13,8 @@ type Props = {
   validation?: InputValidation;
   value?: string;
   getIsNotValid?: (value: string) => boolean;
+  autofocus?: boolean;
+  errorMessage?: string;
 };
 
 type State = {
@@ -31,9 +33,9 @@ export default class Input extends Component<Props, State> {
   constructor(props: Props) {
     super(tmpl, props);
 
-    const { errorMessage } = this.props.validation || { errorMessage: "" };
+    const { errorMessage = "" } = this.props.validation || this.props;
 
-    this.state = {
+    this.setState({
       notValid: false,
       value: this.props.value || "",
       fixPlaceholder: false,
@@ -42,7 +44,7 @@ export default class Input extends Component<Props, State> {
         selectionStart: this.props.value?.length || 1,
         selectionEnd: this.props.value?.length || 1,
       },
-    };
+    });
 
     this.innerProps.onInput = (e) => {
       const selectionStart =
@@ -121,6 +123,12 @@ export default class Input extends Component<Props, State> {
     }
   }
 
+  componentDidMount() {
+    if (this.props.autofocus) {
+      this.focus();
+    }
+  }
+
   getInputElement() {
     const root = this.element;
     return root?.querySelector("input");
@@ -133,7 +141,10 @@ export default class Input extends Component<Props, State> {
     if (getIsNotValid) {
       return getIsNotValid(this.state.value);
     }
-    return !!regexp && !regexp.test(this.state.value);
+    if (regexp) {
+      return !regexp.test(this.state.value);
+    }
+    return false;
   }
 
   getPlaceholderElement() {

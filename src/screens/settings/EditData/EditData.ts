@@ -129,8 +129,6 @@ export default class EditData extends Component<Props, State, InnerProps> {
       name: "save",
       getDisabled: () => !!this.state.disableSubmit,
       onClick: () => {
-        // eslint-disable-next-line no-console
-        console.log(this.state.formValues);
         if (!getIsFormInvalid(this.state.formValues)) {
           userSettingsController.changeProfile(
             extractFormValues(this.state.formValues)

@@ -9,14 +9,15 @@ export type User = {
   avatar: string;
 };
 
-export type BaseResponse = string | { reason: string };
+export type BaseResponse = string | ErrorResponse;
+export type ErrorResponse = { reason: string }
 
 export type Chat = {
   id: number;
   title: string;
   avatar: string;
-  unread_count: 15;
-  last_message: {
+  unread_count: number;
+  last_message?: {
     user: {
       first_name: string;
       second_name: string;

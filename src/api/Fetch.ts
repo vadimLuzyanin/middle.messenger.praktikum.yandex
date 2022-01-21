@@ -92,7 +92,8 @@ export default class HTTPTransport {
 
       switch (method) {
         case METHODS.PUT:
-        case METHODS.POST: {
+        case METHODS.POST:
+        case METHODS.DELETE: {
           if (data instanceof FormData) {
             xhr.send(data);
           }

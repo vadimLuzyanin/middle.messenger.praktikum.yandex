@@ -15,7 +15,7 @@ type Action<S = unknown, A extends string = string> =
   | SimpleAction<A>
   | FnAction<S, A>;
 
-type SubscriberFn<S> = (oldState: S, getState: () => S) => void;
+type SubscriberFn<S> = (getState: () => S) => void;
 
 type Store<S = unknown, A extends string = string> = {
   dispatch: (action: Action<S, A>) => void;
@@ -34,9 +34,8 @@ export function createStore<S, A extends string = string>(
       if (typeof action === "function") {
         (action as FnAction<S, A>)(store.dispatch, store.getState);
       } else {
-        const oldState = store.getState();
         state = reducer(state, action);
-        subs.forEach((fn) => fn(oldState, store.getState));
+        subs.forEach((fn) => fn(store.getState));
       }
     },
     getState: () => ({ ...state }),
