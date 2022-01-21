@@ -1,3 +1,5 @@
+@use "../../utils/colors" as *;
+
 .button {
   font-weight: 500;
   border-radius: 8px;
@@ -6,27 +8,32 @@
   border: none;
   cursor: pointer;
   padding: 0;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: unset;
+  }
 }
 
 .primary {
-  color: #ffffff;
-  background-color: #3369f3;
+  color: $white;
+  background-color: $primary;
   font-size: 13px;
   line-height: 13px;
 }
 
 .secondary {
-  color: #3369f3;
-  background-color: #ffffff;
+  color: $primary;
+  background-color: $white;
   font-size: 11px;
   line-height: 11px;
 }
 
 .warn {
-  color: #ff0000;
+  color: $warn;
   font-size: 11px;
   line-height: 11px;
-  background-color: #ffffff;
+  background-color: $white;
 }
 
 .leftAlign {

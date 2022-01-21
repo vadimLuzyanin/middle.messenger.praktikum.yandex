@@ -1,0 +1,50 @@
+@use "../../../../utils/colors" as *;
+
+.card {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 15px;
+  max-width: 33%;
+  position: relative;
+  box-sizing: border-box;
+  padding: 11px 11px 28px;
+  display: flex;
+  flex-direction: row;
+  min-width: 100px;
+}
+
+.received {
+  background-color: $received-message;
+  margin-right: auto;
+  border-radius: 0 15px 15px;
+}
+
+.time {
+  color: $gray;
+  font-size: 9px;
+  font-weight: 500;
+  line-height: 9px;
+  position: absolute;
+  bottom: 11px;
+  right: 11px;
+}
+
+.sent {
+  background-color: $selected-chat;
+  margin-left: auto;
+  border-radius: 15px 15px 0;
+
+  .time {
+    color: $primary;
+  }
+}
+
+.status {
+  width: 10px;
+  height: 6px;
+  background-image: url("../assets/readedIcon.svg");
+  background-repeat: no-repeat;
+  position: relative;
+  left: -14px;
+  bottom: -8px;
+}

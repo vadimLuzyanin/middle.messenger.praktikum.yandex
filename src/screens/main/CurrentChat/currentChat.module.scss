@@ -1,0 +1,64 @@
+@use "../../../utils/colors" as *;
+
+.wrapper {
+  height: 100vh;
+  width: 100%;
+  padding: 10px 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.stub {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 12px;
+  color: $gray;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.chatContent {
+  display: flex;
+  flex-direction: column;
+  padding: 30px 0;
+  border-top: 1px solid $border;
+  border-bottom: 1px solid $border;
+  flex-grow: 1;
+  margin-bottom: 11px;
+}
+
+.header {
+  padding: 10px 0;
+  height: 55px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.avatarContainer {
+  border-radius: 50%;
+  width: 34px;
+  height: 34px;
+  background-color: $avatar-and-input-background;
+  margin-right: 10px;
+}
+
+.chatName {
+  color: $text;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 13px;
+}
+
+.chatInfo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}

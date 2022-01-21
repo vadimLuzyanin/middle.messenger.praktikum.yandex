@@ -1,0 +1,18 @@
+ <div class="{{cn.outerWrapper}}">
+   <div class="{{cn.topDivider}}"></div>
+ <div class="{{cn.wrapper}} {{#if selected}} {{cn.selected}}{{/if}}">
+ <div class="{{cn.container}} {{#if selected}} {{cn.selected}}{{/if}}">
+  <div class="{{cn.avatarContainer}}">
+    {{{avatar}}}
+  </div>
+  <div class="{{cn.messageContainer}}">
+    <div class="{{cn.messageAuthor}}">{{messageAuthor}}</div>
+    <div class="{{cn.messageContent}}">{{messageContent}}</div>
+  </div>
+  <div class="{{cn.dateAndNotifier}}">
+    <div class="{{cn.date}}">{{lastUpdated}}</div>
+    {{#if notify}}<div class="{{cn.notifier}}">{{notify}}</div>{{/if}}
+  </div>
+</div>
+</div><div class="{{cn.divider}}"></div>
+</div>

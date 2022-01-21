@@ -1,0 +1,28 @@
+<div class="{{cn.wrapper}}">
+  {{#unless chat}}
+    <div class="{{cn.stub}}">
+      Выберите чат чтобы отправить сообщение
+    </div>
+  {{/unless}}
+  {{#if chat}}
+    <div class="{{cn.header}}">
+      <div class="{{cn.chatInfo}}">
+        <div class="{{cn.avatarContainer}}">
+          {{{chat.avatar}}}
+        </div>
+        <div class="{{cn.chatName}}">
+          {{chat.messageAuthor}}
+        </div>
+      </div>
+      <div class="{{cn.chatActions}}">
+        {{{chatActionsButton}}}
+      </div>
+    </div>
+    <div class="{{cn.chatContent}}">
+      {{#each messages}}
+        {{{this}}}
+      {{/each}}
+    </div>
+    {{{messageInput}}}
+  {{/if}}
+</div>

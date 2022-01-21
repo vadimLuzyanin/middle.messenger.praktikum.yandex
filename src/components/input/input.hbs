@@ -1,6 +1,9 @@
 <div class="{{cn.wrapper}}">
-  <input class="{{cn.input}}" type="{{type}}" name="{{name}}" placeholder="&nbsp;" />
-  <div class="{{cn.placeholder}}">
-    {{placeholder}}
+  <div class="{{cn.inputWrapper}}">
+    <input class="{{cn.input}}" type="{{type}}" name="{{name}}" placeholder="&nbsp;" />
+    <div class="{{cn.placeholder}} {{#if fixPlaceholder}} {{cn.fixPlaceholder}} {{/if}}">
+      {{placeholder}}
+    </div>
+    {{#if notValid}}<div class="{{cn.errorMessage}}">{{errorMessage}}</div>{{/if}}
   </div>
 </div>

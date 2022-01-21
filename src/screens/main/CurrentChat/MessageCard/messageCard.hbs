@@ -1,0 +1,12 @@
+<div class="{{cn.card}}
+  {{#switch type}}
+  {{#case 'received'}} {{cn.received}} {{/case}}
+  {{#case 'sent'}} {{cn.sent}} {{/case}}
+  {{/switch}}"
+>
+  {{text}}
+  <div class="{{cn.time}}">
+    {{#ifCond status "===" "readed"}}<div class="{{cn.status}}"></div>{{/ifCond}}
+    {{time}}
+  </div>
+</div>

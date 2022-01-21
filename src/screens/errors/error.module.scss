@@ -1,3 +1,5 @@
+@use "../../utils/colors" as *;
+
 .wrapper {
   width: 100vw;
   height: 100vh;
@@ -9,7 +11,7 @@
 .content {
   height: 160px;
   font-weight: 500;
-  color: #1e1e1e;
+  color: $text;
   display: flex;
   flex-direction: column;
   justify-content: center;

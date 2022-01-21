@@ -1,0 +1,32 @@
+@use "../../../../utils/colors" as *;
+
+.wrapper {
+  box-sizing: border-box;
+  padding: 0 10px;
+  width: 100%;
+}
+
+.input {
+  background-color: $avatar-and-input-background;
+  border-radius: 5px;
+  border: none;
+  height: 32px;
+  background-image: url("../assets/searchIcon.svg");
+  background-repeat: no-repeat;
+  background-position: calc(50% - 35px) 55%;
+  margin-bottom: 14px;
+  width: 100%;
+  box-sizing: border-box;
+
+  &::placeholder {
+    color: $gray;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 12px;
+    text-align: center;
+  }
+
+  &:not(:placeholder-shown) {
+    background-image: none;
+  }
+}

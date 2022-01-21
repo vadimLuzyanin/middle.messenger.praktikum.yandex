@@ -1,0 +1,79 @@
+{
+  "env": {
+    "browser": true,
+    "es6": true
+  },
+  "extends": ["airbnb-base", "prettier"],
+  "globals": {
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly"
+  },
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 2018,
+    "sourceType": "module"
+  },
+  "plugins": ["prettier", "import", "@typescript-eslint", "es"],
+  "rules": {
+    "quotes": [2, "double"],
+    "no-unused-expressions": "off",
+    "@typescript-eslint/no-unused-expressions": ["error"],
+    "func-names": "off",
+    "no-console": ["error"],
+    "no-dupe-class-members": "off",
+    "class-methods-use-this": "off",
+    "no-alert": ["error"],
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "js": "never",
+        "ts": "never"
+      }
+    ],
+    "camelcase": ["off"],
+    "no-continue": "off",
+    "no-plusplus": "off",
+    "global-require": "off",
+    "import/prefer-default-export": ["off"],
+    "no-redeclare": ["off"],
+    "no-shadow": "off",
+    "require-await": "error",
+    "no-use-before-define": "off",
+    "no-unneeded-ternary": "off",
+    "no-restricted-syntax": ["error", "LabeledStatement", "WithStatement"],
+    "spaced-comment": [2, "always", { "markers": ["/"] }]
+  },
+  "overrides": [
+    {
+      "files": ["**/*.ts"],
+      "rules": {
+        "@typescript-eslint/no-unnecessary-condition": [
+          "error",
+          { "allowConstantLoopConditions": true }
+        ],
+        "no-unused-vars": ["off"],
+        "import/named": ["off"],
+        "no-undef": ["off"]
+      },
+      "parserOptions": {
+        "project": "./tsconfig.json"
+      }
+    },
+    {
+      "files": ["**/{index}.{ts}", "**/*.d.ts"],
+      "rules": {
+        "import/prefer-default-export": ["off"]
+      }
+    }
+  ],
+  "settings": {
+    "import/resolver": {
+      "typescript": {}
+    },
+    "import/extensions": [".ts"],
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts"]
+    }
+  }
+}
