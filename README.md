@@ -32,4 +32,4 @@
 
 Использована реализация блока с реактивным state
 
-[Ссылка на пул реквест](https://github.com/vadimLuzyanin/middle.messenger.praktikum.yandex/pull/3)
+[Ссылка на пул реквест](https://github.com/vadimLuzyanin/middle.messenger.praktikum.yandex/pull/4)
