@@ -1,4 +1,4 @@
-import { combineReducers } from "../../storeLib/storeLib";
+import { combineReducers } from "../../storeLib";
 import type { AppAction } from "../types";
 import { authError, isLoggedIn, user, AuthState } from "./auth";
 import { messages, MessagesState } from "./chatMessages";

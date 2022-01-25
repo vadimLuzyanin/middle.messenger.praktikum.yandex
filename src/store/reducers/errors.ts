@@ -1,5 +1,5 @@
 import { renderErrorModal } from "../../components";
-import { errorInController } from "../actions/errors";
+import { errorInController } from "../actions";
 import { AppAction } from "../types";
 
 type Errors = Error[];

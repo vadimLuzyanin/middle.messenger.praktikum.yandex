@@ -1,5 +1,5 @@
 import chatsController from "./chatsController";
-import { store, currentUserReceive } from "../store";
+import { store, currentUserReceive, errorInController } from "../store";
 import {
   ChangeAvatarParams,
   ChangePasswordParams,
@@ -7,7 +7,6 @@ import {
   ErrorResponse,
   UserSettingsApi,
 } from "../api";
-import { errorInController } from "../store/actions/errors";
 
 const userSettingsApi = new UserSettingsApi();
 

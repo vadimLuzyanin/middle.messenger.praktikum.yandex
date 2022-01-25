@@ -9,7 +9,7 @@ import { EditData } from "./EditData";
 import { renderModal, removeModals } from "../../components";
 import { gotoRoute } from "../../router";
 import { ScreensPathnames } from "../../constants";
-import { AppState } from "../../store/reducers";
+import { AppState } from "../../store";
 import { userSettingsController } from "../../controllers";
 
 type InnerProps = {

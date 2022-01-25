@@ -4,8 +4,8 @@ import {
   ChatUsersAction,
   MessagesAction,
   PathnameAction,
+  ErrorAction,
 } from "./actions";
-import { ErrorAction } from "./actions/errors";
 
 export type AppAction =
   | AuthAction

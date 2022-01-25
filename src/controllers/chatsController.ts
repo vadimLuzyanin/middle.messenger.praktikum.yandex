@@ -7,8 +7,12 @@ import {
   GetChatTokenParams,
   GetChatUsersParams,
 } from "../api";
-import { store, chatListReceive, chatUsersReceive } from "../store";
-import { errorInController } from "../store/actions/errors";
+import {
+  store,
+  chatListReceive,
+  chatUsersReceive,
+  errorInController,
+} from "../store";
 import WSController from "./WSController";
 
 const chatsApi = new ChatApi();

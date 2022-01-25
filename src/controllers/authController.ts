@@ -6,8 +6,8 @@ import {
   loginError,
   logout,
   registerError,
+  errorInController,
 } from "../store";
-import { errorInController } from "../store/actions/errors";
 import chatsController from "./chatsController";
 
 const authApi = new AuthApi();

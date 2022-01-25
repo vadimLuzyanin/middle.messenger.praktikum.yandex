@@ -1,6 +1,5 @@
 import { ChatApi, ChatMessage } from "../api";
-import { store } from "../store";
-import { oldMessagesReceive, newMessagesReceive } from "../store/actions";
+import { newMessagesReceive, oldMessagesReceive, store } from "../store";
 
 type ConnectParams = {
   token: string;

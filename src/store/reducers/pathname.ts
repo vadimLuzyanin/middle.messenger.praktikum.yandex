@@ -1,4 +1,4 @@
-import { pathnameChange } from "../actions/pathname";
+import { pathnameChange } from "../actions";
 import { AppAction } from "../types";
 
 export function pathname(

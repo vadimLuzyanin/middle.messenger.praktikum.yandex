@@ -1,8 +1,6 @@
+import { oldMessagesReceive, newMessagesReceive } from "../actions";
 import { ChatMessage } from "../../api";
-import {
-  newMessagesReceive,
-  oldMessagesReceive,
-} from "../actions/chatMessages";
+
 import { AppAction } from "../types";
 
 type State = { [key: number]: ChatMessage[] };
