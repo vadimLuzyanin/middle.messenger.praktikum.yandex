@@ -6,9 +6,9 @@ export enum ListenerNames {
 }
 
 export enum ScreensPathnames {
-  login = "/",
-  register = "/sign-up",
-  settings = "/settings",
-  messenger = "/messenger",
-  screen500 = "/500",
+  Login = "/",
+  Register = "/sign-up",
+  Settings = "/settings",
+  Messenger = "/messenger",
+  Screen500 = "/500",
 }

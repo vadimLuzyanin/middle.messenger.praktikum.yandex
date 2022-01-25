@@ -18,9 +18,9 @@ function subRedirects() {
     const { isLoggedIn, pathname } = getState();
     if (isLoggedIn) {
       switch (pathname) {
-        case ScreensPathnames.register:
-        case ScreensPathnames.login: {
-          router.go(ScreensPathnames.messenger);
+        case ScreensPathnames.Register:
+        case ScreensPathnames.Login: {
+          router.go(ScreensPathnames.Messenger);
           break;
         }
         default: {
@@ -29,9 +29,9 @@ function subRedirects() {
       }
     } else {
       switch (pathname) {
-        case ScreensPathnames.messenger:
-        case ScreensPathnames.settings: {
-          router.go(ScreensPathnames.login);
+        case ScreensPathnames.Messenger:
+        case ScreensPathnames.Settings: {
+          router.go(ScreensPathnames.Login);
           break;
         }
         default: {
@@ -44,23 +44,27 @@ function subRedirects() {
 
 async function init() {
   router
-    .use(ScreensPathnames.login, LoginScreen)
-    .use(ScreensPathnames.register, RegisterScreen)
-    .use(ScreensPathnames.messenger, MainScreen)
-    .use(ScreensPathnames.settings, SettingsScreen)
-    .use(ScreensPathnames.screen500, Screen500)
+    .use(ScreensPathnames.Login, LoginScreen)
+    .use(ScreensPathnames.Register, RegisterScreen)
+    .use(ScreensPathnames.Messenger, MainScreen)
+    .use(ScreensPathnames.Settings, SettingsScreen)
+    .use(ScreensPathnames.Screen500, Screen500)
     .use("*", Screen404)
     .addOnPathname((pathname) => {
       store.dispatch(pathnameChange(pathname));
     })
     .start();
 
-  await authController.ensureInSystem();
-  await chatsController.fetchChats();
+  const alreadyLoggedIn = await authController.ensureInSystem();
+  if (alreadyLoggedIn) {
+    await chatsController.fetchChats();
+  }
   subRedirects();
 
   store.dispatch({ type: "@@INIT", payload: null });
-  await WSController.requestOldMessagesAndSubscribeToNew();
+  if (alreadyLoggedIn) {
+    await WSController.requestOldMessagesAndSubscribeToNew();
+  }
 }
 
 init();

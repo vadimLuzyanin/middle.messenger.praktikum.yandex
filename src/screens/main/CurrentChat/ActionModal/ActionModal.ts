@@ -11,8 +11,10 @@ type InnerProps = {
   text: string;
 };
 
+type ChatActionType = "add" | "remove";
+
 type Props = {
-  type: "add" | "remove";
+  type: ChatActionType;
   chatId: number;
 };
 
@@ -36,7 +38,7 @@ export default class ActionModal extends Component<Props, State, InnerProps> {
     }
 
     this.innerProps.loginInput = new Input({
-      autofocus: true,
+      shouldFocusAfterRender: true,
       placeholder: "Логин",
       value: this.state.login,
       errorMessage: "Пользователи не найдены",

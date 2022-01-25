@@ -13,7 +13,7 @@ type Props = {
   validation?: InputValidation;
   value?: string;
   getIsNotValid?: (value: string) => boolean;
-  autofocus?: boolean;
+  shouldFocusAfterRender?: boolean;
   errorMessage?: string;
 };
 
@@ -124,7 +124,7 @@ export default class Input extends Component<Props, State> {
   }
 
   componentDidMount() {
-    if (this.props.autofocus) {
+    if (this.props.shouldFocusAfterRender) {
       this.focus();
     }
   }

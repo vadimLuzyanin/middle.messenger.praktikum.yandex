@@ -62,7 +62,7 @@ export default class LoginScreen extends Component<{}, State, InnerProps> {
       text: "Нет аккаунта?",
       type: "secondary",
       onClick: () => {
-        gotoRoute(ScreensPathnames.register);
+        gotoRoute(ScreensPathnames.Register);
       },
     });
     this.innerProps.loginInput = new Input({

@@ -1,7 +1,13 @@
-/* eslint-disable no-console */
+import WSController from "./WSController";
 import { AuthApi, ErrorResponse, LoginParams, RegisterParams } from "../api";
-import { store, currentUserReceive, loginError, logout } from "../store";
-// eslint-disable-next-line import/no-cycle
+import {
+  store,
+  currentUserReceive,
+  loginError,
+  logout,
+  registerError,
+} from "../store";
+import { errorInController } from "../store/actions/errors";
 import chatsController from "./chatsController";
 
 const authApi = new AuthApi();
@@ -14,6 +20,7 @@ class AuthController {
 
       store.dispatch(currentUserReceive(userData));
       await chatsController.fetchChats();
+      await WSController.requestOldMessagesAndSubscribeToNew();
     } catch (e) {
       store.dispatch(loginError((e as ErrorResponse).reason));
     }
@@ -26,17 +33,25 @@ class AuthController {
 
       store.dispatch(currentUserReceive(userData));
       await chatsController.fetchChats();
+      await WSController.requestOldMessagesAndSubscribeToNew();
     } catch (e) {
-      console.log(e);
+      store.dispatch(registerError((e as ErrorResponse).reason));
     }
   }
 
-  async getUser() {
+  async getUser(dontWarnOnError?: boolean) {
     try {
       const result = await authApi.getUser();
       return result;
     } catch (e) {
-      console.log(e);
+      if (!dontWarnOnError) {
+        store.dispatch(
+          errorInController({
+            error: e as Error,
+            message: "Произошла ошибка при получении пользователя",
+          })
+        );
+      }
       return null;
     }
   }
@@ -46,16 +61,30 @@ class AuthController {
       await authApi.logout();
       store.dispatch(logout(null));
     } catch (e) {
-      console.log(e);
+      store.dispatch(
+        errorInController({
+          error: e as Error,
+          message: "Произошла ошибка при выходе из системы",
+        })
+      );
     }
   }
 
   async ensureInSystem() {
     try {
-      const userData = await authApi.getUser();
-      store.dispatch(currentUserReceive(userData));
+      const userData = await this.getUser(true);
+      if (userData) {
+        store.dispatch(currentUserReceive(userData));
+        return true;
+      }
+      return false;
     } catch (e) {
-      console.log(e);
+      store.dispatch(
+        errorInController({
+          error: e as Error,
+        })
+      );
+      return false;
     }
   }
 }

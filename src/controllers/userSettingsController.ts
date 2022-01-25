@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import chatsController from "./chatsController";
 import { store, currentUserReceive } from "../store";
 import {
@@ -8,6 +7,7 @@ import {
   ErrorResponse,
   UserSettingsApi,
 } from "../api";
+import { errorInController } from "../store/actions/errors";
 
 const userSettingsApi = new UserSettingsApi();
 
@@ -17,7 +17,12 @@ class UserSettingsController {
       const userData = await userSettingsApi.changeProfile(params);
       store.dispatch(currentUserReceive(userData));
     } catch (e) {
-      console.log(e);
+      store.dispatch(
+        errorInController({
+          error: e as Error,
+          message: "Произошла ошибка при изменении настроек пользователя",
+        })
+      );
     }
   }
 
@@ -36,7 +41,12 @@ class UserSettingsController {
       store.dispatch(currentUserReceive(result));
       await chatsController.fetchChats();
     } catch (e) {
-      console.log(e);
+      store.dispatch(
+        errorInController({
+          error: e as Error,
+          message: "Произошла ошибка при изменении аватара пользователя",
+        })
+      );
     }
   }
 }

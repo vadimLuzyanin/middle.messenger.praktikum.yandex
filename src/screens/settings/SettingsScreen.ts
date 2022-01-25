@@ -110,7 +110,7 @@ export default class SettingsScreen extends Component<{}, State, InnerProps> {
         const listener = () => {
           switch (this.state.currentComponent) {
             case this.props.viewSettings: {
-              gotoRoute(ScreensPathnames.messenger);
+              gotoRoute(ScreensPathnames.Messenger);
               break;
             }
             default: {

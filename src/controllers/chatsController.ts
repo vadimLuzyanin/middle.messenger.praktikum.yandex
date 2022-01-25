@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-
 import {
   AddUsersParams,
   ChatApi,
@@ -8,10 +6,9 @@ import {
   GetChatsParams,
   GetChatTokenParams,
   GetChatUsersParams,
-  GetOldMessagesCountParams,
 } from "../api";
 import { store, chatListReceive, chatUsersReceive } from "../store";
-// eslint-disable-next-line import/no-cycle
+import { errorInController } from "../store/actions/errors";
 import WSController from "./WSController";
 
 const chatsApi = new ChatApi();
@@ -26,7 +23,12 @@ class ChatsController {
         await this.getChatUsers({ id, limit: Number.MAX_SAFE_INTEGER });
       }
     } catch (e) {
-      console.log(e);
+      store.dispatch(
+        errorInController({
+          error: e as Error,
+          message: "Произошла ошибка при получении списка чатов",
+        })
+      );
     }
   }
 
@@ -35,7 +37,12 @@ class ChatsController {
       await chatsApi.addUsers(params);
       await this.fetchChats();
     } catch (e) {
-      console.log(e);
+      store.dispatch(
+        errorInController({
+          error: e as Error,
+          message: "Произошла ошибка при добавлении пользователей в чат",
+        })
+      );
     }
   }
 
@@ -44,7 +51,12 @@ class ChatsController {
       await chatsApi.deleteUsers(params);
       await this.fetchChats();
     } catch (e) {
-      console.log(e);
+      store.dispatch(
+        errorInController({
+          error: e as Error,
+          message: "Произошла ошибка при удалении пользователей из чата",
+        })
+      );
     }
   }
 
@@ -54,7 +66,12 @@ class ChatsController {
       await this.fetchChats();
       await WSController.requestOldMessagesAndSubscribeToNew();
     } catch (e) {
-      console.log(e);
+      store.dispatch(
+        errorInController({
+          error: e as Error,
+          message: "Произошла ошибка при создании чата",
+        })
+      );
     }
   }
 
@@ -63,7 +80,12 @@ class ChatsController {
       const users = await chatsApi.getChatUsers(params);
       store.dispatch(chatUsersReceive({ users, chatId: params.id }));
     } catch (e) {
-      console.log(e);
+      store.dispatch(
+        errorInController({
+          error: e as Error,
+          message: "Произошла ошибка при получении списка пользователей чата",
+        })
+      );
     }
   }
 
@@ -72,17 +94,12 @@ class ChatsController {
       const { token } = await chatsApi.getChatToken(params);
       return token;
     } catch (e) {
+      store.dispatch(
+        errorInController({
+          error: e as Error,
+        })
+      );
       return null;
-    }
-  }
-
-  async getOldMessagesCount(params: GetOldMessagesCountParams) {
-    try {
-      const count = await chatsApi.getOldMessagesCount(params);
-      return count;
-    } catch (e) {
-      console.log(e);
-      return { unread_count: 0 };
     }
   }
 }

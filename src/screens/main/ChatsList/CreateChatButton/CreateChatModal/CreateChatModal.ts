@@ -27,7 +27,7 @@ export default class LogoutModalContent extends Component<
 
     this.innerProps.chatTitleInput = new Input({
       placeholder: "Название чата",
-      autofocus: true,
+      shouldFocusAfterRender: true,
       handleInput: (e) => {
         this.setState({ title: e.target.value });
         this.props.chatTitleInput.focus();

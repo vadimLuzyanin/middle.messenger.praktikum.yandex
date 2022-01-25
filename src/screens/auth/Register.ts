@@ -64,7 +64,7 @@ export default class RegisterScreen extends Component<{}, State, InnerProps> {
       text: "Войти",
       type: "secondary",
       onClick: () => {
-        gotoRoute(ScreensPathnames.login);
+        gotoRoute(ScreensPathnames.Login);
       },
     });
     this.innerProps.registerBtn = new Button({

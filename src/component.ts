@@ -322,18 +322,4 @@ export default class Component<
       this.element.remove();
     }
   }
-
-  // hide() {
-  //   if (this.element && this.#elementDisplayValue !== "none") {
-  //     this.#elementDisplayValue = window.getComputedStyle(this.element).display;
-  //     this.element.style.display = "none";
-  //   }
-  // }
-
-  // show() {
-  //   if (this.element && this.#elementDisplayValue) {
-  //     this.element.style.display = this.#elementDisplayValue;
-  //     this.#elementDisplayValue = null;
-  //   }
-  // }
 }

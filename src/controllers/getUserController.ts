@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { ErrorResponse, GetUserApi, SearchUsersParams } from "../api";
 
 const getUserApi = new GetUserApi();

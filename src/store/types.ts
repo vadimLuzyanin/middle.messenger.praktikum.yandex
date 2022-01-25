@@ -5,6 +5,7 @@ import {
   MessagesAction,
   PathnameAction,
 } from "./actions";
+import { ErrorAction } from "./actions/errors";
 
 export type AppAction =
   | AuthAction
@@ -12,4 +13,5 @@ export type AppAction =
   | ChatUsersAction
   | PathnameAction
   | MessagesAction
+  | ErrorAction
   | { type: "@@INIT" };

@@ -68,11 +68,10 @@ export default class HTTP {
     const combinedUrl = `${this.baseUrl}${url}`;
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
+      xhr.responseType = "json";
       const {
         method,
-        headers = options.data instanceof FormData
-          ? {}
-          : { "Content-Type": "application/json" },
+        headers = { "Content-Type": "application/json" },
         data = {},
       } = options;
 
@@ -91,34 +90,26 @@ export default class HTTP {
       xhr.timeout = timeout;
 
       switch (method) {
-        case METHODS.PUT:
-        case METHODS.POST:
-        case METHODS.DELETE: {
-          if (data instanceof FormData) {
-            xhr.send(data);
-            break;
-          }
-          xhr.send(JSON.stringify(data));
+        case METHODS.GET: {
+          xhr.send();
           break;
         }
         default: {
-          xhr.send();
+          if (data instanceof FormData) {
+            xhr.send(data);
+          } else {
+            xhr.send(JSON.stringify(data));
+          }
           break;
         }
       }
 
       xhr.onload = () => {
-        const { status, responseText } = xhr;
-        let parsedResponse;
-        try {
-          parsedResponse = JSON.parse(responseText);
-        } catch {
-          parsedResponse = responseText;
-        }
+        const { status, response } = xhr;
         if (status >= 200 && status < 300) {
-          resolve(parsedResponse);
+          resolve(response);
         } else {
-          reject(parsedResponse);
+          reject(response);
         }
       };
       xhr.onerror = reject;

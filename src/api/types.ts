@@ -18,14 +18,7 @@ export type Chat = {
   avatar: string;
   unread_count: number;
   last_message?: {
-    user: {
-      first_name: string;
-      second_name: string;
-      avatar: string;
-      email: string;
-      login: string;
-      phone: string;
-    };
+    user: User;
     time: string;
     content: string;
   };

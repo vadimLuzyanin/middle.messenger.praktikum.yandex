@@ -10,7 +10,7 @@ export default class ProfileButton extends Component {
   constructor() {
     super(tmpl);
     this.innerProps.onClick = () => {
-      gotoRoute(ScreensPathnames.settings);
+      gotoRoute(ScreensPathnames.Settings);
     };
   }
 }

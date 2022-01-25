@@ -30,6 +30,7 @@ export class UserSettingsApi {
       "/profile/avatar",
       {
         data: params,
+        headers: {},
       }
     );
   }

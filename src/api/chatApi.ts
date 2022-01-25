@@ -47,14 +47,6 @@ type GetChatTokenResponse = {
   token: string;
 };
 
-export type GetOldMessagesCountParams = {
-  id: number;
-};
-
-type GetOldMessagesCountResponse = {
-  unread_count: number;
-};
-
 const chatAPIInstance = new HTTP("api/v2/chats");
 
 export class ChatApi {
@@ -90,10 +82,5 @@ export class ChatApi {
   getChatToken(params: GetChatTokenParams) {
     const { id } = params;
     return chatAPIInstance.post<GetChatTokenResponse>(`/token/${id}`);
-  }
-
-  getOldMessagesCount(params: GetOldMessagesCountParams) {
-    const { id } = params;
-    return chatAPIInstance.get<GetOldMessagesCountResponse>(`/new/${id}`);
   }
 }

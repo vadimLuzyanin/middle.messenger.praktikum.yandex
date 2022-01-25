@@ -1,10 +1,6 @@
-import { ChatMessage } from "../api";
+import { ChatApi, ChatMessage } from "../api";
 import { store } from "../store";
 import { oldMessagesReceive, newMessagesReceive } from "../store/actions";
-// eslint-disable-next-line import/no-cycle
-import authController from "./authController";
-// eslint-disable-next-line import/no-cycle
-import chatsController from "./chatsController";
 
 type ConnectParams = {
   token: string;
@@ -14,6 +10,8 @@ type ConnectParams = {
 const keepAliveMessage = JSON.stringify({
   type: "ping",
 });
+
+const chatsApi = new ChatApi();
 
 class WSController {
   userId: number = 0;
@@ -74,13 +72,12 @@ class WSController {
   }
 
   async requestOldMessagesAndSubscribeToNew() {
-    const user = await authController.getUser();
-    if (!user) {
+    const userId = store.getState().user?.id;
+    if (!userId) {
       return;
     }
-    this.setUserId(user.id);
+    this.setUserId(userId);
 
-    await chatsController.fetchChats();
     const chatsIds = store.getState().chats.map((c) => c.id);
     const alreadyConnected = Object.keys(this.sockets);
     const notConnected = chatsIds.filter(
@@ -88,7 +85,13 @@ class WSController {
     );
     const chatIdsWithTokens = await Promise.all(
       notConnected.map(async (id) => {
-        const token = await chatsController.getChatToken({ id });
+        let token = null;
+        try {
+          const response = await chatsApi.getChatToken({ id });
+          token = response.token;
+        } catch {
+          token = null;
+        }
         if (token) {
           await this.connect({ chatId: id, token });
           return id;

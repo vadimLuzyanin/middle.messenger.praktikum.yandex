@@ -2,7 +2,6 @@ import tmpl from "./chatsList.hbs";
 import * as cn from "./chatsList.module.scss";
 import { ChatCard } from "./ChatCard";
 import { ProfileButton } from "./ProfileButton";
-import { SearchInput } from "./SearchInput";
 import Component from "../../../component";
 import { Chat } from "../../../api";
 import { CreateChatButton, CreateChatModal } from "./CreateChatButton";
@@ -15,7 +14,6 @@ type Props = {
 type State = { selected: ChatCard | null; scrollPosition: number };
 type InnerProps = {
   profileBtn: ProfileButton;
-  searchInput: SearchInput;
   createChatBtn: CreateChatButton;
   createChatModal: CreateChatModal;
   cards: { id: number; component: ChatCard }[];
@@ -31,7 +29,6 @@ export default class ChatsList extends Component<Props, State, InnerProps> {
     this.state = { selected: null, scrollPosition: 0 };
 
     this.innerProps.profileBtn = new ProfileButton();
-    // this.innerProps.searchInput = new SearchInput();
 
     this.innerProps.createChatModal = new CreateChatModal();
     this.innerProps.createChatBtn = new CreateChatButton({

@@ -21,7 +21,7 @@ export default class Screen500 extends Component<{}, {}, InnerProps> {
       text: "Назад к чатам",
       type: "secondary",
       onClick: () => {
-        gotoRoute(ScreensPathnames.messenger);
+        gotoRoute(ScreensPathnames.Messenger);
       },
     });
 
