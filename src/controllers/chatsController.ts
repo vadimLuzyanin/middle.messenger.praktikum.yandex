@@ -20,7 +20,10 @@ const chatsApi = new ChatApi();
 class ChatsController {
   async fetchChats(params?: GetChatsParams) {
     try {
-      const chats = await chatsApi.getChats(params);
+      const chats = await chatsApi.getChats({
+        ...params,
+        limit: Number.MAX_SAFE_INTEGER,
+      });
       store.dispatch(chatListReceive(chats));
       for (const { id } of chats) {
         // eslint-disable-next-line no-await-in-loop
