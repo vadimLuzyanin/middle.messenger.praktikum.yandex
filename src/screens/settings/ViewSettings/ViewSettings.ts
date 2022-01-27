@@ -2,8 +2,10 @@ import { Button, renderModal } from "../../../components";
 import Component from "../../../component";
 import tmpl from "./viewSettings.hbs";
 import * as cn from "../settings.module.scss";
-import { pushPathname } from "../../../index";
 import { LogoutModalContent } from "./LogoutModalContent";
+import { AppState } from "../../../store";
+import { authController } from "../../../controllers";
+import { removeModals } from "../../../components/modal";
 
 type InnerProps = {
   changeDataButton: Button;
@@ -18,16 +20,17 @@ type Props = {
   onChangeDataClick: () => void;
 };
 
-type State = {
-  name: string;
-  fields: { name: string; value: string }[];
-};
+type State = {} & Partial<AppState["user"]>;
+
+function mapStoreToState(state: AppState) {
+  return { ...state.user };
+}
 
 export default class ViewSettings extends Component<Props, State, InnerProps> {
   cn = cn;
 
   constructor(props: Props) {
-    super(tmpl, props);
+    super(tmpl, props, mapStoreToState);
 
     this.innerProps.changeDataButton = new Button({
       text: "Изменить данные",
@@ -47,10 +50,12 @@ export default class ViewSettings extends Component<Props, State, InnerProps> {
     });
     this.innerProps.logoutModalContent = new LogoutModalContent({
       onCancelClick: () => {
-        this.props.logoutModalContent.remove();
+        removeModals();
       },
       onLogoutClick: () => {
-        pushPathname("/login");
+        authController.logout().then(() => {
+          removeModals();
+        });
       },
     });
     this.innerProps.logoutButton = new Button({
@@ -61,35 +66,5 @@ export default class ViewSettings extends Component<Props, State, InnerProps> {
         renderModal(this.props.logoutModalContent, e as MouseEvent);
       },
     });
-
-    this.state = {
-      name: "Иван",
-      fields: [
-        {
-          name: "Почта",
-          value: "pochta@yandex.ru",
-        },
-        {
-          name: "Логин",
-          value: "ivanivanov",
-        },
-        {
-          name: "Имя",
-          value: "Иван",
-        },
-        {
-          name: "Фамилия",
-          value: "Иванов",
-        },
-        {
-          name: "Имя в чате",
-          value: "Иван",
-        },
-        {
-          name: "Телефон",
-          value: "+7 (909) 967 30 30",
-        },
-      ],
-    };
   }
 }

@@ -1,69 +1,70 @@
-import Component from "./component";
+import { ScreensPathnames } from "./constants";
+import { authController, chatsController, WSController } from "./controllers";
 import "./helpers";
+import { router } from "./router";
 import {
-  ErrorScreen,
   LoginScreen,
   MainScreen,
   RegisterScreen,
+  Screen404,
+  Screen500,
   SettingsScreen,
 } from "./screens";
+import { pathnameChange } from "./store";
+import store from "./store/store";
 
-export function renderRoot(block: Component<any, any, any>) {
-  const root = document.getElementById("app");
-  if (root) {
-    root.appendChild(block.render());
-  }
-  block.dispatchComponentDidMount();
+function subRedirects() {
+  store.subscribe((getState) => {
+    const { isLoggedIn, pathname } = getState();
+    if (isLoggedIn) {
+      switch (pathname) {
+        case ScreensPathnames.Register:
+        case ScreensPathnames.Login: {
+          router.go(ScreensPathnames.Messenger);
+          break;
+        }
+        default: {
+          break;
+        }
+      }
+    } else {
+      switch (pathname) {
+        case ScreensPathnames.Messenger:
+        case ScreensPathnames.Settings: {
+          router.go(ScreensPathnames.Login);
+          break;
+        }
+        default: {
+          break;
+        }
+      }
+    }
+  });
 }
 
-export function clearRoot() {
-  const root = document.getElementById("app");
-  if (root) {
-    root.innerHTML = "";
-  }
-}
+async function init() {
+  router
+    .use(ScreensPathnames.Login, LoginScreen)
+    .use(ScreensPathnames.Register, RegisterScreen)
+    .use(ScreensPathnames.Messenger, MainScreen)
+    .use(ScreensPathnames.Settings, SettingsScreen)
+    .use(ScreensPathnames.Screen500, Screen500)
+    .use("*", Screen404)
+    .addOnPathname((pathname) => {
+      store.dispatch(pathnameChange(pathname));
+    })
+    .start();
 
-export function pushPathname(pathname: string) {
-  if (document.location.pathname !== pathname) {
-    window.history.pushState(null, "", pathname);
-    render();
+  const alreadyLoggedIn = await authController.ensureInSystem();
+  if (alreadyLoggedIn) {
+    await chatsController.fetchChats();
   }
-}
+  subRedirects();
 
-export default function render() {
-  clearRoot();
-  const { pathname } = document.location;
-  switch (pathname) {
-    case "/":
-    case "/index.html": {
-      renderRoot(new MainScreen());
-      break;
-    }
-    case "/login": {
-      renderRoot(new LoginScreen());
-      break;
-    }
-    case "/register": {
-      renderRoot(new RegisterScreen());
-      break;
-    }
-    case "/settings": {
-      renderRoot(new SettingsScreen());
-      break;
-    }
-    case "/500": {
-      renderRoot(
-        new ErrorScreen({ description: "Мы уже фиксим", title: "500" })
-      );
-      break;
-    }
-    case "/404":
-    default: {
-      renderRoot(
-        new ErrorScreen({ description: "Не туда попали", title: "404" })
-      );
-    }
+  store.dispatch({ type: "@@INIT", payload: null });
+  if (alreadyLoggedIn) {
+    await WSController.requestOldMessagesAndSubscribeToNew();
   }
 }
 
-render();
+init();

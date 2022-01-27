@@ -1,15 +1,17 @@
-import { Button, Input } from "../../../components";
+import { Button, Input, Popup } from "../../../components";
 import Component from "../../../component";
 import validations from "../../../validations";
 import tmpl from "./editPassword.hbs";
 import * as cn from "../settings.module.scss";
-import { getIsFormInvalid } from "../../../utils";
+import { extractFormValues, getIsFormInvalid } from "../../../utils";
+import { userSettingsController } from "../../../controllers";
 
 type InnerProps = {
   oldPasswordInput: Input;
   newPasswordInput: Input;
   newPasswordAgainInput: Input;
   saveButton: Button;
+  incorrectPopup: Popup;
 };
 
 type Props = {
@@ -31,14 +33,14 @@ export default class EditPassword extends Component<Props, State, InnerProps> {
   constructor(props: Props) {
     super(tmpl, props);
 
-    this.state = {
+    this.setState({
       formValues: {
         oldPassword: { value: "", notValid: true },
         newPassword: { value: "", notValid: true },
         newPasswordAgain: { value: "", notValid: true },
       },
       disableSubmit: true,
-    };
+    });
 
     this.innerProps.oldPasswordInput = new Input({
       placeholder: "Старый пароль",
@@ -82,19 +84,42 @@ export default class EditPassword extends Component<Props, State, InnerProps> {
       },
     });
 
+    this.innerProps.incorrectPopup = new Popup({
+      rootElement: document.documentElement,
+      text: "Неверный пароль",
+      indent: 15,
+      hidden: true,
+      warn: true,
+    });
+
     this.innerProps.saveButton = new Button({
       text: "Сохранить",
       type: "primary",
       name: "save",
       getDisabled: () => !!this.state.disableSubmit,
       onClick: () => {
-        // eslint-disable-next-line no-console
-        console.log(this.state.formValues);
         if (!getIsFormInvalid(this.state.formValues)) {
-          this.props.onSaveClick();
+          userSettingsController
+            .changePassword(extractFormValues(this.state.formValues))
+            .then((res) => {
+              if (res === true) {
+                this.props.onSaveClick();
+              } else {
+                this.renderIncorrectPopup();
+              }
+            });
         }
       },
     });
+  }
+
+  renderIncorrectPopup() {
+    this.props.incorrectPopup.outerProps.rootElement =
+      this.props.saveButton.element!;
+    this.props.incorrectPopup.show();
+    setTimeout(() => {
+      this.props.incorrectPopup.hide();
+    }, 5000);
   }
 
   setFormValue(

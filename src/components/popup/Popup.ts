@@ -5,6 +5,9 @@ import * as cn from "./popup.module.scss";
 type Props = {
   rootElement: HTMLElement;
   indent: number;
+  text: string;
+  hidden?: boolean;
+  warn?: boolean;
 };
 
 export default class Popup extends Component<Props> {
@@ -31,13 +34,13 @@ export default class Popup extends Component<Props> {
 
   show() {
     if (this.element) {
-      this.element.style.display = "block";
+      this.element.style.opacity = "1";
     }
   }
 
   hide() {
     if (this.element) {
-      this.element.style.display = "none";
+      this.element.style.opacity = "0";
     }
   }
 

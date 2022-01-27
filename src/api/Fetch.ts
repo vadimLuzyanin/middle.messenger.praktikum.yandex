@@ -5,6 +5,8 @@ enum METHODS {
   DELETE = "DELETE",
 }
 
+const DOMAIN = "https://ya-praktikum.tech";
+
 type Options = {
   timeout?: number;
   method: METHODS;
@@ -23,46 +25,50 @@ function queryStringify(data: any) {
   return result;
 }
 
-export default class HTTPTransport {
-  get = (url: string, options: OptionsNoMethod = {}) => {
-    return this.request(
+export default class HTTP {
+  baseUrl: string;
+
+  constructor(base: string) {
+    this.baseUrl = `${DOMAIN}/${base}`;
+  }
+
+  get<R>(url: string, options: OptionsNoMethod = {}) {
+    return this.request<R>(
       url,
       { ...options, method: METHODS.GET },
       options.timeout
     );
-  };
+  }
 
-  put = (url: string, options: OptionsNoMethod = {}) => {
-    return this.request(
+  put<R>(url: string, options: OptionsNoMethod = {}) {
+    return this.request<R>(
       url,
       { ...options, method: METHODS.PUT },
       options.timeout
     );
-  };
+  }
 
-  post = (url: string, options: OptionsNoMethod = {}) => {
-    return this.request(
+  post<R>(url: string, options: OptionsNoMethod = {}) {
+    return this.request<R>(
       url,
       { ...options, method: METHODS.POST },
       options.timeout
     );
-  };
+  }
 
-  delete = (url: string, options: OptionsNoMethod = {}) => {
-    return this.request(
+  delete<R>(url: string, options: OptionsNoMethod = {}) {
+    return this.request<R>(
       url,
       { ...options, method: METHODS.DELETE },
       options.timeout
     );
-  };
+  }
 
-  request = (
-    url: string,
-    options: Options,
-    timeout = 5000
-  ): Promise<XMLHttpRequest> => {
+  request<R>(url: string, options: Options, timeout = 5000): Promise<R> {
+    const combinedUrl = `${this.baseUrl}${url}`;
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
+      xhr.responseType = "json";
       const {
         method,
         headers = { "Content-Type": "application/json" },
@@ -70,9 +76,9 @@ export default class HTTPTransport {
       } = options;
 
       if (method === METHODS.GET) {
-        xhr.open(method, `${url}${queryStringify(data)}`, true);
+        xhr.open(method, `${combinedUrl}${queryStringify(data)}`, true);
       } else {
-        xhr.open(method, url, true);
+        xhr.open(method, combinedUrl, true);
       }
 
       Object.keys(headers).forEach((key) => {
@@ -84,29 +90,31 @@ export default class HTTPTransport {
       xhr.timeout = timeout;
 
       switch (method) {
-        case METHODS.PUT:
-        case METHODS.POST: {
-          xhr.send(JSON.stringify(data));
+        case METHODS.GET: {
+          xhr.send();
           break;
         }
         default: {
-          xhr.send();
+          if (data instanceof FormData) {
+            xhr.send(data);
+          } else {
+            xhr.send(JSON.stringify(data));
+          }
           break;
         }
       }
 
       xhr.onload = () => {
-        const { status, responseText } = xhr;
-        const parsedResponse = JSON.parse(responseText);
+        const { status, response } = xhr;
         if (status >= 200 && status < 300) {
-          resolve(parsedResponse);
+          resolve(response);
         } else {
-          reject(parsedResponse);
+          reject(response);
         }
       };
       xhr.onerror = reject;
       xhr.ontimeout = reject;
       xhr.onabort = reject;
     });
-  };
+  }
 }

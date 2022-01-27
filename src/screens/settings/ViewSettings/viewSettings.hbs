@@ -1,13 +1,31 @@
 
 <div>
   <div class="{{cn.fields}}">
-    <h1 class="{{cn.name}}">{{name}}</h1>
-    {{#each fields}}
-    <div class="{{../cn.field}}">
-      <span class="{{../cn.fieldName}}">{{this.name}}</span>
-      <span class="{{../cn.fieldValue}}">{{this.value}}</span>
+    <h1 class="{{cn.name}}">{{first_name}}</h1>
+    <div class="{{cn.field}}">
+      <span class="{{cn.fieldName}}">Почта</span>
+      <span class="{{cn.fieldValue}}">{{email}}</span>
     </div>
-    {{/each}}
+    <div class="{{cn.field}}">
+      <span class="{{cn.fieldName}}">Логин</span>
+      <span class="{{cn.fieldValue}}">{{login}}</span>
+    </div>
+    <div class="{{cn.field}}">
+      <span class="{{cn.fieldName}}">Имя</span>
+      <span class="{{cn.fieldValue}}">{{first_name}}</span>
+    </div>
+    <div class="{{cn.field}}">
+      <span class="{{cn.fieldName}}">Фамилия</span>
+      <span class="{{cn.fieldValue}}">{{second_name}}</span>
+    </div>
+    <div class="{{cn.field}}">
+      <span class="{{cn.fieldName}}">Имя в чате</span>
+      <span class="{{cn.fieldValue}}">{{display_name}}</span>
+    </div>
+    <div class="{{cn.field}}">
+      <span class="{{cn.fieldName}}">Телефон</span>
+      <span class="{{cn.fieldValue}}">{{phone}}</span>
+    </div>
   </div>
   <div class="{{cn.buttons}}">
     {{{changeDataButton}}}

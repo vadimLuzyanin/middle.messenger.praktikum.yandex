@@ -3,8 +3,11 @@ import tmpl from "./register.hbs";
 import * as cn from "./auth.module.scss";
 import validations from "../../validations";
 import Component from "../../component";
-import { pushPathname } from "../../index";
-import { getIsFormInvalid } from "../../utils";
+import { extractFormValues, getIsFormInvalid } from "../../utils";
+import { gotoRoute } from "../../router";
+import { ScreensPathnames } from "../../constants";
+import { authController } from "../../controllers";
+import { AppState } from "../../store";
 
 type InnerProps = {
   loginBtn: Button;
@@ -29,15 +32,22 @@ type State = {
     password_again: { value: string; notValid: boolean };
   };
   disableSubmit: boolean;
+  authError: string;
 };
+
+function mapStoreToState(store: AppState) {
+  return {
+    authError: store.authError,
+  };
+}
 
 export default class RegisterScreen extends Component<{}, State, InnerProps> {
   cn = cn;
 
   constructor() {
-    super(tmpl);
+    super(tmpl, {}, mapStoreToState);
 
-    this.state = {
+    this.setState({
       formValues: {
         email: { value: "", notValid: true },
         login: { value: "", notValid: true },
@@ -48,13 +58,13 @@ export default class RegisterScreen extends Component<{}, State, InnerProps> {
         password_again: { value: "", notValid: true },
       },
       disableSubmit: true,
-    };
+    });
 
     this.innerProps.loginBtn = new Button({
       text: "Войти",
       type: "secondary",
       onClick: () => {
-        pushPathname("/login");
+        gotoRoute(ScreensPathnames.Login);
       },
     });
     this.innerProps.registerBtn = new Button({
@@ -62,10 +72,11 @@ export default class RegisterScreen extends Component<{}, State, InnerProps> {
       type: "primary",
       getDisabled: () => !!this.state.disableSubmit,
       onClick: () => {
-        // eslint-disable-next-line no-console
-        console.log(this.state.formValues);
         if (!getIsFormInvalid(this.state.formValues)) {
-          pushPathname("/");
+          const params = extractFormValues(this.state.formValues);
+          authController.register(params).then(() => {
+            this.setState({ authError: "" });
+          });
         }
       },
     });
@@ -170,6 +181,15 @@ export default class RegisterScreen extends Component<{}, State, InnerProps> {
         this.props.passwordAgainInput.focus();
       },
     });
+  }
+
+  componentDidUpdate(_: InnerProps, prevState: State) {
+    if (this.state.authError && !prevState.authError) {
+      this.props.emailInput.setState({
+        errorMessage: this.state.authError,
+        notValid: true,
+      });
+    }
   }
 
   setFormValue(
