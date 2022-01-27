@@ -57,11 +57,7 @@
     "build": "rimraf dist && yarn webpack --mode=production && yarn copyfiles _redirects dist",
     "lint": "yarn tsc --noEmit && yarn eslint --ext .ts . && yarn stylelint '**/*.scss' && yarn prettier '**/*.{ts,scss}' --check",
     "fix": "yarn eslint --ext .ts . --fix && yarn prettier '**/*.{ts,scss}' --write",
-    "test": "yarn mocha"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "test && fix && lint"
-    }
+    "test": "yarn mocha",
+    "prepare": "husky install"
   }
 }
