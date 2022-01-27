@@ -23,6 +23,7 @@
     "eslint-plugin-prettier": "^4.0.0",
     "handlebars-loader": "^1.7.1",
     "html-webpack-plugin": "^5.5.0",
+    "husky": "^7.0.4",
     "mini-css-extract-plugin": "^2.5.3",
     "mocha": "^9.1.4",
     "mockdate": "^3.0.5",
@@ -57,5 +58,10 @@
     "lint": "yarn tsc --noEmit && yarn eslint --ext .ts . && yarn stylelint '**/*.scss' && yarn prettier '**/*.{ts,scss}' --check",
     "fix": "yarn eslint --ext .ts . --fix && yarn prettier '**/*.{ts,scss}' --write",
     "test": "yarn mocha"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "test && fix && lint"
+    }
   }
 }
