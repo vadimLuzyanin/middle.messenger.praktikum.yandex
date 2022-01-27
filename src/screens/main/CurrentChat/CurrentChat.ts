@@ -1,5 +1,5 @@
 import Component from "../../../component";
-import * as cn from "./currentChat.module.scss";
+import cn from "./currentChat.module.scss";
 import tmpl from "./currentChat.hbs";
 import { MessageCard } from "./MessageCard";
 import { MessageInput } from "./MessageInput";

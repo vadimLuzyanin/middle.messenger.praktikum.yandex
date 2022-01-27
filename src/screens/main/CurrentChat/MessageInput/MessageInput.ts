@@ -1,5 +1,5 @@
 import Component from "../../../../component";
-import * as cn from "./messageInput.module.scss";
+import cn from "./messageInput.module.scss";
 import tmpl from "./messageInput.hbs";
 import validations from "../../../../validations";
 import WSController from "../../../../controllers/WSController";

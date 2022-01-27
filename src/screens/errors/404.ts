@@ -1,7 +1,7 @@
 import Component from "../../component";
 import { Button } from "../../components";
 import tmpl from "./error.hbs";
-import * as cn from "./error.module.scss";
+import cn from "./error.module.scss";
 import { gotoRoute } from "../../router";
 import { ScreensPathnames } from "../../constants";
 

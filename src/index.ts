@@ -1,6 +1,7 @@
+import "./normalize.css";
+import "./fonts.css";
 import { ScreensPathnames } from "./constants";
 import { authController, chatsController, WSController } from "./controllers";
-import "./helpers";
 import { router } from "./router";
 import {
   LoginScreen,
@@ -10,8 +11,7 @@ import {
   Screen500,
   SettingsScreen,
 } from "./screens";
-import { pathnameChange } from "./store";
-import store from "./store/store";
+import { pathnameChange, store } from "./store";
 
 function subRedirects() {
   store.subscribe((getState) => {

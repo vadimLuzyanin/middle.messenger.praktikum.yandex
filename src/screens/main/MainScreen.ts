@@ -1,5 +1,5 @@
 import tmpl from "./main.hbs";
-import * as cn from "./main.module.scss";
+import cn from "./main.module.scss";
 import Component from "../../component";
 import { Chat } from "../../api";
 import { AppState } from "../../store";

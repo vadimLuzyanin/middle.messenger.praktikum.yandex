@@ -1,6 +1,4 @@
-// @ts-nocheck
-
-import Handlebars from "handlebars";
+const Handlebars = require('handlebars/runtime');
 
 Handlebars.registerHelper("switch", function (value, options) {
   this.switch_value = value;
@@ -44,3 +42,5 @@ Handlebars.registerHelper("ifCond", function (v1, operator, v2, options) {
       return options.inverse(this);
   }
 });
+
+module.exports = Handlebars

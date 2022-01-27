@@ -3,7 +3,7 @@ import Component from "../../../../component";
 import { BlockProps } from "../../../../types";
 import { parseDate } from "../../../../utils";
 import tmpl from "./chatCard.hbs";
-import * as cn from "./chatCard.module.scss";
+import cn from "./chatCard.module.scss";
 
 type Props = BlockProps & {
   chat: Chat;

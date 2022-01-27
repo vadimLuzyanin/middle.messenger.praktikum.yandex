@@ -1,6 +1,6 @@
 import Component from "../../component";
 import tmpl from "./screen.hbs";
-import * as cn from "./settings.module.scss";
+import cn from "./settings.module.scss";
 import backIcon from "./assets/back.svg";
 import avatar from "./assets/defaultAvatar.svg";
 import { ViewSettings } from "./ViewSettings";

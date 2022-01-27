@@ -1,4 +1,4 @@
-import * as cn from "./messageCard.module.scss";
+import cn from "./messageCard.module.scss";
 import tmpl from "./messageCard.hbs";
 import Component from "../../../../component";
 import { parseDate } from "../../../../utils";

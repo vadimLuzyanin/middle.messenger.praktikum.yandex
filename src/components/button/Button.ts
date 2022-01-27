@@ -1,7 +1,7 @@
 import Component from "../../component";
 import { BlockProps } from "../../types";
 import tmpl from "./button.hbs";
-import * as cn from "./button.module.scss";
+import cn from "./button.module.scss";
 
 type Props = BlockProps & {
   text: string;

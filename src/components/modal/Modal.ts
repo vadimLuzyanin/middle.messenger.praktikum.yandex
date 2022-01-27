@@ -1,7 +1,7 @@
 import Component from "../../component";
 import { renderRoot } from "../../render";
 import tmpl from "./modal.hbs";
-import * as cn from "./modal.module.scss";
+import cn from "./modal.module.scss";
 
 type Props = {
   content: Component;

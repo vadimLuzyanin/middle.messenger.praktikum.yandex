@@ -1,5 +1,5 @@
 import tmpl from "./chatsList.hbs";
-import * as cn from "./chatsList.module.scss";
+import cn from "./chatsList.module.scss";
 import { ChatCard } from "./ChatCard";
 import { ProfileButton } from "./ProfileButton";
 import Component from "../../../component";

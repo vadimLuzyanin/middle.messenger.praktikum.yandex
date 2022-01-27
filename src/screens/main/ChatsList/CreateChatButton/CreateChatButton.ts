@@ -1,7 +1,7 @@
 import Component from "../../../../component";
 import { BlockProps } from "../../../../types";
 import tmpl from "./profileButton.hbs";
-import * as cn from "./profileButton.module.scss";
+import cn from "./profileButton.module.scss";
 
 type Props = BlockProps;
 
