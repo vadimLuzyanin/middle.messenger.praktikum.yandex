@@ -48,14 +48,15 @@
   },
   "dependencies": {
     "handlebars": "^4.7.7",
+    "modern-normalize": "^1.1.0",
     "uuid": "^8.3.2"
   },
   "scripts": {
     "start": "yarn webpack serve -c ./webpack.config.js",
     "wds-prod": "yarn webpack serve -c ./webpack.config.js --mode production",
     "build": "rimraf dist && yarn webpack --mode=production",
-    "lint": "yarn tsc --noEmit && yarn eslint --ext .ts . && yarn stylelint '**/*.scss' && yarn prettier '**/*.{ts,scss}' --check",
-    "fix": "yarn eslint --ext .ts . --fix && yarn prettier '**/*.{ts,scss}' --write",
+    "lint": "yarn tsc --noEmit && yarn eslint --ext .ts . && yarn stylelint '**/*.{css,scss}' && yarn prettier '**/*.{ts,scss}' --check",
+    "fix": "yarn eslint --ext .ts . --fix && yarn prettier '**/*.{ts,scss}' --write && yarn stylelint '**/*.{css,scss}' --fix",
     "test": "yarn mocha",
     "prepare": "husky install",
     "deploy": "heroku git:remote --app hidden-mountain-01296 && heroku container:push web && heroku container:release web"

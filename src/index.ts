@@ -1,4 +1,4 @@
-import "./normalize.css";
+import "modern-normalize";
 import "./fonts.css";
 import { ScreensPathnames } from "./constants";
 import { authController, chatsController, WSController } from "./controllers";
