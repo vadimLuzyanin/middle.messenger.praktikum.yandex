@@ -11,7 +11,6 @@
     "@typescript-eslint/eslint-plugin": "^5.6.0",
     "@typescript-eslint/parser": "^5.6.0",
     "chai": "^4.3.4",
-    "copyfiles": "^2.4.1",
     "css-loader": "^6.5.1",
     "eslint": "^8.4.1",
     "eslint-config-airbnb-base": "^15.0.0",
@@ -54,7 +53,7 @@
   "scripts": {
     "start": "yarn webpack serve -c ./webpack.config.js",
     "wds-prod": "yarn webpack serve -c ./webpack.config.js --mode production",
-    "build": "rimraf dist && yarn webpack --mode=production && yarn copyfiles _redirects dist",
+    "build": "rimraf dist && yarn webpack --mode=production",
     "lint": "yarn tsc --noEmit && yarn eslint --ext .ts . && yarn stylelint '**/*.scss' && yarn prettier '**/*.{ts,scss}' --check",
     "fix": "yarn eslint --ext .ts . --fix && yarn prettier '**/*.{ts,scss}' --write",
     "test": "yarn mocha",
