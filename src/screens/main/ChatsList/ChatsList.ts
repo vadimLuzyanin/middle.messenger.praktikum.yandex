@@ -76,6 +76,11 @@ export default class ChatsList extends Component<Props, State, InnerProps> {
             scrollPosition: this.getScrollableElement()?.scrollTop,
           });
           this.props.onSelect(card.id);
+
+          const scrollable = this.getScrollableElement();
+          if (scrollable) {
+            scrollable.scrollTop = this.state.scrollPosition;
+          }
         };
       });
     }
@@ -93,10 +98,5 @@ export default class ChatsList extends Component<Props, State, InnerProps> {
       // eslint-disable-next-line no-param-reassign
       card.component.outerProps.selected = false;
     });
-
-    const scrollable = this.getScrollableElement();
-    if (scrollable) {
-      scrollable.scrollTop = this.state.scrollPosition;
-    }
   }
 }

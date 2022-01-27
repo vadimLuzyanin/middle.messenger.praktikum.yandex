@@ -58,6 +58,7 @@
     "lint": "yarn tsc --noEmit && yarn eslint --ext .ts . && yarn stylelint '**/*.scss' && yarn prettier '**/*.{ts,scss}' --check",
     "fix": "yarn eslint --ext .ts . --fix && yarn prettier '**/*.{ts,scss}' --write",
     "test": "yarn mocha",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "deploy": "heroku git:remote --app hidden-mountain-01296 && heroku container:push web && heroku container:release web"
   }
 }

@@ -1,4 +1,5 @@
-const Handlebars = require('handlebars/runtime');
+/* eslint-disable consistent-return */
+const Handlebars = require("handlebars/runtime");
 
 Handlebars.registerHelper("switch", function (value, options) {
   this.switch_value = value;
@@ -7,14 +8,14 @@ Handlebars.registerHelper("switch", function (value, options) {
 });
 
 Handlebars.registerHelper("case", function (value, options) {
-  if (value == this.switch_value) {
+  if (value === this.switch_value) {
     this.switch_break = true;
     return options.fn(this);
   }
 });
 
 Handlebars.registerHelper("default", function (value) {
-  if (this.switch_break == false) {
+  if (this.switch_break === false) {
     return value;
   }
 });
