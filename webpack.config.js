@@ -77,5 +77,10 @@ module.exports = ({ mode = "development" }) => {
     resolve: {
       extensions: [".ts", ".js"],
     },
+    optimization: {
+      splitChunks: {
+        chunks: "all",
+      },
+    },
   };
 };
