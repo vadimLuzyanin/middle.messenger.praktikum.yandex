@@ -23,21 +23,12 @@
   }
 }
 
-.attachButton {
-  width: 32px;
-  height: 32px;
-  background-image: url("../assets/attachIcon.svg");
-  background-color: transparent;
-  border: none;
-  margin-right: 10px;
-  cursor: pointer;
-}
-
 .sendButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 28px;
   height: 28px;
-  background-image: url("../assets/sendIcon.svg");
-  background-color: transparent;
   border: none;
   margin-left: 10px;
   cursor: pointer;

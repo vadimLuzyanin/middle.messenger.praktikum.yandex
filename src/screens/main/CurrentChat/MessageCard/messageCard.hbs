@@ -7,7 +7,7 @@
   {{content}}
   <div class="{{cn.time}}">
     {{#if showIcon}}
-      <div class="{{#if readed}}{{cn.readed}}{{else}}{{cn.notReaded}}{{/if}}"></div>
+      <img src="{{#if readed}}{{readedIcon}}{{else}}{{notReadedIcon}}{{/if}}" class="{{cn.readedStatus}}">
     {{/if}}
     {{time}}
   </div>
