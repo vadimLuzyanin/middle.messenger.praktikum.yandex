@@ -10,13 +10,13 @@ module.exports = ({ mode = "development" }) => {
     entry: "./src/index.ts",
     target: "web",
     output: {
-      filename: "[name].bundle.js",
+      filename: "[name].[contenthash].js",
       path: outputPath,
     },
 
     plugins: [
       new MiniCssExtractPlugin({
-        filename: "[name].css",
+        filename: "[name].[contenthash].css",
       }),
       new HtmlWebpackPlugin({
         template: path.resolve(__dirname, "./index.html"),
