@@ -21,7 +21,10 @@ export function chats(state: Chat[] = [], action: AppAction) {
         id,
       };
 
-      if (newLastMessage.user.avatar) {
+      if (
+        newLastMessage.user.avatar &&
+        !newLastMessage.user.avatar.startsWith("https")
+      ) {
         newLastMessage.user.avatar = `https://ya-praktikum.tech/api/v2/resources${newLastMessage.user.avatar}`;
       }
 
@@ -34,7 +37,10 @@ export function chats(state: Chat[] = [], action: AppAction) {
       const chats = action.payload;
       const chatsWithAvatars: Chat[] = chats.map((c) => {
         const { last_message, ...rest } = c;
-        if (last_message?.user.avatar) {
+        if (
+          last_message?.user.avatar &&
+          !last_message.user.avatar.startsWith("https")
+        ) {
           last_message.user.avatar = `https://ya-praktikum.tech/api/v2/resources${last_message.user.avatar}`;
         }
         return { ...rest, last_message };

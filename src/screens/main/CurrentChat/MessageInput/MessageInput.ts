@@ -121,8 +121,8 @@ export default class MessageInput extends Component<Props, State, InnerProps> {
       if (e.code === "Enter" && this.sendListener) {
         this.sendListener();
         this.setState({ value: "" });
+        this.focus();
       }
-      this.focus();
     };
     this.getInputElement()?.addEventListener("keypress", this.keypressListener);
     sendButton.addEventListener("click", this.sendListener);
