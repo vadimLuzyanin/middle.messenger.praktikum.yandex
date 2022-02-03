@@ -1,7 +1,7 @@
 {
   "name": "chat",
   "version": "1.0.0",
-  "author": "Vadim Luzyanin <vadim.luzyanin@phkp.ru>",
+  "author": "Vadim Luzyanin <luzianin999@inbox.ru>",
   "license": "MIT",
   "devDependencies": {
     "@teamsupercell/typings-for-css-modules-loader": "^2.5.1",
