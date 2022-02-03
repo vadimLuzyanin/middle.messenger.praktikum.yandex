@@ -1,8 +1,10 @@
 import Component from "../../../../component";
-import * as cn from "./messageInput.module.scss";
+import cn from "./messageInput.module.scss";
 import tmpl from "./messageInput.hbs";
 import validations from "../../../../validations";
 import WSController from "../../../../controllers/WSController";
+import { BlockProps } from "../../../../types";
+import sendIcon from "../assets/sendIcon.svg";
 
 type State = {
   notValid: boolean;
@@ -16,7 +18,12 @@ type State = {
 type Props = {
   chatId: number;
 };
-export default class MessageInput extends Component<Props, State> {
+
+type InnerProps = BlockProps & {
+  sendIcon: string;
+};
+
+export default class MessageInput extends Component<Props, State, InnerProps> {
   cn = cn;
 
   eventTargetSelector = "input";
@@ -37,6 +44,7 @@ export default class MessageInput extends Component<Props, State> {
       },
     };
 
+    this.innerProps.sendIcon = sendIcon;
     this.innerProps.onInput = (e) => {
       const selectionStart =
         this.getInputElement()?.selectionStart || e.target.value.length;
@@ -113,8 +121,8 @@ export default class MessageInput extends Component<Props, State> {
       if (e.code === "Enter" && this.sendListener) {
         this.sendListener();
         this.setState({ value: "" });
+        this.focus();
       }
-      this.focus();
     };
     this.getInputElement()?.addEventListener("keypress", this.keypressListener);
     sendButton.addEventListener("click", this.sendListener);

@@ -3,7 +3,7 @@ import Component from "../../../../component";
 import { Button, Input, removeModals } from "../../../../components";
 import { chatsController, getUserController } from "../../../../controllers";
 import tmpl from "./actionModal.hbs";
-import * as cn from "./actionModal.module.scss";
+import cn from "./actionModal.module.scss";
 
 type InnerProps = {
   loginInput: Input;

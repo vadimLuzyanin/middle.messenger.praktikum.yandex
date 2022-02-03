@@ -1,6 +1,6 @@
 import Component from "../../component";
 import tmpl from "./popup.hbs";
-import * as cn from "./popup.module.scss";
+import cn from "./popup.module.scss";
 
 type Props = {
   rootElement: HTMLElement;

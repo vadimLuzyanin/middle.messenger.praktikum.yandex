@@ -1,6 +1,12 @@
 import { ScreenComponentClassType, ValidRouterPathname } from "../types";
 import Route from "./route";
 
+type RouteModule = {
+  default: ScreenComponentClassType;
+};
+
+type LoadableRoute = () => Promise<RouteModule>;
+
 class Router {
   routes: Route[];
 
@@ -10,19 +16,23 @@ class Router {
 
   #onPathname?: (pathname: string) => void;
 
+  pending: {
+    pathname: string;
+    loadableRoute: LoadableRoute;
+  }[] = [];
+
   constructor() {
     this.routes = [];
     this.history = window.history;
     this.#currentRoute = null;
   }
 
-  use(pathname: ValidRouterPathname, componentClass: ScreenComponentClassType) {
-    const route = new Route(pathname, componentClass);
-    this.routes.push(route);
+  use(pathname: ValidRouterPathname, loadableRoute: LoadableRoute) {
+    this.pending.push({ pathname, loadableRoute });
     return this;
   }
 
-  start() {
+  async start() {
     window.onpopstate = (event) => {
       const newPathname = (event.currentTarget as Window).location.pathname as
         | ValidRouterPathname
@@ -32,12 +42,12 @@ class Router {
       }
     };
 
-    this.#onRoute(window.location.pathname as ValidRouterPathname);
+    await this.#onRoute(window.location.pathname as ValidRouterPathname);
   }
 
-  go(pathname: ValidRouterPathname) {
+  async go(pathname: ValidRouterPathname) {
     this.history.pushState({}, "", pathname);
-    this.#onRoute(pathname);
+    await this.#onRoute(pathname);
   }
 
   back() {
@@ -57,9 +67,20 @@ class Router {
     return this;
   }
 
-  #onRoute(pathname: ValidRouterPathname) {
-    const route = this.getRoute(pathname);
-    if (!route) return;
+  async #onRoute(pathname: ValidRouterPathname) {
+    let route = this.getRoute(pathname);
+    if (!route) {
+      const loadableRoute = this.pending.find(
+        (p) => p.pathname === pathname
+      )?.loadableRoute;
+      if (!loadableRoute) {
+        return;
+      }
+      const module = await loadableRoute();
+      const pendingClass = module.default;
+      route = new Route(pathname, pendingClass);
+      this.routes.push(route);
+    }
 
     if (this.#currentRoute && this.#currentRoute !== route) {
       this.#currentRoute.leave();

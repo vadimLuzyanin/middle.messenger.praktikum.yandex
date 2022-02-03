@@ -2,7 +2,7 @@ import Component from "../../../../../component";
 import { Button, Input, removeModals } from "../../../../../components";
 import { chatsController } from "../../../../../controllers";
 import tmpl from "./createChatModal.hbs";
-import * as cn from "./createChatModal.module.scss";
+import cn from "./createChatModal.module.scss";
 
 type InnerProps = {
   chatTitleInput: Input;

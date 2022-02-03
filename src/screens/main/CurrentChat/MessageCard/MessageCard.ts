@@ -1,8 +1,10 @@
-import * as cn from "./messageCard.module.scss";
+import cn from "./messageCard.module.scss";
 import tmpl from "./messageCard.hbs";
 import Component from "../../../../component";
 import { parseDate } from "../../../../utils";
 import { ChatMessage } from "../../../../api";
+import readedIcon from "../assets/readedIcon.svg";
+import notReadedIcon from "../assets/notReadedIcon.svg";
 
 type Props = {
   message: ChatMessage;
@@ -14,6 +16,8 @@ type InnerProps = Omit<ChatMessage, "type" | "time"> & {
   readed: boolean;
   time: string;
   showIcon: boolean;
+  readedIcon: string;
+  notReadedIcon: string;
 };
 
 export default class MessageCard extends Component<Props, {}, InnerProps> {
@@ -29,6 +33,8 @@ export default class MessageCard extends Component<Props, {}, InnerProps> {
       readed: !!this.props.message.is_read,
       time: parseDate(this.props.message.time),
       showIcon: this.props.message.user_id === this.props.userId,
+      readedIcon,
+      notReadedIcon,
     };
   }
 }

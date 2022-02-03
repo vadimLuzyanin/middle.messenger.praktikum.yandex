@@ -1,12 +1,23 @@
-export const avatar: string;
-export const avatarContainer: string;
-export const avatarContainerWithHover: string;
-export const back: string;
-export const backIcon: string;
-export const buttons: string;
-export const content: string;
-export const field: string;
-export const fieldName: string;
-export const fields: string;
-export const name: string;
-export const wrapper: string;
+declare namespace SettingsModuleScssNamespace {
+  export interface ISettingsModuleScss {
+    avatar: string;
+    avatarContainer: string;
+    avatarContainerWithHover: string;
+    back: string;
+    backIcon: string;
+    buttons: string;
+    content: string;
+    field: string;
+    fieldName: string;
+    fields: string;
+    name: string;
+    wrapper: string;
+  }
+}
+
+declare const SettingsModuleScssModule: SettingsModuleScssNamespace.ISettingsModuleScss & {
+  /** WARNING: Only available when `css-loader` is used without `style-loader` or `mini-css-extract-plugin` */
+  locals: SettingsModuleScssNamespace.ISettingsModuleScss;
+};
+
+export = SettingsModuleScssModule;

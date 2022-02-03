@@ -1,7 +1,7 @@
 import Component from "../../../../component";
 import { Button } from "../../../../components";
 import tmpl from "./logoutModalContent.hbs";
-import * as cn from "./logoutModalContent.module.scss";
+import cn from "./logoutModalContent.module.scss";
 
 type InnerProps = {
   logoutBtn: Button;

@@ -1,7 +1,7 @@
 import Component from "../../component";
 import { InputValidation } from "../../types";
 import tmpl from "./input.hbs";
-import * as cn from "./input.module.scss";
+import cn from "./input.module.scss";
 
 type Props = {
   placeholder: string;

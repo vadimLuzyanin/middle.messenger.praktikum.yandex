@@ -1,6 +1,6 @@
 import { Button, Input } from "../../components";
 import tmpl from "./register.hbs";
-import * as cn from "./auth.module.scss";
+import cn from "./auth.module.scss";
 import validations from "../../validations";
 import Component from "../../component";
 import { extractFormValues, getIsFormInvalid } from "../../utils";

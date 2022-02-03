@@ -13,7 +13,7 @@ export function user(state: UserState = null, action: AppAction) {
   switch (action.type) {
     case currentUserReceive.type: {
       const user = action.payload;
-      if (user.avatar) {
+      if (user.avatar && !user.avatar.startsWith("https")) {
         user.avatar = `https://ya-praktikum.tech/api/v2/resources${user.avatar}`;
       }
       return user;

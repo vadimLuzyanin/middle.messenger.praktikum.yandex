@@ -1,7 +1,7 @@
 import { Button, renderModal } from "../../../components";
 import Component from "../../../component";
 import tmpl from "./viewSettings.hbs";
-import * as cn from "../settings.module.scss";
+import cn from "../settings.module.scss";
 import { LogoutModalContent } from "./LogoutModalContent";
 import { AppState } from "../../../store";
 import { authController } from "../../../controllers";

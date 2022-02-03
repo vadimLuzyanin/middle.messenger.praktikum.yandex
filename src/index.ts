@@ -1,17 +1,9 @@
+import "modern-normalize";
+import "./fonts.css";
 import { ScreensPathnames } from "./constants";
 import { authController, chatsController, WSController } from "./controllers";
-import "./helpers";
 import { router } from "./router";
-import {
-  LoginScreen,
-  MainScreen,
-  RegisterScreen,
-  Screen404,
-  Screen500,
-  SettingsScreen,
-} from "./screens";
-import { pathnameChange } from "./store";
-import store from "./store/store";
+import { pathnameChange, store } from "./store";
 
 function subRedirects() {
   store.subscribe((getState) => {
@@ -44,16 +36,19 @@ function subRedirects() {
 
 async function init() {
   router
-    .use(ScreensPathnames.Login, LoginScreen)
-    .use(ScreensPathnames.Register, RegisterScreen)
-    .use(ScreensPathnames.Messenger, MainScreen)
-    .use(ScreensPathnames.Settings, SettingsScreen)
-    .use(ScreensPathnames.Screen500, Screen500)
-    .use("*", Screen404)
+    .use(ScreensPathnames.Login, () => import("./screens/auth/Login"))
+    .use(ScreensPathnames.Register, () => import("./screens/auth/Register"))
+    .use(ScreensPathnames.Messenger, () => import("./screens/main/MainScreen"))
+    .use(
+      ScreensPathnames.Settings,
+      () => import("./screens/settings/SettingsScreen")
+    )
+    .use(ScreensPathnames.Screen500, () => import("./screens/errors/500"))
+    .use("*", () => import("./screens/errors/404"))
     .addOnPathname((pathname) => {
       store.dispatch(pathnameChange(pathname));
-    })
-    .start();
+    });
+  await router.start();
 
   const alreadyLoggedIn = await authController.ensureInSystem();
   if (alreadyLoggedIn) {
